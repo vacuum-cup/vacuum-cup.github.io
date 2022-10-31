@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>(Pytorch)中的一些基本方法 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1. torch.chunk方法 2. torch.cumsum方法 3. torch.cat方法 4. torch.stack方法 5. torch.max方法    1.  torch.chunk方法1Tensor.chunk(chunks,dim&#x3D;0) # 可以参考torch.chunk()  torch.chunk   tensor (Tensor) – the tensor to">
+<meta property="og:type" content="article">
+<meta property="og:title" content="(Pytorch)中的一些基本方法">
+<meta property="og:url" content="https://github.com/wangguoxiang123/wangguoxiang123.github.io/2022/10/28/Pytorch-%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1. torch.chunk方法 2. torch.cumsum方法 3. torch.cat方法 4. torch.stack方法 5. torch.max方法    1.  torch.chunk方法1Tensor.chunk(chunks,dim&#x3D;0) # 可以参考torch.chunk()  torch.chunk   tensor (Tensor) – the tensor to">
+<meta property="og:locale">
+<meta property="og:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20221028112608381.png">
+<meta property="og:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20221028112735293.png">
+<meta property="og:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20221028145413973.png">
+<meta property="article:published_time" content="2022-10-28T03:18:51.000Z">
+<meta property="article:modified_time" content="2022-10-28T09:26:59.916Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20221028112608381.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://github.com/wangguoxiang123/wangguoxiang123.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Pytorch-中的一些基本方法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/10/28/Pytorch-%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95/" class="article-date">
+  <time datetime="2022-10-28T03:18:51.000Z" itemprop="datePublished">2022-10-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Pytorch/">Pytorch</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      (Pytorch)中的一些基本方法
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <!-- toc -->
+
+<ul>
+<li><a href="#1-torchchunk%E6%96%B9%E6%B3%95">1. <strong>torch.chunk方法</strong></a></li>
+<li><a href="#2-torchcumsum%E6%96%B9%E6%B3%95">2. <strong>torch.cumsum方法</strong></a></li>
+<li><a href="#3-torchcat%E6%96%B9%E6%B3%95">3. <strong>torch.cat方法</strong></a></li>
+<li><a href="#4-torchstack%E6%96%B9%E6%B3%95"><strong>4. torch.stack方法</strong></a></li>
+<li><a href="#5-torchmax%E6%96%B9%E6%B3%95"><strong>5. torch.max方法</strong></a></li>
+</ul>
+<!-- tocstop -->
+
+<h2><span id="1-torchchunk方法">1.  <strong>torch.chunk方法</strong></span></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Tensor.chunk(chunks,dim=<span class="number">0</span>) <span class="comment"># 可以参考torch.chunk()</span></span><br></pre></td></tr></table></figure>
+
+<p><code>torch.chunk</code></p>
+<p><img src="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20221028112608381.png"></p>
+<ul>
+<li>tensor (<a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor"><em>Tensor</em></a>) – the tensor to split</li>
+<li>chunks (<a target="_blank" rel="noopener" href="https://docs.python.org/3/library/functions.html#int"><em>int</em></a>) - number of chunks to return（分割的块数）</li>
+<li>dim (<a target="_blank" rel="noopener" href="https://docs.python.org/3/library/functions.html#int"><em>int</em></a>) - dimension along which to split the tensor（沿着哪个轴分块）</li>
+</ul>
+<p><strong>实例：</strong></p>
+<p><img src="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20221028112735293.png" alt="实例"></p>
+<h2><span id="2-torchcumsum方法">2. <strong>torch.cumsum方法</strong></span></h2><p>返回  输入张量指定维度累加和</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.cumsum(<span class="built_in">input</span>, dim, *, dtype=<span class="literal">None</span>, out=<span class="literal">None</span>) → Tensor</span><br></pre></td></tr></table></figure>
+
+<p>参数：</p>
+<ul>
+<li>input (Tensor)  输入张量</li>
+<li>dim (int)   操作的维度</li>
+</ul>
+<p>计算原理:</p>
+<p><img src="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20221028145413973.png" alt="cumsum 计算原理"></p>
+<h2><span id="3-torchcat方法">3. <strong>torch.cat方法</strong></span></h2><p>在给定维数中连接给定序列的 seq 张量。所有张量必须具有相同的形状(连接维数除外)或为空。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.cat(tensors, dim=<span class="number">0</span>, *, out=<span class="literal">None</span>) → Tensor</span><br></pre></td></tr></table></figure>
+
+<p>实例：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; x = torch.randn(<span class="number">2</span>, <span class="number">3</span>)</span><br><span class="line">&gt;&gt;&gt; x</span><br><span class="line">tensor([[ <span class="number">0</span>.<span class="number">6580</span>, -<span class="number">1</span>.<span class="number">0969</span>, -<span class="number">0</span>.<span class="number">4614</span>],</span><br><span class="line">        [-<span class="number">0</span>.<span class="number">1034</span>, -<span class="number">0</span>.<span class="number">5790</span>,  <span class="number">0</span>.<span class="number">1497</span>]])</span><br><span class="line">&gt;&gt;&gt; torch.cat((x, x, x), <span class="number">0</span>)</span><br><span class="line">tensor([[ <span class="number">0</span>.<span class="number">6580</span>, -<span class="number">1</span>.<span class="number">0969</span>, -<span class="number">0</span>.<span class="number">4614</span>],</span><br><span class="line">        [-<span class="number">0</span>.<span class="number">1034</span>, -<span class="number">0</span>.<span class="number">5790</span>,  <span class="number">0</span>.<span class="number">1497</span>],</span><br><span class="line">        [ <span class="number">0</span>.<span class="number">6580</span>, -<span class="number">1</span>.<span class="number">0969</span>, -<span class="number">0</span>.<span class="number">4614</span>],</span><br><span class="line">        [-<span class="number">0</span>.<span class="number">1034</span>, -<span class="number">0</span>.<span class="number">5790</span>,  <span class="number">0</span>.<span class="number">1497</span>],</span><br><span class="line">        [ <span class="number">0</span>.<span class="number">6580</span>, -<span class="number">1</span>.<span class="number">0969</span>, -<span class="number">0</span>.<span class="number">4614</span>],</span><br><span class="line">        [-<span class="number">0</span>.<span class="number">1034</span>, -<span class="number">0</span>.<span class="number">5790</span>,  <span class="number">0</span>.<span class="number">1497</span>]])</span><br><span class="line">&gt;&gt;&gt; torch.cat((x, x, x), <span class="number">1</span>)</span><br><span class="line">tensor([[ <span class="number">0</span>.<span class="number">6580</span>, -<span class="number">1</span>.<span class="number">0969</span>, -<span class="number">0</span>.<span class="number">4614</span>,  <span class="number">0</span>.<span class="number">6580</span>, -<span class="number">1</span>.<span class="number">0969</span>, -<span class="number">0</span>.<span class="number">4614</span>,  <span class="number">0</span>.<span class="number">6580</span>,</span><br><span class="line">         -<span class="number">1</span>.<span class="number">0969</span>, -<span class="number">0</span>.<span class="number">4614</span>],</span><br><span class="line">        [-<span class="number">0</span>.<span class="number">1034</span>, -<span class="number">0</span>.<span class="number">5790</span>,  <span class="number">0</span>.<span class="number">1497</span>, -<span class="number">0</span>.<span class="number">1034</span>, -<span class="number">0</span>.<span class="number">5790</span>,  <span class="number">0</span>.<span class="number">1497</span>, -<span class="number">0</span>.<span class="number">1034</span>,</span><br><span class="line">         -<span class="number">0</span>.<span class="number">5790</span>,  <span class="number">0</span>.<span class="number">1497</span>]])</span><br></pre></td></tr></table></figure>
+
+<h2><span id="4-torchstack方法"><strong>4. torch.stack方法</strong></span></h2><p>沿着一个新的维数连接一系列张量。</p>
+<p>所有张量的大小必须相同。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.stack(tensors, dim=<span class="number">0</span>, *, out=<span class="literal">None</span>) → Tensor    <span class="comment"># 插入了一个维度</span></span><br></pre></td></tr></table></figure>
+
+<p>实例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line">l = <span class="number">4</span></span><br><span class="line"></span><br><span class="line">tag = torch.FloatTensor(l, l, <span class="number">2</span>).fill_(<span class="number">0</span>)</span><br><span class="line">tag1 = torch.FloatTensor(l, l, <span class="number">2</span>).fill_(<span class="number">5</span>)</span><br><span class="line">tag2 = torch.FloatTensor(l, l, <span class="number">2</span>).fill_(<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">tags = torch.stack([tag,tag1,tag2],dim=<span class="number">0</span>)</span><br><span class="line">display(tags.shape)</span><br><span class="line">tags = torch.stack([tag,tag1,tag2],dim=<span class="number">1</span>)</span><br><span class="line">tags.shape</span><br></pre></td></tr></table></figure>
+
+<p>output: </p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">torch.Size([<span class="number">3</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">2</span>])</span><br><span class="line">torch.Size([<span class="number">4</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+
+
+
+<h2><span id="5-torchmax方法"><strong>5. torch.max方法</strong></span></h2><p><strong>方式一：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.<span class="built_in">max</span>(<span class="built_in">input</span>) → Tensor</span><br></pre></td></tr></table></figure>
+
+<p>返回所有元素的最大值</p>
+<p>实例：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = torch.randn(<span class="number">1</span>, <span class="number">3</span>)</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">tensor([[ <span class="number">0</span>.<span class="number">6763</span>,  <span class="number">0</span>.<span class="number">7445</span>, -<span class="number">2</span>.<span class="number">2369</span>]])</span><br><span class="line">&gt;&gt;&gt; torch.max(a)</span><br><span class="line">tensor(<span class="number">0</span>.<span class="number">7445</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>方式二：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.<span class="built_in">max</span>(<span class="built_in">input</span>, dim, keepdim=<span class="literal">False</span>, *, out=<span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+
+<p>返回一个命名元组(values, indexes)，其中values是给定维度dim中输入张量的每一行的最大值。而indexes是找到的每个最大值的索引位置(argmax)。</p>
+<p>实例：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = torch.randn(<span class="number">4</span>, <span class="number">4</span>)</span><br><span class="line">&gt;&gt;&gt; a</span><br><span class="line">tensor([[-<span class="number">1</span>.<span class="number">2360</span>, -<span class="number">0</span>.<span class="number">2942</span>, -<span class="number">0</span>.<span class="number">1222</span>,  <span class="number">0</span>.<span class="number">8475</span>],</span><br><span class="line">        [ <span class="number">1</span>.<span class="number">1949</span>, -<span class="number">1</span>.<span class="number">1127</span>, -<span class="number">2</span>.<span class="number">2379</span>, -<span class="number">0</span>.<span class="number">6702</span>],</span><br><span class="line">        [ <span class="number">1</span>.<span class="number">5717</span>, -<span class="number">0</span>.<span class="number">9207</span>,  <span class="number">0</span>.<span class="number">1297</span>, -<span class="number">1</span>.<span class="number">8768</span>],</span><br><span class="line">        [-<span class="number">0</span>.<span class="number">6172</span>,  <span class="number">1</span>.<span class="number">0036</span>, -<span class="number">0</span>.<span class="number">6060</span>, -<span class="number">0</span>.<span class="number">2432</span>]])</span><br><span class="line">&gt;&gt;&gt; torch.max(a, <span class="number">1</span>)</span><br><span class="line">torch.return_types.max(values=tensor([<span class="number">0</span>.<span class="number">8475</span>, <span class="number">1</span>.<span class="number">1949</span>, <span class="number">1</span>.<span class="number">5717</span>, <span class="number">1</span>.<span class="number">0036</span>]), indices=tensor([<span class="number">3</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>]))</span><br></pre></td></tr></table></figure>
+
+<p><strong>方式二，个人理解：</strong></p>
+<p>​    给定一个张量 t 和维度d，设 t 的维度为  <code>x*y*z</code></p>
+<p>最后的返回值values（仅表示思路 ）:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">d = <span class="number">0</span> <span class="comment"># 举例</span></span><br><span class="line">output = torch.zeros(y,z)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(y):</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(z):</span><br><span class="line">        output[i][j] = <span class="built_in">max</span>(t[:][i][j])</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://github.com/wangguoxiang123/wangguoxiang123.github.io/2022/10/28/Pytorch-%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95/" data-id="cl9smhw150000lsal574shfy1" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2022/10/27/Pytorch-nn-Dropout/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">(Pytorch) nn.Dropout</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Pytorch/">Pytorch</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/10/28/Pytorch-%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95/">(Pytorch)中的一些基本方法</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/27/Pytorch-nn-Dropout/">(Pytorch) nn.Dropout</a>
+          </li>
+        
+          <li>
+            <a href="/2022/10/24/my-first-blog/">my first blog</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
