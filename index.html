@@ -64,6 +64,69 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Pytorch-nn-Embedding" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/11/04/Pytorch-nn-Embedding/" class="article-date">
+  <time datetime="2022-11-04T02:51:22.000Z" itemprop="datePublished">2022-11-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Pytorch/">Pytorch</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/11/04/Pytorch-nn-Embedding/">Pytorch-nn-Embedding</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ol>
+<li><p>简述</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">torch.nn.Embedding(num_embeddings, embedding_dim, padding_idx=<span class="literal">None</span>,</span><br><span class="line"> max_norm=<span class="literal">None</span>,  norm_type=<span class="number">2.0</span>,   scale_grad_by_freq=<span class="literal">False</span>, </span><br><span class="line"> sparse=<span class="literal">False</span>,  _weight=<span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>其为一个简单的存储固定大小的词典的嵌入向量的查找表，意思就是说，<strong>给一个编号，嵌入层就能返回这个编号对应的嵌入向量</strong>，嵌入向量反映了各个编号代表的符号之间的语义关系。</li>
+<li>输入为一个编号列表，输出为对应的符号嵌入向量列表。</li>
+</ul>
+</li>
+<li><p>参数说明</p>
+<ul>
+<li><font color="blue">**num_embeddings (python:int) **</font>– 词典的大小尺寸，比如总共出现5000个词，那就输入5000。此时index为（0-4999）</li>
+<li><font color="blue"><strong>embedding_dim (python:int)</strong> </font>– 嵌入向量的维度，即用多少维来表示一个符号。</li>
+<li>padding_idx (python:int, optional) – 填充id，比如，输入长度为100，但是每次的句子长度并不一样，后面就需要用统一的数字填充，而这里就是指定这个数字，这样，网络在遇到填充id时，就不会计算其与其它符号的相关性。（初始化为0）</li>
+<li>max_norm (python:float, optional) – 最大范数，如果嵌入向量的范数超过了这个界限，就要进行再归一化</li>
+<li>norm_type (python:float, optional) – 指定利用什么范数计算，并用于对比max_norm，默认为2范数。</li>
+<li>scale_grad_by_freq (boolean, optional) – 根据单词在mini-batch中出现的频率，对梯度进行放缩。默认为False.</li>
+<li>sparse (bool, optional) – 若为True,则与权重矩阵相关的梯度转变为稀疏张量。</li>
+</ul>
+</li>
+<li><p>实例</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; # an Embedding module containing <span class="number">10</span> tensors of size <span class="number">3</span></span><br><span class="line">&gt;&gt;&gt; embedding = nn.Embedding(<span class="number">10</span>, <span class="number">3</span>)</span><br><span class="line">&gt;&gt;&gt; # a batch of <span class="number">2</span> samples of <span class="number">4</span> indices each</span><br><span class="line">&gt;&gt;&gt; input = torch.LongTensor([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">5</span>],[<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">9</span>]])</span><br><span class="line">&gt;&gt;&gt; embedding(input)</span><br><span class="line">tensor([[[-<span class="number">0</span>.<span class="number">0251</span>, -<span class="number">1</span>.<span class="number">6902</span>,  <span class="number">0</span>.<span class="number">7172</span>],</span><br><span class="line">         [-<span class="number">0</span>.<span class="number">6431</span>,  <span class="number">0</span>.<span class="number">0748</span>,  <span class="number">0</span>.<span class="number">6969</span>],</span><br><span class="line">         [ <span class="number">1</span>.<span class="number">4970</span>,  <span class="number">1</span>.<span class="number">3448</span>, -<span class="number">0</span>.<span class="number">9685</span>],</span><br><span class="line">         [-<span class="number">0</span>.<span class="number">3677</span>, -<span class="number">2</span>.<span class="number">7265</span>, -<span class="number">0</span>.<span class="number">1685</span>]],</span><br><span class="line"></span><br><span class="line">        [[ <span class="number">1</span>.<span class="number">4970</span>,  <span class="number">1</span>.<span class="number">3448</span>, -<span class="number">0</span>.<span class="number">9685</span>],</span><br><span class="line">         [ <span class="number">0</span>.<span class="number">4362</span>, -<span class="number">0</span>.<span class="number">4004</span>,  <span class="number">0</span>.<span class="number">9400</span>],</span><br><span class="line">         [-<span class="number">0</span>.<span class="number">6431</span>,  <span class="number">0</span>.<span class="number">0748</span>,  <span class="number">0</span>.<span class="number">6969</span>],</span><br><span class="line">         [ <span class="number">0</span>.<span class="number">9124</span>, -<span class="number">2</span>.<span class="number">3616</span>,  <span class="number">1</span>.<span class="number">1151</span>]]])</span><br><span class="line"> </span><br><span class="line">&gt;&gt;&gt; # example with padding_idx</span><br><span class="line">&gt;&gt;&gt; embedding = nn.Embedding(<span class="number">10</span>, <span class="number">3</span>, padding_idx=<span class="number">0</span>)</span><br><span class="line">&gt;&gt;&gt; input = torch.LongTensor([[<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">5</span>]])</span><br><span class="line">&gt;&gt;&gt; embedding(input)</span><br><span class="line">tensor([[[ <span class="number">0</span>.<span class="number">0000</span>,  <span class="number">0</span>.<span class="number">0000</span>,  <span class="number">0</span>.<span class="number">0000</span>],</span><br><span class="line">         [ <span class="number">0</span>.<span class="number">1535</span>, -<span class="number">2</span>.<span class="number">0309</span>,  <span class="number">0</span>.<span class="number">9315</span>],</span><br><span class="line">         [ <span class="number">0</span>.<span class="number">0000</span>,  <span class="number">0</span>.<span class="number">0000</span>,  <span class="number">0</span>.<span class="number">0000</span>],</span><br><span class="line">         [-<span class="number">0</span>.<span class="number">1655</span>,  <span class="number">0</span>.<span class="number">9897</span>,  <span class="number">0</span>.<span class="number">0635</span>]]])</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://github.com/wangguoxiang123/wangguoxiang123.github.io/2022/11/04/Pytorch-nn-Embedding/" data-id="cla1won7n0000d4al09uo1zzo" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Pytorch-中的一些基本方法" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2022/10/28/Pytorch-%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95/" class="article-date">
@@ -296,7 +359,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/11/">November 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">October 2022</a></li></ul>
     </div>
   </div>
 
@@ -307,6 +370,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2022/11/04/Pytorch-nn-Embedding/">Pytorch-nn-Embedding</a>
+          </li>
         
           <li>
             <a href="/2022/10/28/Pytorch-%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95/">(Pytorch)中的一些基本方法</a>
