@@ -495,7 +495,7 @@
 <p>具体方法: 读取要追加数据的excel文件,然后与要追加的数据组合一起保存到原文件中</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#--coding-- utf-8--</span></span><br><span class="line"><span class="keyword">import</span> pandas</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">append_to_excel</span>(<span class="params">filepath,dataframe</span>)-&gt;<span class="literal">None</span>:</span><br><span class="line">    writer=pandas.ExcelWriter(filepath,mode=<span class="string">&#x27;w&#x27;</span>)<span class="comment">#这里的mode需要用w模式，a模式会产生新的sheet</span></span><br><span class="line">    data=pandas.read_excel(writer,index_col=<span class="literal">None</span>,header=<span class="literal">None</span>)</span><br><span class="line">    data.to_excel(writer,startrow=<span class="number">0</span>,index=<span class="literal">None</span>,header=<span class="literal">None</span>,sheet_name=<span class="string">&#x27;sheet1&#x27;</span>)</span><br><span class="line">    dataframe.to_excel(writer,startrow=data.shape[<span class="number">0</span>],index=<span class="literal">None</span>,header=<span class="literal">None</span>,sheet_name=<span class="string">&#x27;sheet1&#x27;</span>)</span><br><span class="line">    writer.save()</span><br></pre></td></tr></table></figure>
 
-<p>感谢： <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_29983177/article/details/109059289?spm=1001.2101.3001.6650.1&utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~Rate-1-109059289-blog-106766743.pc_relevant_3mothn_strategy_and_data_recovery&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~Rate-1-109059289-blog-106766743.pc_relevant_3mothn_strategy_and_data_recovery&utm_relevant_index=2">(43条消息) python pandas excel同一个sheet追加不覆盖追加数据_Demnok Lannik的博客-CSDN博客_python panada 追加sheet</a></p>
+<p>感谢： <a href="https://blog.csdn.net/qq_29983177/article/details/109059289?spm=1001.2101.3001.6650.1&utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~Rate-1-109059289-blog-106766743.pc_relevant_3mothn_strategy_and_data_recovery&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~Rate-1-109059289-blog-106766743.pc_relevant_3mothn_strategy_and_data_recovery&utm_relevant_index=2">(43条消息) python pandas excel同一个sheet追加不覆盖追加数据_Demnok Lannik的博客-CSDN博客_python panada 追加sheet</a></p>
 
     </article>
     <!-- license -->
@@ -924,6 +924,13 @@
             <script src="/scripts/share.js?v=20211217" async></script>
         
         <!-- mermaid -->
+        
+            <script src='https://cdn.jsdelivr.net/npm/mermaid@8.x/dist/mermaid.min.js'></script>
+            <script>
+                if (window.mermaid) {
+                    mermaid.initialize({theme: 'dark'});
+                }
+            </script>
         
     </body>
 </html>

@@ -507,12 +507,12 @@
 <p>部分学者发现，Transformer学到的词向量在空间的分布如下： </p>
 <p><img src="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20221116095449627.png" alt="image-20221116095449627"></p>
 <p>Bert与GPT-2中也存在类似的情况。由上图可以知道模型学到的向量分布是各项异性的。</p>
-<h2><span id="各项异性的缺点">各项异性的缺点</span></h2><p>各向异性就有个问题，那就是最后学到的向量都挤在一起，彼此之间计算<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E4%BD%99%E5%BC%A6&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:2353153090%7D">余弦</a>相似度都很高，并不是一个很好的表示。<strong>一个好的向量表示应该同时满足Alignment 和 <a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=uniformity&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:2353153090%7D">uniformity</a>，前者表示相似的向量距离应该相近，后者就表示向量在空间上应该尽量均匀，最好是各向同性的。</strong></p>
+<h2><span id="各项异性的缺点">各项异性的缺点</span></h2><p>各向异性就有个问题，那就是最后学到的向量都挤在一起，彼此之间计算<a href="https://www.zhihu.com/search?q=%E4%BD%99%E5%BC%A6&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:2353153090%7D">余弦</a>相似度都很高，并不是一个很好的表示。<strong>一个好的向量表示应该同时满足Alignment 和 <a href="https://www.zhihu.com/search?q=uniformity&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:2353153090%7D">uniformity</a>，前者表示相似的向量距离应该相近，后者就表示向量在空间上应该尽量均匀，最好是各向同性的。</strong></p>
 <p><img src="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/v2-16afeb2bcb31948dded07183b983b609_720w.webp" alt="img"></p>
 <blockquote>
 <p>左图是理想的表示，右图则有各向异性的缺点。</p>
 </blockquote>
-<h2><span id="应对方法">应对方法</span></h2><h3><span id="1-映射为各向同性">1. 映射为各向同性</span></h3><p>BERT-flow的工作就是将原来的分布校准为<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E9%AB%98%E6%96%AF%E5%88%86%E5%B8%83&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:2353153090%7D">高斯分布</a>。标准的高斯分布就是各向同性的。</p>
+<h2><span id="应对方法">应对方法</span></h2><h3><span id="1-映射为各向同性">1. 映射为各向同性</span></h3><p>BERT-flow的工作就是将原来的分布校准为<a href="https://www.zhihu.com/search?q=%E9%AB%98%E6%96%AF%E5%88%86%E5%B8%83&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:2353153090%7D">高斯分布</a>。标准的高斯分布就是各向同性的。</p>
 <p><img src="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/v2-4a7119dcc59982f1a6276cbe0f9a9ae2_720w.webp" alt="img"></p>
 <p>类似的还有<strong>whitening</strong>操作。大概流程就是根据SVD分解的结果，旋转缩放后得到一个标准正态分布。</p>
 <p><img src="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/v2-64c44ba2cb17ec940acf5356a031e1cc_720w.webp" alt="img"></p>
@@ -522,7 +522,7 @@
 <h3><span id="3-正则化">3. 正则化</span></h3><p>参见论文：</p>
 <p><a href="https://link.zhihu.com/?target=https://arxiv.org/abs/1907.12009">Representation Degeneration Problem in Training Natural Language Generation Models</a></p>
 <h2><span id="本文选自">本文选自：</span></h2><blockquote>
-<p>作者：看图学<br>链接：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/460991118/answer/2353153090">https://www.zhihu.com/question/460991118/answer/2353153090</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+<p>作者：看图学<br>链接：<a href="https://www.zhihu.com/question/460991118/answer/2353153090">https://www.zhihu.com/question/460991118/answer/2353153090</a><br>来源：知乎<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
 </blockquote>
 
     </article>
@@ -947,6 +947,13 @@
             <script src="/scripts/share.js?v=20211217" async></script>
         
         <!-- mermaid -->
+        
+            <script src='https://cdn.jsdelivr.net/npm/mermaid@8.x/dist/mermaid.min.js'></script>
+            <script>
+                if (window.mermaid) {
+                    mermaid.initialize({theme: 'dark'});
+                }
+            </script>
         
     </body>
 </html>

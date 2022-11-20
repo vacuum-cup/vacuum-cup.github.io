@@ -514,9 +514,9 @@
 <p><code>torch.chunk</code></p>
 <p><img src="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20221028112608381.png"></p>
 <ul>
-<li>tensor (<a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor"><em>Tensor</em></a>) – the tensor to split</li>
-<li>chunks (<a target="_blank" rel="noopener" href="https://docs.python.org/3/library/functions.html#int"><em>int</em></a>) - number of chunks to return（分割的块数）</li>
-<li>dim (<a target="_blank" rel="noopener" href="https://docs.python.org/3/library/functions.html#int"><em>int</em></a>) - dimension along which to split the tensor（沿着哪个轴分块）</li>
+<li>tensor (<a href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor"><em>Tensor</em></a>) – the tensor to split</li>
+<li>chunks (<a href="https://docs.python.org/3/library/functions.html#int"><em>int</em></a>) - number of chunks to return（分割的块数）</li>
+<li>dim (<a href="https://docs.python.org/3/library/functions.html#int"><em>int</em></a>) - dimension along which to split the tensor（沿着哪个轴分块）</li>
 </ul>
 <p><strong>实例：</strong></p>
 <p><img src="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20221028112735293.png" alt="实例"></p>
@@ -573,7 +573,7 @@
 <ul>
 <li><p>squeeze() 方法</p>
 <blockquote>
-<p>在<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=pytorch&spm=1001.2101.3001.7020">pytorch</a>中，用torch.squeeze()函数或者tensor的自身成员函数squeeze()去除维度为1的维度。</p>
+<p>在<a href="https://so.csdn.net/so/search?q=pytorch&spm=1001.2101.3001.7020">pytorch</a>中，用torch.squeeze()函数或者tensor的自身成员函数squeeze()去除维度为1的维度。</p>
 <p>使用示例:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">x = torch.randn(<span class="number">3</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">1</span>)</span><br><span class="line"><span class="built_in">print</span>(x.shape)</span><br><span class="line">x_ = x.squeeze() <span class="comment"># 默认删除所大小为1 的维度</span></span><br><span class="line"><span class="built_in">print</span>(x_.shape)</span><br><span class="line">y = torch.squeeze(x,dim=<span class="number">1</span>)  <span class="comment"># 指定维度</span></span><br><span class="line"><span class="built_in">print</span>(y.shape)</span><br><span class="line">z = torch.squeeze(x,dim=<span class="number">2</span>)  <span class="comment"># dim=2 维度不是1  无法去除 但不会报错</span></span><br><span class="line"><span class="built_in">print</span>(z.shape)</span><br></pre></td></tr></table></figure>
 
@@ -581,7 +581,7 @@
 </li>
 <li><p>unsqueeze() 方法</p>
 <blockquote>
-<p> 在pytorch中，用自带的torch.unsqueeze()和tensor的<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0&spm=1001.2101.3001.7020">成员函数</a>unsqueeze()可以为tensor添加维度为1的维度</p>
+<p> 在pytorch中，用自带的torch.unsqueeze()和tensor的<a href="https://so.csdn.net/so/search?q=%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0&spm=1001.2101.3001.7020">成员函数</a>unsqueeze()可以为tensor添加维度为1的维度</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">e = torch.unsqueeze(x, dim=<span class="number">0</span>)  <span class="comment"># 在第一维度添加维度</span></span><br><span class="line"><span class="built_in">print</span>(e.shape)</span><br><span class="line">f = x.unsqueeze(dim=<span class="number">0</span>)</span><br><span class="line"><span class="built_in">print</span>(f.shape)</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">torch.Size([<span class="number">1</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">2</span>])</span><br><span class="line">torch.Size([<span class="number">1</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">2</span>])</span><br></pre></td></tr></table></figure></blockquote>
@@ -1015,6 +1015,13 @@
             <script src="/scripts/share.js?v=20211217" async></script>
         
         <!-- mermaid -->
+        
+            <script src='https://cdn.jsdelivr.net/npm/mermaid@8.x/dist/mermaid.min.js'></script>
+            <script>
+                if (window.mermaid) {
+                    mermaid.initialize({theme: 'dark'});
+                }
+            </script>
         
     </body>
 </html>
