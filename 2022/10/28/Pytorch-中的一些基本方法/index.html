@@ -19,18 +19,18 @@
         <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
     
     <meta name="description" content="">
-    <meta name="description" content="1. torch.chunk方法 2. torch.cumsum方法 3. torch.cat方法 4. torch.stack方法 5. torch.max方法">
+    <meta name="description" content="1. torch.chunk方法 2. torch.cumsum方法 3. torch.cat方法 4. torch.stack方法 5. torch.max方法 6. squeeze与unsqueeze">
 <meta property="og:type" content="article">
 <meta property="og:title" content="(Pytorch)中的一些基本方法">
 <meta property="og:url" content="https://github.com/vacuum-cup/vacuum-cup.github.io/2022/10/28/Pytorch-%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. torch.chunk方法 2. torch.cumsum方法 3. torch.cat方法 4. torch.stack方法 5. torch.max方法">
+<meta property="og:description" content="1. torch.chunk方法 2. torch.cumsum方法 3. torch.cat方法 4. torch.stack方法 5. torch.max方法 6. squeeze与unsqueeze">
 <meta property="og:locale">
 <meta property="og:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20221028112608381.png">
 <meta property="og:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20221028112735293.png">
 <meta property="og:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20221028145413973.png">
 <meta property="article:published_time" content="2022-10-28T03:18:51.000Z">
-<meta property="article:modified_time" content="2022-11-15T13:33:39.965Z">
+<meta property="article:modified_time" content="2022-11-20T00:47:12.973Z">
 <meta property="article:author" content="xnf">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20221028112608381.png">
@@ -334,7 +334,7 @@
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">651</span>阅读时长: <span class="post-count reading-time">3 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">869</span>阅读时长: <span class="post-count reading-time">4 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -503,6 +503,7 @@
 <li><a href="#3-torchcat%E6%96%B9%E6%B3%95">3. <strong>torch.cat方法</strong></a></li>
 <li><a href="#4-torchstack%E6%96%B9%E6%B3%95"><strong>4. torch.stack方法</strong></a></li>
 <li><a href="#5-torchmax%E6%96%B9%E6%B3%95"><strong>5. torch.max方法</strong></a></li>
+<li><a href="#6-squeeze%E4%B8%8Eunsqueeze">6. squeeze与unsqueeze</a></li>
 </ul>
 <!-- tocstop -->
 
@@ -568,8 +569,24 @@
 
 
 
+<h2><span id="6-squeeze与unsqueeze">6.  squeeze与unsqueeze</span></h2><p><strong>给tensor删除或者添加维度为1的维度</strong></p>
+<ul>
+<li><p>squeeze() 方法</p>
+<blockquote>
+<p>在<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=pytorch&spm=1001.2101.3001.7020">pytorch</a>中，用torch.squeeze()函数或者tensor的自身成员函数squeeze()去除维度为1的维度。</p>
+<p>使用示例:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">x = torch.randn(<span class="number">3</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">1</span>)</span><br><span class="line"><span class="built_in">print</span>(x.shape)</span><br><span class="line">x_ = x.squeeze() <span class="comment"># 默认删除所大小为1 的维度</span></span><br><span class="line"><span class="built_in">print</span>(x_.shape)</span><br><span class="line">y = torch.squeeze(x,dim=<span class="number">1</span>)  <span class="comment"># 指定维度</span></span><br><span class="line"><span class="built_in">print</span>(y.shape)</span><br><span class="line">z = torch.squeeze(x,dim=<span class="number">2</span>)  <span class="comment"># dim=2 维度不是1  无法去除 但不会报错</span></span><br><span class="line"><span class="built_in">print</span>(z.shape)</span><br></pre></td></tr></table></figure>
 
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">torch.Size([<span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">1</span>])</span><br><span class="line">torch.Size([<span class="number">3</span>, <span class="number">2</span>, <span class="number">4</span>])</span><br><span class="line">torch.Size([<span class="number">3</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">1</span>])</span><br><span class="line">torch.Size([<span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">1</span>])</span><br></pre></td></tr></table></figure></blockquote>
+</li>
+<li><p>unsqueeze() 方法</p>
+<blockquote>
+<p> 在pytorch中，用自带的torch.unsqueeze()和tensor的<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0&spm=1001.2101.3001.7020">成员函数</a>unsqueeze()可以为tensor添加维度为1的维度</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">e = torch.unsqueeze(x, dim=<span class="number">0</span>)  <span class="comment"># 在第一维度添加维度</span></span><br><span class="line"><span class="built_in">print</span>(e.shape)</span><br><span class="line">f = x.unsqueeze(dim=<span class="number">0</span>)</span><br><span class="line"><span class="built_in">print</span>(f.shape)</span><br></pre></td></tr></table></figure>
 
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">torch.Size([<span class="number">1</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">2</span>])</span><br><span class="line">torch.Size([<span class="number">1</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">2</span>])</span><br></pre></td></tr></table></figure></blockquote>
+</li>
+</ul>
 
     </article>
     <!-- license -->
@@ -735,7 +752,7 @@
                 <div class="toc-catalog">
                     <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
                 </div>
-                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">1.  torch.chunk方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">2. torch.cumsum方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">3. torch.cat方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">4. torch.stack方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">5. torch.max方法</span></a></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">1.  torch.chunk方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">2. torch.cumsum方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">3. torch.cat方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">4. torch.stack方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">5. torch.max方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">6.  squeeze与unsqueeze</span></a></li></ol>
             </div>
         
         <!-- sidebar -->
@@ -795,6 +812,8 @@
         
         
     
+        
+        
         
         
         
