@@ -19,26 +19,24 @@
         <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
     
     <meta name="description" content="">
-    <meta name="description" content="1. 引言 2. 时序卷积神经网络（TCN）  2.1 因果卷积 2.2 膨胀卷积 2.3 残差链接  3. TCN优缺点 4. 小结： 参考原文:   1. 引言 传统的卷积神经网络一般认为不太适合时序问题的建模，这主要由于其卷积核大小的限制，不能很好的抓取长时的依赖信息。  特定的卷积神经网络结构也可以达到很好的效果，比如Goolgle提出的用来做语音合成">
+    <meta name="description" content="EMA定义 进一步理解\(v_t\) 在深度模型中的应用  关于EMA的作用    EMA定义 指数移动平均（Exponential Moving Average）也叫权重移动平均（Weighted Moving Average），是一种给予近期数据更高权重的平均方法。  假设我们有n个数据：\([\theta_1 ,\theta_2,...,\theta_n]\">
 <meta property="og:type" content="article">
-<meta property="og:title" content="TCN-时间卷积网络">
-<meta property="og:url" content="https://github.com/vacuum-cup/vacuum-cup.github.io/2022/11/21/TCN-%E6%97%B6%E9%97%B4%E5%8D%B7%E7%A7%AF%E7%BD%91%E7%BB%9C/index.html">
+<meta property="og:title" content="指数移动平均（EMA）">
+<meta property="og:url" content="https://github.com/vacuum-cup/vacuum-cup.github.io/2022/11/26/%E6%8C%87%E6%95%B0%E7%A7%BB%E5%8A%A8%E5%B9%B3%E5%9D%87%EF%BC%88EMA%EF%BC%89/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 引言 2. 时序卷积神经网络（TCN）  2.1 因果卷积 2.2 膨胀卷积 2.3 残差链接  3. TCN优缺点 4. 小结： 参考原文:   1. 引言 传统的卷积神经网络一般认为不太适合时序问题的建模，这主要由于其卷积核大小的限制，不能很好的抓取长时的依赖信息。  特定的卷积神经网络结构也可以达到很好的效果，比如Goolgle提出的用来做语音合成">
+<meta property="og:description" content="EMA定义 进一步理解\(v_t\) 在深度模型中的应用  关于EMA的作用    EMA定义 指数移动平均（Exponential Moving Average）也叫权重移动平均（Weighted Moving Average），是一种给予近期数据更高权重的平均方法。  假设我们有n个数据：\([\theta_1 ,\theta_2,...,\theta_n]\">
 <meta property="og:locale">
-<meta property="og:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/%E5%9B%A0%E6%9E%9C%E5%8D%B7%E7%A7%AF.png">
-<meta property="og:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20221121171800012.png">
-<meta property="og:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20221121172058160.png">
-<meta property="article:published_time" content="2022-11-21T08:56:49.000Z">
-<meta property="article:modified_time" content="2022-11-21T10:14:02.697Z">
+<meta property="og:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/20210702095206320.png">
+<meta property="article:published_time" content="2022-11-26T08:24:52.000Z">
+<meta property="article:modified_time" content="2022-11-26T12:47:13.955Z">
 <meta property="article:author" content="xnf">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/%E5%9B%A0%E6%9E%9C%E5%8D%B7%E7%A7%AF.png">
+<meta name="twitter:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/20210702095206320.png">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="icon" href="/assets/favicon.ico">
     
-    <title>TCN-时间卷积网络 · dudu&#39;s blog</title>
+    <title>指数移动平均（EMA） · dudu&#39;s blog</title>
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
 - testing support for link[rel=preload]
@@ -263,7 +261,7 @@
                 <a href="/">Dudu&#39;s Blog.</a>
             </div>
             <div class="post-title header-element">
-                <a href="#" class="post-name">TCN-时间卷积网络</a>
+                <a href="#" class="post-name">指数移动平均（EMA）</a>
             </div>
         </div>
     
@@ -309,7 +307,7 @@
         <h1 class="intro-title">
             <!-- 主页  -->
             
-                TCN-时间卷积网络
+                指数移动平均（EMA）
             <!-- 404 -->
             
         </h1>
@@ -334,13 +332,13 @@
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">1k</span>阅读时长: <span class="post-count reading-time">3 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">601</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <!-- 撰写日期 -->
                     <span class="iconfont-archer post-intro-calander">&#xe676;</span>
-                    <span class="post-intro-time">2022/11/21</span>
+                    <span class="post-intro-time">2022/11/26</span>
                     <!-- busuanzi -->
                     
                         <span id="busuanzi_container_page_pv" class="busuanzi-pv">
@@ -497,75 +495,101 @@
     <article class="article-entry">
         <!-- toc -->
 <ul>
-<li><a href="#1-引言">1. 引言</a></li>
-<li><a href="#2-时序卷积神经网络tcn">2. 时序卷积神经网络（TCN）</a>
+<li><a href="#ema定义">EMA定义</a></li>
+<li><a href="#进一步理解v_t">进一步理解<span class="math inline">\(v_t\)</span></a></li>
+<li><a href="#在深度模型中的应用">在深度模型中的应用</a>
 <ul>
-<li><a href="#21-因果卷积">2.1 因果卷积</a></li>
-<li><a href="#22-膨胀卷积">2.2 膨胀卷积</a></li>
-<li><a href="#23-残差链接">2.3 残差链接</a></li>
+<li><a href="#关于ema的作用">关于EMA的作用</a></li>
 </ul></li>
-<li><a href="#3-tcn优缺点">3. TCN优缺点</a></li>
-<li><a href="#4-小结">4. 小结：</a></li>
-<li><a href="#参考原文">参考原文:</a></li>
 </ul>
 <!-- tocstop -->
-<h2><span id="1-引言">1. 引言</span></h2>
-<p>传统的卷积神经网络一般认为不太适合时序问题的建模，这主要由于其<strong>卷积核大小的限制，不能很好的抓取长时的依赖信息。</strong></p>
+<h2><span id="ema定义">EMA定义</span></h2>
+<p>指数移动平均（Exponential Moving Average）也叫权重移动平均（Weighted
+Moving Average），是一种给予近期数据更高权重的平均方法。</p>
 <blockquote>
-<p>特定的卷积神经网络结构也可以达到很好的效果，比如Goolgle提出的用来做语音合成的wavenet，Facebook提出的用来做翻译的卷积神经网络</p>
+<p>假设我们有n个数据：<span class="math inline">\([\theta_1
+,\theta_2,...,\theta_n]\)</span></p>
+<p>普通的平均数： <span class="math inline">\(\overline{v}=\frac1n \sum
+_{i=1} ^n \theta_i\)</span></p>
+<p><strong>EMA： <span class="math inline">\(v_t = \beta ·v_{t-1} +
+(1-\beta)·\theta_t\)</span> ，其中， <span class="math inline">\(v_t\)</span>表示前<span class="math inline">\(t\)</span>条的平均值 ( <span class="math inline">\(v_0 =0\)</span> )， <span class="math inline">\(\beta\)</span>是加权权重值
+(一般设为0.9-0.999)。</strong></p>
 </blockquote>
-<p><font color="red">时序卷积网络（Temporal convolutional network，
-TCN）的提出是为了是卷积神经网络具备时序特性</font>，与多种RNN结构相对比，发现在多种任务上TCN都能达到甚至超过RNN模型。</p>
-<h2><span id="2-时序卷积神经网络tcn">2. 时序卷积神经网络（TCN）</span></h2>
-<p>分类：</p>
+<p>EMA 可以看成是过去 <span class="math inline">\(1/(1-\beta)\)</span>天的 <span class="math inline">\(\theta 值的平均\)</span></p>
+<p>如：</p>
+<table>
+<colgroup>
+<col style="width: 22%">
+<col style="width: 25%">
+<col style="width: 46%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><span class="math inline">\(\beta = 0.9\)</span></th>
+<th><span class="math inline">\(1/(1-\beta)=10\)</span></th>
+<th><span class="math inline">\(v_t\)</span>大概表示前10天的平均数据</th>
+<th>红线</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\beta = 0.98\)</span></td>
+<td><span class="math inline">\(1/(1-\beta)=50\)</span></td>
+<td><span class="math inline">\(v_t\)</span>大概表示前50天的平均数据</td>
+<td>绿线</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\beta = 0.5\)</span></td>
+<td><span class="math inline">\(1/(1-\beta)=2\)</span></td>
+<td>大<span class="math inline">\(v_t\)</span>概表示前2天的平均数据</td>
+<td>黄线</td>
+</tr>
+</tbody>
+</table>
+<p><img src="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/20210702095206320.png"></p>
+<p><font color="gren">那么<span class="math inline">\(\beta\)</span>越大，表示考虑的时间长度越长</font></p>
+<h2><span id="进一步理解v_t">进一步理解<span class="math inline">\(v_t\)</span></span></h2>
 <blockquote>
+<p><span class="math inline">\(v_t = \beta ·v_{t-1} +
+(1-\beta)·\theta_t\)</span></p>
+<p>当 <span class="math inline">\(\beta=0.9\)</span>，从<span class="math inline">\(v_{100}\)</span>往回写: <span class="math display">\[
+v_{100}=0.1\theta_{100}+0.9v_{99}\\
+v_{99}=0.1\theta_{98}+0.9v_{98}\\
+...
+\]</span> 可得: <span class="math display">\[
+v_{100}=0.1\theta_{100}+0.1*0.9*\theta_{99}+0.1*(0.9)^2\theta_{98}+..
+\]</span> 由此可知：</p>
 <ol type="1">
-<li>因果卷积(Causal Convolution)</li>
-<li>膨胀卷积（Dilated Convolution）</li>
-<li>残差链接(Residual Connections)</li>
+<li><span class="math inline">\(v_(100)是\theta_i的加权求和\)</span></li>
+<li><span class="math inline">\(\theta\)</span>前的系数相加逼近1</li>
 </ol>
 </blockquote>
-<h3><span id="21-因果卷积">2.1 因果卷积</span></h3>
-<p><img src="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/%E5%9B%A0%E6%9E%9C%E5%8D%B7%E7%A7%AF.png"></p>
-<p>即对于上一层t时刻的值，只依赖于下一层t时刻及其之前的值。和传统的卷积神经网络的不同之处在于，因果卷积不能看到未来的数据，它是单向的结构，不是双向的。也就是说只有有了前面的因才有后面的果，是一种严格的时间约束模型，因此被成为因果卷积。</p>
-<p>问题:
-单纯的因果卷积还是存在传统卷积神经网络的问题，即<strong>对时间的建模长度受限于卷积核大小</strong>的，如果要想抓去更长的依赖关系，就需要线性的堆叠很多的层。</p>
-<h3><span id="22-膨胀卷积">2.2 膨胀卷积</span></h3>
-<p><img src="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20221121171800012.png" alt="image-20221121171800012" style="zoom: 80%;"></p>
-<p>和传统卷积不同的是，膨胀卷积允许卷积时的输入存在间隔采样，采样率受图中的d控制。
-最下面一层的d=1，表示输入时每个点都采样，中间层d=2，表示输入时每2个点采样一个作为输入。一般来讲，越高的层级使用的d的大小越大。所以，膨胀卷积使得有效窗口的大小随着层数呈指数型增长。这样卷积网络用比较少的层，就可以获得很大的感受野。</p>
-<h3><span id="23-残差链接">2.3 残差链接</span></h3>
-<p><img src="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20221121172058160.png" alt="image-20221121172058160" style="zoom: 67%;"></p>
-<p>残差链接被证明是训练深层网络的有效方法，它使得网络可以以跨层的方式传递信息。本文构建了一个残差块来代替一层的卷积。如上图所示，一个残差块包含两层的卷积和非线性映射，在每层中还加入了WeightNorm和Dropout来正则化网络。</p>
-<h2><span id="3-tcn优缺点">3. TCN优缺点</span></h2>
-<ol type="1">
-<li><p>优点</p>
+<h2><span id="在深度模型中的应用">在深度模型中的应用</span></h2>
 <blockquote>
-<ul>
-<li>并行性，较之RNN，TCN可以并行处理，不需要顺序处理</li>
-<li>感受野灵活</li>
-<li>梯度稳定、内存低</li>
-</ul>
-</blockquote></li>
-<li><p>缺点：</p>
+<p><span class="math inline">\(v_t = \beta ·v_{t-1} +
+(1-\beta)·\theta_t\)</span></p>
 <blockquote>
-<ul>
-<li>TCN
-在迁移学习方面可能没有那么强的适应能力。这是因为在不同的领域，模型预测所需要的历史信息量可能是不同的。因此，在将一个模型从一个对记忆信息需求量少的问题迁移到一个需要更长记忆的问题上时，TCN
-可能会表现得很差，因为其感受野不够大。</li>
-<li>论文中描述的TCN还是一种单向的结构，<font color="blue">在语音识别和语音合成等任务上，纯单向的结构还是相当有用的。但是在文本中大多使用双向的结构</font>，当然将TCN也很容易扩展成双向的结构，不使用因果卷积，使用传统的卷积结构即可。</li>
-<li>TCN毕竟是卷积神经网络的变种，虽然使用扩展卷积可以扩大感受野，但是仍然受到限制，相比于Transformer那种可以任意长度的相关信息都可以抓取到的特性还是差了点。TCN在文本中的应用还有待检验。</li>
-</ul>
-</blockquote></li>
-</ol>
-<h2><span id="4-小结">4. 小结：</span></h2>
-<ul>
-<li>TCN是一个CNN变体</li>
-<li>在语音、文本等方面均有应用</li>
-</ul>
-<h2><span id="参考原文">参考原文:</span></h2>
-<p><a href="https://aistudio.csdn.net/62e38a39cd38997446774b5a.html?spm=1001.2101.3001.6650.7&amp;utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~activity-7-90751794-blog-106824427.pc_relevant_multi_platform_whitelistv3&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~activity-7-90751794-blog-106824427.pc_relevant_multi_platform_whitelistv3&amp;utm_relevant_index=8">TCN-时间卷积网络_满腹的小不甘_静静-DevPress官方社区
-(csdn.net)</a></p>
+<p><span class="math inline">\(\theta_t\)</span>：在第t次更新得到的所有参数权重。</p>
+<p><span class="math inline">\(v_t\)</span>：第t次更新的所有参数移动平均数。</p>
+<p><span class="math inline">\(\beta\)</span>：权重参数。</p>
+</blockquote>
+</blockquote>
+<h3><span id="关于ema的作用">关于EMA的作用</span></h3>
+<blockquote>
+<p>对于更新n次时普通的参数权重<span class="math inline">\(\theta_n\)</span>: <span class="math display">\[
+\theta_n = \theta+i - \sum_{i=1}^{n-1} g_i\\
+g_n 为第n次传播得到的梯度
+\]</span> 对于更新n次时，使用EMA的参数权重<span class="math inline">\(v_n\)</span> <span class="math display">\[
+v_n = \theta_1 -\sum_{i=1}^{n-1}(1-\beta^{n-i})g_i
+\]</span>
+<strong>普通的参数权重相当于一直累积更新整个训练过程的梯度，使用EMA的参数权重相当于使用训练过程梯度的加权平均（刚开始的梯度权值很小）。由于刚开始训练不稳定，得到的梯度给更小的权值更为合理，所以EMA会有效。</strong></p>
+</blockquote>
+<p>参考资料：</p>
+<p><a href="https://blog.csdn.net/zhang2010hao/article/details/91599411">(43条消息)
+指数移动平均（EMA）的原理及PyTorch实现_枫林扬的博客-CSDN博客_指数移动平均</a></p>
+<p><a href="https://blog.csdn.net/Dteam_f/article/details/118405875">(43条消息)
+EMA(指数移动平均)及其深度学习应用_Kmaeii的博客-CSDN博客_ema指数移动平均值</a></p>
 
     </article>
     <!-- license -->
@@ -574,17 +598,12 @@ TCN）的提出是为了是卷积神经网络具备时序特性</font>，与多�
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2022/11/21/%E5%A4%9A%E9%80%9A%E9%81%93%E5%8D%B7%E7%A7%AF%E7%BD%91%E7%BB%9C/" title="多通道卷积网络">
-                    <div class="nextTitle">多通道卷积网络</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href="/2022/11/21/Transformer%E4%B8%8ELSTM%E4%BC%98%E5%8A%A3%E5%88%86%E6%9E%90/" title="Transformer与LSTM优劣分析">
-                    <div class="prevTitle">Transformer与LSTM优劣分析</div>
+                <a href="/2022/11/26/Python-call-%E6%96%B9%E6%B3%95/" title="Python 中的特殊成员(属性和方法)">
+                    <div class="prevTitle">Python 中的特殊成员(属性和方法)</div>
                 </a>
             
         </li>
@@ -746,7 +765,7 @@ TCN）的提出是为了是卷积神经网络具备时序特性</font>，与多�
                 <div class="toc-catalog">
                     <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
                 </div>
-                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">1. 引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">2. 时序卷积神经网络（TCN）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 因果卷积</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 膨胀卷积</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 残差链接</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">3. TCN优缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">4. 小结：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">参考原文:</span></a></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">EMA定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">进一步理解\(v_t\)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">在深度模型中的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">3.1.</span> <span class="toc-text">关于EMA的作用</span></a></li></ol></li></ol>
             </div>
         
         <!-- sidebar -->
