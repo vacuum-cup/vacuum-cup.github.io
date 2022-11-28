@@ -28,7 +28,7 @@
 <meta property="og:locale">
 <meta property="og:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/20210702095206320.png">
 <meta property="article:published_time" content="2022-11-26T08:24:52.000Z">
-<meta property="article:modified_time" content="2022-11-28T01:27:43.583Z">
+<meta property="article:modified_time" content="2022-11-28T12:15:43.105Z">
 <meta property="article:author" content="xnf">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/20210702095206320.png">
@@ -332,7 +332,7 @@
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">601</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">600</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -578,8 +578,8 @@ v_{100}=0.1\theta_{100}+0.1*0.9*\theta_{99}+0.1*(0.9)^2\theta_{98}+..
 <h3><span id="关于ema的作用">关于EMA的作用</span></h3>
 <blockquote>
 <p>对于更新n次时普通的参数权重<span class="math inline">\(\theta_n\)</span>: <span class="math display">\[
-\theta_n = \theta+i - \sum_{i=1}^{n-1} g_i\\
-g_n 为第n次传播得到的梯度
+\theta_n = \theta_i - \sum_{i=1}^{n-1} g_i \\
+  ,g_n 为第n次传播得到的梯度
 \]</span> 对于更新n次时，使用EMA的参数权重<span class="math inline">\(v_n\)</span> <span class="math display">\[
 v_n = \theta_1 -\sum_{i=1}^{n-1}(1-\beta^{n-i})g_i
 \]</span>
