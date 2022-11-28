@@ -19,18 +19,27 @@
         <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
     
     <meta name="description" content="">
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://github.com/vacuum-cup/vacuum-cup.github.io/categories/contrastive/index.html">
+    <meta name="description" content="简介 扩散过程  定义 重参数技巧得到迭代公式  逆扩散过程 基于扩散模型的目标检测框架  类别引导问题？    简介 扩散模型是Encoder-Decoder架构的生成模型，分为扩散阶段和逆扩散阶段。 在扩散阶段，通过不断对原始数据添加噪声，使数据从原始分布变为我们期望的分布，例如通过不断添加高斯噪声将原始数据分布变为正态分布。 在逆扩散阶段，使用神经网络">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Diffusion Model">
+<meta property="og:url" content="https://github.com/vacuum-cup/vacuum-cup.github.io/2022/11/28/Diffusion-Model/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="简介 扩散过程  定义 重参数技巧得到迭代公式  逆扩散过程 基于扩散模型的目标检测框架  类别引导问题？    简介 扩散模型是Encoder-Decoder架构的生成模型，分为扩散阶段和逆扩散阶段。 在扩散阶段，通过不断对原始数据添加噪声，使数据从原始分布变为我们期望的分布，例如通过不断添加高斯噪声将原始数据分布变为正态分布。 在逆扩散阶段，使用神经网络">
 <meta property="og:locale">
+<meta property="og:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/v2-13d12242af9c295dc940782a332e50dd_720w.webp">
+<meta property="og:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20221128143526708.png">
+<meta property="og:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20221128144243498.png">
+<meta property="og:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/v2-66ddd051e7869216fd9089e79b0dd585_720w.webp">
+<meta property="article:published_time" content="2022-11-28T02:32:47.000Z">
+<meta property="article:modified_time" content="2022-11-28T08:26:43.872Z">
 <meta property="article:author" content="xnf">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/v2-13d12242af9c295dc940782a332e50dd_720w.webp">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="icon" href="/assets/favicon.ico">
     
-    <title>dudu&#39;s blog</title>
+    <title>Diffusion Model · dudu&#39;s blog</title>
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
 - testing support for link[rel=preload]
@@ -217,6 +226,8 @@
         }
     </script>
     
+        <body class="post-body">
+    
         <!-- header -->
         <header class="header header-mobile">
     <!-- top read progress line -->
@@ -246,6 +257,17 @@
     </div>
     <!-- toggle banner for post layout -->
     
+        
+            <div class="banner">
+        
+            <div class="blog-title header-element">
+                <a href="/">Dudu&#39;s Blog.</a>
+            </div>
+            <div class="post-title header-element">
+                <a href="#" class="post-name">Diffusion Model</a>
+            </div>
+        </div>
+    
 </header>
 
         <!-- fixed footer -->
@@ -272,24 +294,77 @@
 
 
 
+    height:50vh;
+
 ">
     
     <!-- 主页  -->
+    
+        
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+                Diffusion Model
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+                
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页 meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+    
+</div>
+
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">1k</span>阅读时长: <span class="post-count reading-time">3 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <!-- 撰写日期 -->
+                    <span class="iconfont-archer post-intro-calander">&#xe676;</span>
+                    <span class="post-intro-time">2022/11/28</span>
+                    <!-- busuanzi -->
+                    
+                        <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                            <span class="iconfont-archer post-intro-busuanzi">&#xe602;</span>
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    
+                    <!-- 文章分享 -->
+                    <span class="share-wrapper">
+                        <span class="iconfont-archer share-icon">&#xe71d;</span>
+                        <span class="share-text">Share</span>
+                        <ul class="share-list">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -419,37 +494,138 @@
 
             <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
             <div class="container container-unloaded">
-                <main class="main index-page">
+                <main class="main post-page">
+    <article class="article-entry">
+        <!-- toc -->
+<ul>
+<li><a href="#简介">简介</a></li>
+<li><a href="#扩散过程">扩散过程</a>
+<ul>
+<li><a href="#定义">定义</a></li>
+<li><a href="#重参数技巧得到迭代公式">重参数技巧得到迭代公式</a></li>
+</ul></li>
+<li><a href="#逆扩散过程">逆扩散过程</a></li>
+<li><a href="#基于扩散模型的目标检测框架">基于扩散模型的目标检测框架</a>
+<ul>
+<li><a href="#类别引导问题">类别引导问题？</a></li>
+</ul></li>
+</ul>
+<!-- tocstop -->
+<h2><span id="简介">简介</span></h2>
+<p>扩散模型是Encoder-Decoder架构的生成模型，分为扩散阶段和逆扩散阶段。
+在扩散阶段，通过不断对原始数据添加噪声，使数据从原始分布变为我们期望的分布，例如通过不断添加高斯噪声将原始数据分布变为正态分布。
+在逆扩散阶段，使用<strong>神经网络</strong>将数据从正态分布恢复到原始数据分布</p>
+<p><font color="red">Diffusion
+model模型分为扩散过程和逆扩散过程，扩散过程通过对原始数据不断加入高斯噪音，使原始数据变为高斯分布的数据，即从<span class="math inline">\(X_0-&gt;X_T\)</span>；逆扩散过程通过高斯噪声还原图片，即<span class="math inline">\(X_T-&gt;X_0\)</span></font></p>
+<p><img src="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/v2-13d12242af9c295dc940782a332e50dd_720w.webp" alt="img" style="zoom:80%;"></p>
+<h2><span id="扩散过程">扩散过程</span></h2>
+<h3><span id="定义">定义</span></h3>
+<p>在设定扩散过程是一个马尔可夫链的条件下，向原始信息中不断添加高斯噪声，每一步添加高斯噪声的过程是从<span class="math inline">\(X_{t-1}-&gt;X_T\)</span> 于是定义公式：</p>
+<p><img src="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20221128143526708.png"></p>
+<blockquote>
+<p>表示，<span class="math inline">\(X_{t-1}-&gt;X_T\)</span>
+是一个以<span class="math inline">\(\sqrt{1-\beta_t}x_{t-1}为均值\)</span>，<span class="math inline">\(\beta_t\)</span>为方差的高斯分布变换</p>
+</blockquote>
+<h3><span id="重参数技巧得到迭代公式">重参数技巧得到迭代公式</span></h3>
+<p><img src="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20221128144243498.png"></p>
+<ul>
+<li><span class="math inline">\(X_t\)</span>表示t时刻的数据分布</li>
+<li><span class="math inline">\(Z_t\)</span>表示t时刻添加的高斯噪音，一般固定是均值为0方差为1的高斯分布</li>
+<li><span class="math inline">\(\sqrt{1-\beta_t}X_{t-1}\)</span>表示前一时刻分布的均值</li>
+<li><span class="math inline">\(\sqrt{\beta_t}\)</span>表示当前时刻分布的标准差。</li>
+</ul>
+<blockquote>
+<p><span class="math inline">\(\beta_t\)</span>是预先设定的<span class="math inline">\(0-1\)</span>之间的常量，所以扩散过程是不含参的。</p>
+</blockquote>
+<h2><span id="逆扩散过程">逆扩散过程</span></h2>
+<p><strong>扩散过程是将数据噪音化，反向过程就是一个去噪的过程</strong>。逆向扩散过程中，我们将以高斯噪声
+<span class="math inline">\(T∼N(0,I)\)</span>作为输入，从 <span class="math inline">\((x_{t−1}|x_t)\)</span>
+中采样，推断并重构出真实样本。这里需注意，如果 <span class="math inline">\(β_t\)</span> 足够小，<span class="math inline">\(q(x_{t−1}|x_t)\)</span>的采样结果也仍为高斯分布，该值也很难评估，因此难以通过公式求解的方式，来一步步推断出原始的真实分布。这里，大佬们的想法也很直接：整个数据集已经有了，既然<strong>无法直接求解</strong>，何不<font color="gren">尝试训练出一个模型
+$p_θ
+$来对这些噪声的条件概率进行预测呢？既然要做预测，那标签何来？这里便是将前向传播每部生成的真实噪声记录下来作为标签，前向扩散的过程除了推断外，还包含类似该数学模型所用“数据集的构建过程”。在模型做逆向扩散时，即可对前向扩散中所产生的高斯噪声进行预测，并一步一步推断，以还原最初始的样本数据</font>。</p>
+<h2><span id="基于扩散模型的目标检测框架">基于扩散模型的目标检测框架</span></h2>
+<p><a href="https://link.zhihu.com/?target=https%3A//arxiv.org/abs/2211.09788">原文链接</a></p>
+<p>DiffusionDet，该框架可以直接从一组随机框中检测目标，它将目标检测制定为从噪声框到目标框的去噪扩散过程。这种从
+noise-to-box
+的方法不需要启发式的目标先验，也不需要可学习查询，这进一步简化了目标候选，并推动了检测
+pipeline 的发展。</p>
+<p>如下图 1 所示，该研究认为 noise-to-box 范式类似于去噪扩散模型中的
+noise-to-image
+过程，后者是一类基于似然的模型，通过学习到的去噪模型逐步去除图像中的噪声来生成图像。</p>
+<p><img src="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/v2-66ddd051e7869216fd9089e79b0dd585_720w.webp"></p>
+<h3><span id="类别引导问题">类别引导问题？</span></h3>
+<p><strong>参考文献：</strong></p>
+<p>[(43条消息) Diffusion
+model—扩散模型_原来如此-的博客-CSDN博客_扩散模型</p>
+<p>[Diffusion Model 扩散模型-<a href="https://zhuanlan.zhihu.com/p/572263021">通俗易懂+代码讲解]（一） -
+知乎 (zhihu.com)</a></p>
+<p><a href="https://blog.csdn.net/sunningzhzh/article/details/125118688?spm=1001.2101.3001.6650.11&amp;utm_medium=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-11-125118688-blog-125571407.pc_relevant_recovery_v2&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~BlogCommendFromBaidu~Rate-11-125118688-blog-125571407.pc_relevant_recovery_v2&amp;utm_relevant_index=12">[港大&amp;腾讯提出DiffusionDet：第一个用于目标检测的扩散模型
+(qq.com)](https://mp.weixin.qq.com/s/j46nSK-Z9s_qCBB5CnO4aA)</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/584791171">DiffusionDet：基于扩散模型的目标检测框架
+- 知乎 (zhihu.com)</a></p>
+
+    </article>
+    <!-- license -->
+    
+    <!-- paginator -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2022/11/26/%E6%8C%87%E6%95%B0%E7%A7%BB%E5%8A%A8%E5%B9%B3%E5%9D%87%EF%BC%88EMA%EF%BC%89/" title="指数移动平均（EMA）">
+                    <div class="prevTitle">指数移动平均（EMA）</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- comment -->
+    
+        <div class="post-comment">
+            <!-- 来必力 City 版安装代码 -->
+
+
+            
+
+            
+
+            
+
+            <!-- utteranc评论 -->
+
+
+            <!-- partial('_partial/comment/changyan') -->
+            <!--PC版-->
+
+
+            
+            
+
+            
+
+        </div>
+    
+    <!-- timeliness note -->
+    <!-- idea from: https://hexo.fluid-dev.com/posts/hexo-injector/#%E6%96%87%E7%AB%A0%E6%97%B6%E6%95%88%E6%80%A7%E6%8F%90%E7%A4%BA -->
+    
+    <!-- Mathjax -->
     
         
-        
-        
-        
-            
-            
-        
-        <article class="index-post">
-            <a class="abstract-title" href="/2022/11/09/%E5%AF%B9%E6%AF%94%E5%AD%A6%E4%B9%A0/">
-                
-                <span class="abstract-title-text">对比学习</span>
-            </a>
-            <div class="abstract-content">
-                简单的对比学习概念
-            </div>
-            <!-- read more -->
-            
-            <div class="abstract-post-meta">
-                <!-- date -->
-                <div class="abstract-date" title="Last updated: 2022/11/15">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2022/11/09</span>
-                </div>
-                <!-- tags -->
-                
-            </div>
-        </article>
-        <div class="index-post-divider"></div>
-    
-    <!-- paginator  -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script>
+
+
     
 </main>
 
@@ -547,6 +723,23 @@
 
         </div>
         <!-- toc -->
+        
+            <div class="toc-wrapper toc-wrapper-loding" style=
+
+
+
+
+
+
+
+    top:50vh;
+
+>
+                <div class="toc-catalog">
+                    <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+                </div>
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">扩散过程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.2.</span> <span class="toc-text">重参数技巧得到迭代公式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">逆扩散过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">基于扩散模型的目标检测框架</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">4.1.</span> <span class="toc-text">类别引导问题？</span></a></li></ol></li></ol>
+            </div>
         
         <!-- sidebar -->
         <div class="sidebar sidebar-hide">
@@ -1021,7 +1214,16 @@
         
         <!-- async load share.js -->
         
+            <script src="/scripts/share.js?v=20211217" async></script>
+        
         <!-- mermaid -->
+        
+            <script src='https://cdn.jsdelivr.net/npm/mermaid@8.x/dist/mermaid.min.js'></script>
+            <script>
+                if (window.mermaid) {
+                    mermaid.initialize({theme: 'dark'});
+                }
+            </script>
         
     </body>
 </html>
