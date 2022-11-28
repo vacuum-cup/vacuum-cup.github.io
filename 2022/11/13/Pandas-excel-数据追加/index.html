@@ -19,12 +19,12 @@
         <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
     
     <meta name="description" content="">
-    <meta name="description" content="不同于 csv ，无法直接通过mode&#x3D;”a”，进行追加。 具体方法: 读取要追加数据的excel文件,然后与要追加的数据组合一起保存到原文件中 12345678#--coding-- utf-8--import pandasdef append_to_excel(filepath,dataframe)-&gt;None:    writer&#x3D;pandas.ExcelWriter(filepath">
+    <meta name="description" content="不同于 csv ，无法直接通过mode&#x3D;&quot;a&quot;，进行追加。 具体方法: 读取要追加数据的excel文件,然后与要追加的数据组合一起保存到原文件中 12345678#--coding-- utf-8--import pandasdef append_to_excel(filepath,dataframe)-&gt;None:    writer&#x3D;pandas.ExcelWriter(filep">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Pandas-excel-数据追加">
 <meta property="og:url" content="https://github.com/vacuum-cup/vacuum-cup.github.io/2022/11/13/Pandas-excel-%E6%95%B0%E6%8D%AE%E8%BF%BD%E5%8A%A0/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="不同于 csv ，无法直接通过mode&#x3D;”a”，进行追加。 具体方法: 读取要追加数据的excel文件,然后与要追加的数据组合一起保存到原文件中 12345678#--coding-- utf-8--import pandasdef append_to_excel(filepath,dataframe)-&gt;None:    writer&#x3D;pandas.ExcelWriter(filepath">
+<meta property="og:description" content="不同于 csv ，无法直接通过mode&#x3D;&quot;a&quot;，进行追加。 具体方法: 读取要追加数据的excel文件,然后与要追加的数据组合一起保存到原文件中 12345678#--coding-- utf-8--import pandasdef append_to_excel(filepath,dataframe)-&gt;None:    writer&#x3D;pandas.ExcelWriter(filep">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-11-13T09:14:00.000Z">
 <meta property="article:modified_time" content="2022-11-15T13:31:00.021Z">
@@ -491,11 +491,13 @@
             <div class="container container-unloaded">
                 <main class="main post-page">
     <article class="article-entry">
-        <p>不同于 csv ，无法直接通过mode=”a”，进行追加。</p>
-<p>具体方法: 读取要追加数据的excel文件,然后与要追加的数据组合一起保存到原文件中</p>
+        <p>不同于 csv ，无法直接通过mode="a"，进行追加。</p>
+<p>具体方法:
+读取要追加数据的excel文件,然后与要追加的数据组合一起保存到原文件中</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#--coding-- utf-8--</span></span><br><span class="line"><span class="keyword">import</span> pandas</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">append_to_excel</span>(<span class="params">filepath,dataframe</span>)-&gt;<span class="literal">None</span>:</span><br><span class="line">    writer=pandas.ExcelWriter(filepath,mode=<span class="string">&#x27;w&#x27;</span>)<span class="comment">#这里的mode需要用w模式，a模式会产生新的sheet</span></span><br><span class="line">    data=pandas.read_excel(writer,index_col=<span class="literal">None</span>,header=<span class="literal">None</span>)</span><br><span class="line">    data.to_excel(writer,startrow=<span class="number">0</span>,index=<span class="literal">None</span>,header=<span class="literal">None</span>,sheet_name=<span class="string">&#x27;sheet1&#x27;</span>)</span><br><span class="line">    dataframe.to_excel(writer,startrow=data.shape[<span class="number">0</span>],index=<span class="literal">None</span>,header=<span class="literal">None</span>,sheet_name=<span class="string">&#x27;sheet1&#x27;</span>)</span><br><span class="line">    writer.save()</span><br></pre></td></tr></table></figure>
-
-<p>感谢： <a href="https://blog.csdn.net/qq_29983177/article/details/109059289?spm=1001.2101.3001.6650.1&utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~Rate-1-109059289-blog-106766743.pc_relevant_3mothn_strategy_and_data_recovery&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~Rate-1-109059289-blog-106766743.pc_relevant_3mothn_strategy_and_data_recovery&utm_relevant_index=2">(43条消息) python pandas excel同一个sheet追加不覆盖追加数据_Demnok Lannik的博客-CSDN博客_python panada 追加sheet</a></p>
+<p>感谢： <a href="https://blog.csdn.net/qq_29983177/article/details/109059289?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~Rate-1-109059289-blog-106766743.pc_relevant_3mothn_strategy_and_data_recovery&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~Rate-1-109059289-blog-106766743.pc_relevant_3mothn_strategy_and_data_recovery&amp;utm_relevant_index=2">(43条消息)
+python pandas excel同一个sheet追加不覆盖追加数据_Demnok
+Lannik的博客-CSDN博客_python panada 追加sheet</a></p>
 
     </article>
     <!-- license -->
@@ -887,14 +889,6 @@
         
         
         
-        
-        
-        
-        
-        
-        
-        
-        
     
     
     
@@ -930,13 +924,13 @@
         
         <li class="archive-post-item">
             <span class="archive-post-date">11/26</span>
-            <a class="archive-post-title" href="/2022/11/26/Pytorch-nn-BCEWithLogitsLoss/">(Pytorch)nn.BCEWithLogitsLoss</a>
+            <a class="archive-post-title" href="/2022/11/26/Python-call-%E6%96%B9%E6%B3%95/">Python 中的特殊成员(属性和方法)</a>
         </li>
     
         
         <li class="archive-post-item">
             <span class="archive-post-date">11/26</span>
-            <a class="archive-post-title" href="/2022/11/26/Python-call-%E6%96%B9%E6%B3%95/">Python 中的特殊成员(属性和方法)</a>
+            <a class="archive-post-title" href="/2022/11/26/Pytorch-nn-BCEWithLogitsLoss/">(Pytorch)nn.BCEWithLogitsLoss</a>
         </li>
     
         
@@ -1066,26 +1060,6 @@
             Pandas
         </span>
     
-        <span class="sidebar-category-name" data-categories="Pytorch">
-            <span class="iconfont-archer">&#xe60a;</span>
-            Pytorch
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="bert">
-            <span class="iconfont-archer">&#xe60a;</span>
-            bert
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="contrastive">
-            <span class="iconfont-archer">&#xe60a;</span>
-            contrastive
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="transformer">
-            <span class="iconfont-archer">&#xe60a;</span>
-            transformer
-        </span>
-    
         <span class="sidebar-category-name" data-categories="深度学习基础">
             <span class="iconfont-archer">&#xe60a;</span>
             深度学习基础
@@ -1094,6 +1068,26 @@
         <span class="sidebar-category-name" data-categories="Python">
             <span class="iconfont-archer">&#xe60a;</span>
             Python
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="bert">
+            <span class="iconfont-archer">&#xe60a;</span>
+            bert
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="Pytorch">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Pytorch
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="transformer">
+            <span class="iconfont-archer">&#xe60a;</span>
+            transformer
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="contrastive">
+            <span class="iconfont-archer">&#xe60a;</span>
+            contrastive
         </span>
     
     </div>

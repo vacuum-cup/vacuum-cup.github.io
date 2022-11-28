@@ -19,12 +19,12 @@
         <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
     
     <meta name="description" content="">
-    <meta name="description" content="目的： 为了防止过拟合    具体用法  1nn.Dropout(0.2) #表示每个输入的神经元有 0.2的概率被设为0   从下图中也可以看到，其他的数  除了（1-0.3）   补充说明:  Dropout 只能用于训练部分，不可用于测试 一般用在全连接神经网络映射层之后 还可用于将Tensor中的部分值设为0  如上图">
+    <meta name="description" content="目的： 为了防止过拟合   Dropout防止过拟合  具体用法 1nn.Dropout(0.2) #表示每个输入的神经元有 0.2的概率被设为0  从下图中也可以看到，其他的数 除了（1-0.3）  补充说明:  Dropout 只能用于训练部分，不可用于测试 一般用在全连接神经网络映射层之后 还可用于将Tensor中的部分值设为0 如上图">
 <meta property="og:type" content="article">
 <meta property="og:title" content="(Pytorch) nn.Dropout">
 <meta property="og:url" content="https://github.com/vacuum-cup/vacuum-cup.github.io/2022/10/27/Pytorch-nn-Dropout/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="目的： 为了防止过拟合    具体用法  1nn.Dropout(0.2) #表示每个输入的神经元有 0.2的概率被设为0   从下图中也可以看到，其他的数  除了（1-0.3）   补充说明:  Dropout 只能用于训练部分，不可用于测试 一般用在全连接神经网络映射层之后 还可用于将Tensor中的部分值设为0  如上图">
+<meta property="og:description" content="目的： 为了防止过拟合   Dropout防止过拟合  具体用法 1nn.Dropout(0.2) #表示每个输入的神经元有 0.2的概率被设为0  从下图中也可以看到，其他的数 除了（1-0.3）  补充说明:  Dropout 只能用于训练部分，不可用于测试 一般用在全连接神经网络映射层之后 还可用于将Tensor中的部分值设为0 如上图">
 <meta property="og:locale">
 <meta property="og:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/99a84f109d36424b81d836d73afc6fab.png">
 <meta property="og:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/20221027172459.png">
@@ -333,7 +333,7 @@
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">105</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">111</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -494,21 +494,22 @@
             <div class="container container-unloaded">
                 <main class="main post-page">
     <article class="article-entry">
-        <ol>
-<li><strong>目的：</strong> <strong>为了防止过拟合</strong> <img src="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/99a84f109d36424b81d836d73afc6fab.png" alt="Dropout防止过拟合"></li>
-</ol>
-<ol start="2">
+        <ol type="1">
+<li><p><strong>目的：</strong></p>
+<p><strong>为了防止过拟合</strong></p>
+<figure>
+<img src="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/99a84f109d36424b81d836d73afc6fab.png" alt="Dropout防止过拟合">
+<figcaption aria-hidden="true">Dropout防止过拟合</figcaption>
+</figure></li>
 <li><p><strong>具体用法</strong></p>
- <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nn.Dropout(<span class="number">0.2</span>) <span class="comment">#表示每个输入的神经元有 0.2的概率被设为0 </span></span><br></pre></td></tr></table></figure>
-<p> 从下图中也可以看到，其他的数  除了（1-0.3）<br> <img src="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/20221027172459.png" alt="示例"></p>
-</li>
+<p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nn.Dropout(<span class="number">0.2</span>) <span class="comment">#表示每个输入的神经元有 0.2的概率被设为0 </span></span><br></pre></td></tr></table></figure></p>
+<p>从下图中也可以看到，其他的数 除了（1-0.3） <img src="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/20221027172459.png" alt="示例"></p></li>
 <li><p><strong>补充说明:</strong></p>
 <ul>
 <li>Dropout 只能用于训练部分，不可用于测试</li>
 <li>一般用在全连接神经网络映射层之后</li>
-<li>还可用于将Tensor中的部分值设为0  如上图</li>
-</ul>
-</li>
+<li>还可用于将Tensor中的部分值设为0 如上图</li>
+</ul></li>
 </ol>
 
     </article>
@@ -901,14 +902,6 @@
         
         
         
-        
-        
-        
-        
-        
-        
-        
-        
     
     
     
@@ -944,13 +937,13 @@
         
         <li class="archive-post-item">
             <span class="archive-post-date">11/26</span>
-            <a class="archive-post-title" href="/2022/11/26/Pytorch-nn-BCEWithLogitsLoss/">(Pytorch)nn.BCEWithLogitsLoss</a>
+            <a class="archive-post-title" href="/2022/11/26/Python-call-%E6%96%B9%E6%B3%95/">Python 中的特殊成员(属性和方法)</a>
         </li>
     
         
         <li class="archive-post-item">
             <span class="archive-post-date">11/26</span>
-            <a class="archive-post-title" href="/2022/11/26/Python-call-%E6%96%B9%E6%B3%95/">Python 中的特殊成员(属性和方法)</a>
+            <a class="archive-post-title" href="/2022/11/26/Pytorch-nn-BCEWithLogitsLoss/">(Pytorch)nn.BCEWithLogitsLoss</a>
         </li>
     
         
@@ -1080,26 +1073,6 @@
             Pandas
         </span>
     
-        <span class="sidebar-category-name" data-categories="Pytorch">
-            <span class="iconfont-archer">&#xe60a;</span>
-            Pytorch
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="bert">
-            <span class="iconfont-archer">&#xe60a;</span>
-            bert
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="contrastive">
-            <span class="iconfont-archer">&#xe60a;</span>
-            contrastive
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="transformer">
-            <span class="iconfont-archer">&#xe60a;</span>
-            transformer
-        </span>
-    
         <span class="sidebar-category-name" data-categories="深度学习基础">
             <span class="iconfont-archer">&#xe60a;</span>
             深度学习基础
@@ -1108,6 +1081,26 @@
         <span class="sidebar-category-name" data-categories="Python">
             <span class="iconfont-archer">&#xe60a;</span>
             Python
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="bert">
+            <span class="iconfont-archer">&#xe60a;</span>
+            bert
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="Pytorch">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Pytorch
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="transformer">
+            <span class="iconfont-archer">&#xe60a;</span>
+            transformer
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="contrastive">
+            <span class="iconfont-archer">&#xe60a;</span>
+            contrastive
         </span>
     
     </div>
