@@ -19,22 +19,25 @@
         <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
     
     <meta name="description" content="">
-    <meta name="description" content="简述 123torch.nn.Embedding(num_embeddings, embedding_dim, padding_idx&#x3D;None, max_norm&#x3D;None,  norm_type&#x3D;2.0,   scale_grad_by_freq&#x3D;False,  sparse&#x3D;False,  _weight&#x3D;None)  其为一个简单的存储固定大小的词典的嵌入向量的查找表，意思就是说">
+    <meta name="description" content="定义一个添加层 构造神经网络 结果可视化 关于优化器   定义一个添加层  在 Tensorflow 里定义一个添加层的函数可以很容易的添加神经层,为之后的添加省下不少时间.  1234567891011121314151617import tensorflow as tfdef add_layer(inputs,input_size,output_size,acti">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Pytorch-nn-Embedding">
-<meta property="og:url" content="https://github.com/vacuum-cup/vacuum-cup.github.io/2022/11/04/Pytorch-nn-Embedding/index.html">
+<meta property="og:title" content="Tensorflow-建造第一个神经网络">
+<meta property="og:url" content="https://github.com/vacuum-cup/vacuum-cup.github.io/2022/12/05/Tensorflow-%E5%BB%BA%E9%80%A0%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="简述 123torch.nn.Embedding(num_embeddings, embedding_dim, padding_idx&#x3D;None, max_norm&#x3D;None,  norm_type&#x3D;2.0,   scale_grad_by_freq&#x3D;False,  sparse&#x3D;False,  _weight&#x3D;None)  其为一个简单的存储固定大小的词典的嵌入向量的查找表，意思就是说">
+<meta property="og:description" content="定义一个添加层 构造神经网络 结果可视化 关于优化器   定义一个添加层  在 Tensorflow 里定义一个添加层的函数可以很容易的添加神经层,为之后的添加省下不少时间.  1234567891011121314151617import tensorflow as tfdef add_layer(inputs,input_size,output_size,acti">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-11-04T02:51:22.000Z">
-<meta property="article:modified_time" content="2022-11-15T13:32:52.492Z">
+<meta property="og:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20221205171526172.png">
+<meta property="og:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20221205173038323.png">
+<meta property="article:published_time" content="2022-12-05T06:40:11.000Z">
+<meta property="article:modified_time" content="2022-12-05T09:31:16.267Z">
 <meta property="article:author" content="xnf">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20221205171526172.png">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="icon" href="/assets/favicon.ico">
     
-    <title>Pytorch-nn-Embedding · dudu&#39;s blog</title>
+    <title>Tensorflow-建造第一个神经网络 · dudu&#39;s blog</title>
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
 - testing support for link[rel=preload]
@@ -259,7 +262,7 @@
                 <a href="/">Dudu&#39;s Blog.</a>
             </div>
             <div class="post-title header-element">
-                <a href="#" class="post-name">Pytorch-nn-Embedding</a>
+                <a href="#" class="post-name">Tensorflow-建造第一个神经网络</a>
             </div>
         </div>
     
@@ -305,7 +308,7 @@
         <h1 class="intro-title">
             <!-- 主页  -->
             
-                Pytorch-nn-Embedding
+                Tensorflow-建造第一个神经网络
             <!-- 404 -->
             
         </h1>
@@ -330,13 +333,13 @@
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">526</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">492</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <!-- 撰写日期 -->
                     <span class="iconfont-archer post-intro-calander">&#xe676;</span>
-                    <span class="post-intro-time">2022/11/04</span>
+                    <span class="post-intro-time">2022/12/05</span>
                     <!-- busuanzi -->
                     
                         <span id="busuanzi_container_page_pv" class="busuanzi-pv">
@@ -491,33 +494,40 @@
             <div class="container container-unloaded">
                 <main class="main post-page">
     <article class="article-entry">
-        <ol type="1">
-<li><p>简述</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">torch.nn.Embedding(num_embeddings, embedding_dim, padding_idx=<span class="literal">None</span>,</span><br><span class="line"> max_norm=<span class="literal">None</span>,  norm_type=<span class="number">2.0</span>,   scale_grad_by_freq=<span class="literal">False</span>, </span><br><span class="line"> sparse=<span class="literal">False</span>,  _weight=<span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
+        <!-- toc -->
 <ul>
-<li>其为一个简单的存储固定大小的词典的嵌入向量的查找表，意思就是说，<strong>给一个编号，嵌入层就能返回这个编号对应的嵌入向量</strong>，嵌入向量反映了各个编号代表的符号之间的语义关系。</li>
-<li>输入为一个编号列表，输出为对应的符号嵌入向量列表。</li>
-</ul></li>
-<li><p>参数说明</p>
-<ul>
-<li><font color="blue">num_embeddings (python:int) </font>–
-词典的大小尺寸，比如总共出现5000个词，那就输入5000。此时index为（0-4999）</li>
-<li><font color="blue">embedding_dim (python:int)</font>–
-嵌入向量的维度，即用多少维来表示一个符号。</li>
-<li>padding_idx (python:int, optional) –
-填充id，比如，输入长度为100，但是每次的句子长度并不一样，后面就需要用统一的数字填充，而这里就是指定这个数字，这样，网络在遇到填充id时，就不会计算其与其它符号的相关性。（初始化为0）</li>
-<li>max_norm (python:float, optional) –
-最大范数，如果嵌入向量的范数超过了这个界限，就要进行再归一化</li>
-<li>norm_type (python:float, optional) –
-指定利用什么范数计算，并用于对比max_norm，默认为2范数。</li>
-<li>scale_grad_by_freq (boolean, optional) –
-根据单词在mini-batch中出现的频率，对梯度进行放缩。默认为False.</li>
-<li>sparse (bool, optional) –
-若为True,则与权重矩阵相关的梯度转变为稀疏张量。</li>
-</ul></li>
-<li><p>实例</p>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; # an Embedding module containing <span class="number">10</span> tensors of size <span class="number">3</span></span><br><span class="line">&gt;&gt;&gt; embedding = nn.Embedding(<span class="number">10</span>, <span class="number">3</span>)</span><br><span class="line">&gt;&gt;&gt; # a batch of <span class="number">2</span> samples of <span class="number">4</span> indices each</span><br><span class="line">&gt;&gt;&gt; input = torch.LongTensor([[<span class="number">1</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">5</span>],[<span class="number">4</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">9</span>]])</span><br><span class="line">&gt;&gt;&gt; embedding(input)</span><br><span class="line">tensor([[[-<span class="number">0</span>.<span class="number">0251</span>, -<span class="number">1</span>.<span class="number">6902</span>,  <span class="number">0</span>.<span class="number">7172</span>],</span><br><span class="line">         [-<span class="number">0</span>.<span class="number">6431</span>,  <span class="number">0</span>.<span class="number">0748</span>,  <span class="number">0</span>.<span class="number">6969</span>],</span><br><span class="line">         [ <span class="number">1</span>.<span class="number">4970</span>,  <span class="number">1</span>.<span class="number">3448</span>, -<span class="number">0</span>.<span class="number">9685</span>],</span><br><span class="line">         [-<span class="number">0</span>.<span class="number">3677</span>, -<span class="number">2</span>.<span class="number">7265</span>, -<span class="number">0</span>.<span class="number">1685</span>]],</span><br><span class="line"></span><br><span class="line">        [[ <span class="number">1</span>.<span class="number">4970</span>,  <span class="number">1</span>.<span class="number">3448</span>, -<span class="number">0</span>.<span class="number">9685</span>],</span><br><span class="line">         [ <span class="number">0</span>.<span class="number">4362</span>, -<span class="number">0</span>.<span class="number">4004</span>,  <span class="number">0</span>.<span class="number">9400</span>],</span><br><span class="line">         [-<span class="number">0</span>.<span class="number">6431</span>,  <span class="number">0</span>.<span class="number">0748</span>,  <span class="number">0</span>.<span class="number">6969</span>],</span><br><span class="line">         [ <span class="number">0</span>.<span class="number">9124</span>, -<span class="number">2</span>.<span class="number">3616</span>,  <span class="number">1</span>.<span class="number">1151</span>]]])</span><br><span class="line"> </span><br><span class="line">&gt;&gt;&gt; # example with padding_idx</span><br><span class="line">&gt;&gt;&gt; embedding = nn.Embedding(<span class="number">10</span>, <span class="number">3</span>, padding_idx=<span class="number">0</span>)</span><br><span class="line">&gt;&gt;&gt; input = torch.LongTensor([[<span class="number">0</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">5</span>]])</span><br><span class="line">&gt;&gt;&gt; embedding(input)</span><br><span class="line">tensor([[[ <span class="number">0</span>.<span class="number">0000</span>,  <span class="number">0</span>.<span class="number">0000</span>,  <span class="number">0</span>.<span class="number">0000</span>],</span><br><span class="line">         [ <span class="number">0</span>.<span class="number">1535</span>, -<span class="number">2</span>.<span class="number">0309</span>,  <span class="number">0</span>.<span class="number">9315</span>],</span><br><span class="line">         [ <span class="number">0</span>.<span class="number">0000</span>,  <span class="number">0</span>.<span class="number">0000</span>,  <span class="number">0</span>.<span class="number">0000</span>],</span><br><span class="line">         [-<span class="number">0</span>.<span class="number">1655</span>,  <span class="number">0</span>.<span class="number">9897</span>,  <span class="number">0</span>.<span class="number">0635</span>]]])</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-</ol>
+<li><a href="#定义一个添加层">定义一个添加层</a></li>
+<li><a href="#构造神经网络">构造神经网络</a></li>
+<li><a href="#结果可视化">结果可视化</a></li>
+<li><a href="#关于优化器">关于优化器</a></li>
+</ul>
+<!-- tocstop -->
+<h2><span id="定义一个添加层">定义一个添加层</span></h2>
+<blockquote>
+<p>在 Tensorflow
+里定义一个添加层的函数可以很容易的添加神经层,为之后的添加省下不少时间.</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add_layer</span>(<span class="params">inputs,input_size,output_size,activation_func =<span class="literal">None</span></span>):</span><br><span class="line">    <span class="comment"># 一个简单的全连接层  需要定义Weights 和Biases</span></span><br><span class="line">    Weights = tf.Variable(tf.random_normal([input_size,output_size]))  <span class="comment">#随机变量要比全为0好的多</span></span><br><span class="line"></span><br><span class="line">    Biases = tf.Variable(tf.zeros([<span class="number">1</span>,output_size])+<span class="number">0.1</span>)</span><br><span class="line"></span><br><span class="line">    Wx_add_b = tf.matmul(inputs,Weights)+Biases</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 是否需要激活函数</span></span><br><span class="line">    <span class="keyword">if</span> activation_func==<span class="literal">None</span>:</span><br><span class="line">        output = Wx_add_b</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        output = activation_func(Wx_add_b)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> output</span><br></pre></td></tr></table></figure>
+<h2><span id="构造神经网络">构造神经网络</span></h2>
+<blockquote>
+<p>个人理解 就是构建好了一个计算图，然后开始训练</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导入数据</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">x_data = np.linspace(-<span class="number">1</span>,<span class="number">1</span>,<span class="number">300</span>,dtype=np.float32)[:,np.newaxis]</span><br><span class="line">noise = np.random.normal(<span class="number">0</span>,<span class="number">0.05</span>,x_data.shape).astype(np.float32)</span><br><span class="line">y_data = np.square(x_data)+noise</span><br><span class="line"></span><br><span class="line"><span class="comment"># 利用站位符定义神经网络的输入</span></span><br><span class="line">xs = tf.placeholder(tf.float32,[<span class="literal">None</span>,<span class="number">1</span>])  <span class="comment"># None表示大小是多少都可以</span></span><br><span class="line">ys = tf.placeholder(tf.float32,[<span class="literal">None</span>,<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 搭建网络</span></span><br><span class="line"><span class="comment">## 隐藏层</span></span><br><span class="line">l1 = add_layer(xs,<span class="number">1</span>,<span class="number">100</span>,tf.nn.relu)</span><br><span class="line"><span class="comment">## 输入层</span></span><br><span class="line">prediction = add_layer(l1,<span class="number">100</span>,<span class="number">1</span>,activation_func=<span class="literal">None</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#计算预测值和真实值之间的误差,对差的平方和再求平均</span></span><br><span class="line">loss = tf.reduce_mean(tf.reduce_sum(tf.square(ys-prediction),reduction_indices=<span class="number">1</span>)) </span><br><span class="line"></span><br><span class="line"><span class="comment"># 关键的一步，如何提升模型准确性</span></span><br><span class="line">train_step = tf.train.GradientDescentOptimizer(learning_rate=<span class="number">0.1</span>).minimize(loss)</span><br><span class="line"></span><br><span class="line"><span class="comment">#使用变量时需要对其初始化</span></span><br><span class="line">init = tf.global_variables_initializer()</span><br><span class="line">sess = tf.Session()</span><br><span class="line">sess.run(init)</span><br><span class="line"></span><br><span class="line"><span class="comment">#训练</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1000</span>):</span><br><span class="line">    <span class="comment"># training</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):  <span class="comment"># 简单模拟一下batch_size</span></span><br><span class="line">        x = x_data[<span class="number">100</span>*j:<span class="number">100</span>*(j+<span class="number">1</span>)]</span><br><span class="line">        y = y_data[<span class="number">100</span>*j:<span class="number">100</span>*(j+<span class="number">1</span>)]</span><br><span class="line">        sess.run(train_step,feed_dict=&#123;xs:x,ys:y&#125;)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (i+<span class="number">1</span>) %<span class="number">100</span> ==<span class="number">0</span>:</span><br><span class="line">        <span class="built_in">print</span>(sess.run(loss,feed_dict=&#123;xs:x_data,ys:y_data&#125;))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">0</span>.<span class="number">014504891</span></span><br><span class="line"><span class="number">0</span>.<span class="number">0059381262</span></span><br><span class="line"><span class="number">0</span>.<span class="number">0042402893</span></span><br><span class="line"><span class="number">0</span>.<span class="number">0035563668</span></span><br><span class="line"><span class="number">0</span>.<span class="number">0031222783</span></span><br><span class="line"><span class="number">0</span>.<span class="number">0028483642</span></span><br><span class="line"><span class="number">0</span>.<span class="number">002705236</span></span><br><span class="line"><span class="number">0</span>.<span class="number">0025896842</span></span><br><span class="line"><span class="number">0</span>.<span class="number">0025018663</span></span><br><span class="line"><span class="number">0</span>.<span class="number">002452812</span></span><br></pre></td></tr></table></figure>
+<h2><span id="结果可视化">结果可视化</span></h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">fig = plt.figure()</span><br><span class="line">ax = fig.add_subplot(<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>)</span><br><span class="line">ax.scatter(x_data,y_data)</span><br><span class="line"></span><br><span class="line">predictionvalues = sess.run(prediction,feed_dict=&#123;xs:x_data&#125;)</span><br><span class="line">plt.plot(x_data,predictionvalues,<span class="string">&quot;r-&quot;</span>,lw=<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20221205171526172.png"></p>
+<h2><span id="关于优化器">关于优化器</span></h2>
+<blockquote>
+<p>用的时候查吧</p>
+</blockquote>
+<figure>
+<img src="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20221205173038323.png" alt="优化器">
+<figcaption aria-hidden="true">优化器</figcaption>
+</figure>
+<p>参考文章：</p>
+<p><a href="https://yulizi123.github.io/tutorials/machine-learning/tensorflow/">Tensorflow
+教程系列 | 莫烦Python (yulizi123.github.io)</a></p>
 
     </article>
     <!-- license -->
@@ -527,16 +537,16 @@
         <li class="next">
             
                 <div class="nextSlogan">Next Post</div>
-                <a href="/2022/11/09/%E5%AF%B9%E6%AF%94%E5%AD%A6%E4%B9%A0/" title="对比学习">
-                    <div class="nextTitle">对比学习</div>
+                <a href="/2022/12/05/Tensorflow-Tensorboard/" title="Tensorflow-Tensorboard">
+                    <div class="nextTitle">Tensorflow-Tensorboard</div>
                 </a>
             
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href="/2022/10/28/Pytorch-%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95/" title="(Pytorch)中的一些基本方法">
-                    <div class="prevTitle">(Pytorch)中的一些基本方法</div>
+                <a href="/2022/12/04/Tensorflow%E5%9F%BA%E7%A1%80/" title="Tensorflow基础">
+                    <div class="prevTitle">Tensorflow基础</div>
                 </a>
             
         </li>
@@ -571,6 +581,21 @@
     <!-- idea from: https://hexo.fluid-dev.com/posts/hexo-injector/#%E6%96%87%E7%AB%A0%E6%97%B6%E6%95%88%E6%80%A7%E6%8F%90%E7%A4%BA -->
     
     <!-- Mathjax -->
+    
+        
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script>
+
+
     
 </main>
 
@@ -683,7 +708,7 @@
                 <div class="toc-catalog">
                     <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
                 </div>
-                
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">定义一个添加层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">构造神经网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">结果可视化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">关于优化器</span></a></li></ol>
             </div>
         
         <!-- sidebar -->
