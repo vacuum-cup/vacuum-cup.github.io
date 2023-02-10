@@ -27,7 +27,7 @@
 <meta property="og:description" content="简介  torch.utils.data.DataLoader主要是对数据进行batch的划分，除此之外，特别要注意的是输入进函数的数据一定得是可迭代的。如果是自定的数据集的话可以在定义类中用def__len__、def__getitem__定义。   使用DataLoader的好处是，可以快速的迭代数据。  示例 123456789101112131415161718192021">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-11-13T06:44:06.000Z">
-<meta property="article:modified_time" content="2022-11-15T13:31:27.438Z">
+<meta property="article:modified_time" content="2023-02-10T07:34:56.115Z">
 <meta property="article:author" content="xnf">
 <meta name="twitter:card" content="summary">
     <meta http-equiv="Cache-control" content="no-cache">
@@ -330,7 +330,7 @@
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">406</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">445</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -498,7 +498,12 @@
   使用DataLoader的好处是，可以快速的迭代数据。</p>
 <ol start="2" type="1">
 <li><p>示例</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.utils.data <span class="keyword">as</span> Data</span><br><span class="line">torch.manual_seed(<span class="number">1</span>)    <span class="comment"># reproducible</span></span><br><span class="line"> </span><br><span class="line">BATCH_SIZE = <span class="number">5</span>      <span class="comment"># 批训练的数据个数</span></span><br><span class="line"> </span><br><span class="line">x = torch.linspace(<span class="number">1</span>, <span class="number">10</span>, <span class="number">10</span>)       <span class="comment"># x data (torch tensor)</span></span><br><span class="line">y = torch.linspace(<span class="number">10</span>, <span class="number">1</span>, <span class="number">10</span>)       <span class="comment"># y data (torch tensor)</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 先转换成 torch 能识别的 Dataset</span></span><br><span class="line">torch_dataset = Data.TensorDataset(x, y)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 把 dataset 放入 DataLoader</span></span><br><span class="line">loader = Data.DataLoader(</span><br><span class="line">    dataset=torch_dataset,      <span class="comment"># torch TensorDataset format</span></span><br><span class="line">    batch_size=BATCH_SIZE,      <span class="comment"># mini batch size</span></span><br><span class="line">    shuffle=<span class="literal">True</span>,               <span class="comment"># 要不要打乱数据 (打乱比较好)</span></span><br><span class="line">    num_workers=<span class="number">2</span>,              <span class="comment"># 多线程来读数据</span></span><br><span class="line">)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):   <span class="comment"># 训练所有!整套!数据 3 次</span></span><br><span class="line">    <span class="keyword">for</span> step, (batch_x, batch_y) <span class="keyword">in</span> <span class="built_in">enumerate</span>(loader):  <span class="comment"># 每一步 loader 释放一小批数据用来学习</span></span><br><span class="line">        <span class="comment"># 假设这里就是你训练的地方...</span></span><br><span class="line"> </span><br><span class="line">        <span class="comment"># 打出来一些数据</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;&#x27;Epoch: &#x27;&quot;</span>, epoch, <span class="string">&quot;&#x27;| Step: &#x27;&quot;</span>, step, <span class="string">&quot;&#x27;| batch x: &#x27;&quot;</span>,batch_x.numpy(), \</span><br><span class="line">              <span class="string">&quot;&#x27;| batch y: &#x27;&quot;</span>, batch_y.numpy())</span><br><span class="line"></span><br><span class="line">  <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Epoch:  0 | Step:  0 | batch x:  [ 6.  7.  2.  3.  1.] | batch y:  [  5.   4.   9.   8.  10.]</span></span><br><span class="line"><span class="string">Epoch:  0 | Step:  1 | batch x:  [  9.  10.   4.   8.   5.] | batch y:  [ 2.  1.  7.  3.  6.]</span></span><br><span class="line"><span class="string">Epoch:  1 | Step:  0 | batch x:  [  3.   4.   2.   9.  10.] | batch y:  [ 8.  7.  9.  2.  1.]</span></span><br><span class="line"><span class="string">Epoch:  1 | Step:  1 | batch x:  [ 1.  7.  8.  5.  6.] | batch y:  [ 10.   4.   3.   6.   5.]</span></span><br><span class="line"><span class="string">Epoch:  2 | Step:  0 | batch x:  [ 3.  9.  2.  6.  7.] | batch y:  [ 8.  2.  9.  5.  4.]</span></span><br><span class="line"><span class="string">Epoch:  2 | Step:  1 | batch x:  [ 10.   4.   8.   1.   5.] | batch y:  [  1.   7.   3.  10.   6.]</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line">“”</span><br><span class="line">如果改变batch大小每次迭代数据不够batch,则函数就会把剩下的数据输出。</span><br><span class="line">“”</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.utils.data <span class="keyword">as</span> Data</span><br><span class="line">torch.manual_seed(<span class="number">1</span>)    <span class="comment"># reproducible</span></span><br><span class="line"> </span><br><span class="line">BATCH_SIZE = <span class="number">5</span>      <span class="comment"># 批训练的数据个数</span></span><br><span class="line"> </span><br><span class="line">x = torch.linspace(<span class="number">1</span>, <span class="number">10</span>, <span class="number">10</span>)       <span class="comment"># x data (torch tensor)</span></span><br><span class="line">y = torch.linspace(<span class="number">10</span>, <span class="number">1</span>, <span class="number">10</span>)       <span class="comment"># y data (torch tensor)</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># 先转换成 torch 能识别的 Dataset</span></span><br><span class="line">torch_dataset = Data.TensorDataset(x, y)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 把 dataset 放入 DataLoader</span></span><br><span class="line">loader = Data.DataLoader(</span><br><span class="line">    dataset=torch_dataset,      <span class="comment"># torch TensorDataset format</span></span><br><span class="line">    batch_size=BATCH_SIZE,      <span class="comment"># mini batch size</span></span><br><span class="line">    shuffle=<span class="literal">True</span>,               <span class="comment"># 要不要打乱数据 (打乱比较好)</span></span><br><span class="line">    num_workers=<span class="number">2</span>,              <span class="comment"># 多线程来读数据</span></span><br><span class="line">)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):   <span class="comment"># 训练所有!整套!数据 3 次</span></span><br><span class="line">    <span class="keyword">for</span> step, (batch_x, batch_y) <span class="keyword">in</span> <span class="built_in">enumerate</span>(loader):  <span class="comment"># 每一步 loader 释放一小批数据用来学习</span></span><br><span class="line">        <span class="comment"># 假设这里就是你训练的地方...</span></span><br><span class="line"> </span><br><span class="line">        <span class="comment"># 打出来一些数据</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;&#x27;Epoch: &#x27;&quot;</span>, epoch, <span class="string">&quot;&#x27;| Step: &#x27;&quot;</span>, step, <span class="string">&quot;&#x27;| batch x: &#x27;&quot;</span>,batch_x.numpy(), \</span><br><span class="line">              <span class="string">&quot;&#x27;| batch y: &#x27;&quot;</span>, batch_y.numpy())</span><br><span class="line"></span><br><span class="line">  <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">Epoch:  0 | Step:  0 | batch x:  [ 6.  7.  2.  3.  1.] | batch y:  [  5.   4.   9.   8.  10.]</span></span><br><span class="line"><span class="string">Epoch:  0 | Step:  1 | batch x:  [  9.  10.   4.   8.   5.] | batch y:  [ 2.  1.  7.  3.  6.]</span></span><br><span class="line"><span class="string">Epoch:  1 | Step:  0 | batch x:  [  3.   4.   2.   9.  10.] | batch y:  [ 8.  7.  9.  2.  1.]</span></span><br><span class="line"><span class="string">Epoch:  1 | Step:  1 | batch x:  [ 1.  7.  8.  5.  6.] | batch y:  [ 10.   4.   3.   6.   5.]</span></span><br><span class="line"><span class="string">Epoch:  2 | Step:  0 | batch x:  [ 3.  9.  2.  6.  7.] | batch y:  [ 8.  2.  9.  5.  4.]</span></span><br><span class="line"><span class="string">Epoch:  2 | Step:  1 | batch x:  [ 10.   4.   8.   1.   5.] | batch y:  [  1.   7.   3.  10.   6.]</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line">“”</span><br><span class="line">如果改变batch大小每次迭代数据不够batch,则函数就会把剩下的数据输出。</span><br><span class="line">“”</span><br></pre></td></tr></table></figure>
+<p><a href="https://mp.weixin.qq.com/s/Uc2LYM6tIOY8KyxB7aQrOw">PyTorch
+DataLoader工作原理可视化 (qq.com)</a></p>
+<p><a href="https://blog.csdn.net/dong_liuqi/article/details/114521240">(51条消息)
+pytorch中collate_fn函数的使用&amp;如何向collate_fn函数传参_XJTU-Qidong的博客-CSDN博客_pytorch
+collate_fn</a></p></li>
 </ol>
 
     </article>
@@ -799,7 +804,14 @@
         
         
         
+        
+        
+        
+        
+        
     
+        
+        
         
         
         
@@ -970,7 +982,7 @@
     
     <div class="total-and-search">
         <div class="total-archive">
-        Total : 24
+        Total : 25
         </div>
         <!-- search  -->
         
@@ -984,6 +996,12 @@
             <div class="archive-year"> 2022 </div>
             <ul class="year-list">
             
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/07</span>
+            <a class="archive-post-title" href="/2022/12/07/Tensorflow-SimpleRNN/">Tensorflow-SimpleRNN</a>
+        </li>
+    
         
         <li class="archive-post-item">
             <span class="archive-post-date">12/05</span>
@@ -1029,13 +1047,13 @@
         
         <li class="archive-post-item">
             <span class="archive-post-date">11/26</span>
-            <a class="archive-post-title" href="/2022/11/26/Python-call-%E6%96%B9%E6%B3%95/">Python 中的特殊成员(属性和方法)</a>
+            <a class="archive-post-title" href="/2022/11/26/Pytorch-nn-BCEWithLogitsLoss/">(Pytorch)nn.BCEWithLogitsLoss</a>
         </li>
     
         
         <li class="archive-post-item">
             <span class="archive-post-date">11/26</span>
-            <a class="archive-post-title" href="/2022/11/26/Pytorch-nn-BCEWithLogitsLoss/">(Pytorch)nn.BCEWithLogitsLoss</a>
+            <a class="archive-post-title" href="/2022/11/26/Python-call-%E6%96%B9%E6%B3%95/">Python 中的特殊成员(属性和方法)</a>
         </li>
     
         
@@ -1165,14 +1183,9 @@
             深度学习基础
         </span>
     
-        <span class="sidebar-category-name" data-categories="Python">
+        <span class="sidebar-category-name" data-categories="Pandas">
             <span class="iconfont-archer">&#xe60a;</span>
-            Python
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="Pytorch">
-            <span class="iconfont-archer">&#xe60a;</span>
-            Pytorch
+            Pandas
         </span>
     
         <span class="sidebar-category-name" data-categories="bert">
@@ -1180,9 +1193,19 @@
             bert
         </span>
     
-        <span class="sidebar-category-name" data-categories="Pandas">
+        <span class="sidebar-category-name" data-categories="Pytorch">
             <span class="iconfont-archer">&#xe60a;</span>
-            Pandas
+            Pytorch
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="Python">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Python
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="Tensorflow">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Tensorflow
         </span>
     
         <span class="sidebar-category-name" data-categories="transformer">
@@ -1193,11 +1216,6 @@
         <span class="sidebar-category-name" data-categories="contrastive">
             <span class="iconfont-archer">&#xe60a;</span>
             contrastive
-        </span>
-    
-        <span class="sidebar-category-name" data-categories="Tensorflow">
-            <span class="iconfont-archer">&#xe60a;</span>
-            Tensorflow
         </span>
     
     </div>
