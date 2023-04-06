@@ -27,7 +27,7 @@
 <meta property="og:description" content="pytorch中矩阵乘法  @运算，*运算，torch.mul(), torch.mm(), torch.mv(), tensor.t()   @ 和 *代表矩阵的两种相乘方式：@表示常规的数学上定义的矩阵相乘；*表示两个矩阵对应位置处的两个元素相乘。 x.dot(y): 向量乘积,x，y均为一维向量。 *和torch.mul()等同:表示相同shape矩阵点乘，即对应位置相乘">
 <meta property="og:locale">
 <meta property="article:published_time" content="2023-04-06T03:50:36.000Z">
-<meta property="article:modified_time" content="2023-04-06T04:01:50.168Z">
+<meta property="article:modified_time" content="2023-04-06T06:30:45.166Z">
 <meta property="article:author" content="xnf">
 <meta name="twitter:card" content="summary">
     <meta http-equiv="Cache-control" content="no-cache">
@@ -330,7 +330,7 @@
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">222</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">292</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
@@ -501,9 +501,12 @@ torch.mv(), tensor.t() </font></p>
 <p><code>x.dot(y)</code>:
 向量乘积,<code>x</code>，<code>y</code>均为一维向量。</p>
 <p><code>*</code>和<code>torch.mul()</code>等同:表示相同shape矩阵点乘，即对应位置相乘，得到矩阵有相同的shape。</p>
-<p><font color="red"><code>@</code>和<code>torch.mm(a, b)</code>等同</font>：正常矩阵相乘，要求<code>a</code>的列数与<code>b</code>的行数相同。</p>
+<p><font color="red"><code>@</code>和<code>torch.mm(a, b)</code>等同</font>：正常矩阵相乘，要求<code>a</code>的列数与<code>b</code>的行数相同。
+<font color="red">用于二维</font></p>
 <p><font color="red"><code>torch.mv(X, w0)</code></font>:是矩阵和向量相乘.第一个参数是矩阵，第二个参数只能是一维向量,等价于<code>X</code>乘以<code>w0</code>的转置</p>
 <p><code>Y.t()</code>:矩阵<code>Y</code>的转置。</p>
+<p><code>torch.matmul(a, b)</code>也是一种类似于矩阵相乘操作的tensor联乘操作，一般是高维矩阵a和b相乘，但是它可以利用python
+中的广播机制，处理一些维度不同的tensor结构进行相乘操作。</p>
 </blockquote>
 <p>参考：</p>
 <p><a href="https://blog.csdn.net/beauthy/article/details/121103704">(62条消息)
