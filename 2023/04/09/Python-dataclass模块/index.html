@@ -19,18 +19,22 @@
         <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
     
     <meta name="description" content="">
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://github.com/vacuum-cup/vacuum-cup.github.io/categories/Pytorch/index.html">
+    <meta name="description" content="dataclass简介 简单来说，就是定义一个普通的类，@dataclass 可以帮助生成__repr__ __init__ 等方法。 dataclass 提供的方法  查看函数原型 12def dataclass(cls&#x3D;None, &#x2F;, *, init&#x3D;True, repr&#x3D;True, eq&#x3D;True, order&#x3D;False,              unsafe_hash">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python-dataclass模块">
+<meta property="og:url" content="https://github.com/vacuum-cup/vacuum-cup.github.io/2023/04/09/Python-dataclass%E6%A8%A1%E5%9D%97/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="dataclass简介 简单来说，就是定义一个普通的类，@dataclass 可以帮助生成__repr__ __init__ 等方法。 dataclass 提供的方法  查看函数原型 12def dataclass(cls&#x3D;None, &#x2F;, *, init&#x3D;True, repr&#x3D;True, eq&#x3D;True, order&#x3D;False,              unsafe_hash">
 <meta property="og:locale">
+<meta property="article:published_time" content="2023-04-09T12:23:18.000Z">
+<meta property="article:modified_time" content="2023-04-09T13:10:12.999Z">
 <meta property="article:author" content="xnf">
 <meta name="twitter:card" content="summary">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="icon" href="/assets/favicon.ico">
     
-    <title>dudu&#39;s blog</title>
+    <title>Python-dataclass模块 · dudu&#39;s blog</title>
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
 - testing support for link[rel=preload]
@@ -217,6 +221,8 @@
         }
     </script>
     
+        <body class="post-body">
+    
         <!-- header -->
         <header class="header header-mobile">
     <!-- top read progress line -->
@@ -246,6 +252,17 @@
     </div>
     <!-- toggle banner for post layout -->
     
+        
+            <div class="banner">
+        
+            <div class="blog-title header-element">
+                <a href="/">Dudu&#39;s Blog.</a>
+            </div>
+            <div class="post-title header-element">
+                <a href="#" class="post-name">Python-dataclass模块</a>
+            </div>
+        </div>
+    
 </header>
 
         <!-- fixed footer -->
@@ -272,24 +289,77 @@
 
 
 
+    height:50vh;
+
 ">
     
     <!-- 主页  -->
+    
+        
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+                Python-dataclass模块
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+                
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页 meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+    
+</div>
+
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">515</span>阅读时长: <span class="post-count reading-time">2 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <!-- 撰写日期 -->
+                    <span class="iconfont-archer post-intro-calander">&#xe676;</span>
+                    <span class="post-intro-time">2023/04/09</span>
+                    <!-- busuanzi -->
+                    
+                        <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                            <span class="iconfont-archer post-intro-busuanzi">&#xe602;</span>
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    
+                    <!-- 文章分享 -->
+                    <span class="share-wrapper">
+                        <span class="iconfont-archer share-icon">&#xe71d;</span>
+                        <span class="share-text">Share</span>
+                        <ul class="share-list">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -419,221 +489,105 @@
 
             <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
             <div class="container container-unloaded">
-                <main class="main index-page">
-    
-        
-        
-        
-        
-            
-            
-        
-        <article class="index-post">
-            <a class="abstract-title" href="/2023/04/06/pytorch-%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95%E8%BF%90%E7%AE%97/">
-                
-                <span class="abstract-title-text">pytorch-矩阵乘法运算</span>
-            </a>
-            <div class="abstract-content">
-                pytorch中的矩阵乘法 mul,mm,mv, @和*运算
-            </div>
-            <!-- read more -->
-            
-            <div class="abstract-post-meta">
-                <!-- date -->
-                <div class="abstract-date" title="Last updated: 2023/04/06">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2023/04/06</span>
-                </div>
-                <!-- tags -->
-                
-            </div>
-        </article>
-        <div class="index-post-divider"></div>
-    
-        
-        
-        
-        
-            
-            
-        
-        <article class="index-post">
-            <a class="abstract-title" href="/2022/12/01/Pytorch-data-TensorDataset/">
-                
-                <span class="abstract-title-text">Pytorch-data-TensorDataset</span>
-            </a>
-            <div class="abstract-content">
-                TensorDataset 的简单说明
-            </div>
-            <!-- read more -->
-            
-            <div class="abstract-post-meta">
-                <!-- date -->
-                <div class="abstract-date" title="Last updated: 2022/12/01">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2022/12/01</span>
-                </div>
-                <!-- tags -->
-                
-            </div>
-        </article>
-        <div class="index-post-divider"></div>
-    
-        
-        
-        
-        
-            
-            
-        
-        <article class="index-post">
-            <a class="abstract-title" href="/2022/11/26/Pytorch-nn-BCEWithLogitsLoss/">
-                
-                <span class="abstract-title-text">(Pytorch)nn.BCEWithLogitsLoss</span>
-            </a>
-            <div class="abstract-content">
-                记录下BCEWithLogitsLoss 和BCELoss
-            </div>
-            <!-- read more -->
-            
-            <div class="abstract-post-meta">
-                <!-- date -->
-                <div class="abstract-date" title="Last updated: 2022/11/26">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2022/11/26</span>
-                </div>
-                <!-- tags -->
-                
-            </div>
-        </article>
-        <div class="index-post-divider"></div>
-    
-        
-        
-        
-        
-            
-            
-        
-        <article class="index-post">
-            <a class="abstract-title" href="/2022/11/13/Pytorch-data-DataLoader%E4%BD%BF%E7%94%A8/">
-                
-                <span class="abstract-title-text">Pytorch-data-DataLoader使用</span>
-            </a>
-            <div class="abstract-content">
-                Pytorch-data-DataLoader的简单使用说明。
-            </div>
-            <!-- read more -->
-            
-            <div class="abstract-post-meta">
-                <!-- date -->
-                <div class="abstract-date" title="Last updated: 2023/02/10">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2022/11/13</span>
-                </div>
-                <!-- tags -->
-                
-            </div>
-        </article>
-        <div class="index-post-divider"></div>
-    
-        
-        
-        
-        
-            
-            
-        
-        <article class="index-post">
-            <a class="abstract-title" href="/2022/11/04/Pytorch-nn-Embedding/">
-                
-                <span class="abstract-title-text">Pytorch-nn-Embedding</span>
-            </a>
-            <div class="abstract-content">
-                pytorch中nn.Embedding层的说明。
-            </div>
-            <!-- read more -->
-            
-            <div class="abstract-post-meta">
-                <!-- date -->
-                <div class="abstract-date" title="Last updated: 2022/11/15">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2022/11/04</span>
-                </div>
-                <!-- tags -->
-                
-            </div>
-        </article>
-        <div class="index-post-divider"></div>
-    
-        
-        
-        
-        
-            
-            
-        
-        <article class="index-post">
-            <a class="abstract-title" href="/2022/10/28/Pytorch-%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95/">
-                
-                <span class="abstract-title-text">(Pytorch)中的一些基本方法</span>
-            </a>
-            <div class="abstract-content">
-                <!-- toc -->
+                <main class="main post-page">
+    <article class="article-entry">
+        <!--toc-->
+<h2><span id="dataclass简介">dataclass简介</span></h2>
+<p>简单来说，就是定义一个普通的类，<code>@dataclass</code>
+可以帮助生成<code>__repr__</code> <code>__init__</code> 等方法。</p>
+<h3><span id="dataclass-提供的方法">dataclass 提供的方法</span></h3>
+<blockquote>
+<p>查看函数原型</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">dataclass</span>(<span class="params">cls=<span class="literal">None</span>, /, *, init=<span class="literal">True</span>, <span class="built_in">repr</span>=<span class="literal">True</span>, eq=<span class="literal">True</span>, order=<span class="literal">False</span>,</span></span><br><span class="line"><span class="params">              unsafe_hash=<span class="literal">False</span>, frozen=<span class="literal">False</span></span>):</span><br></pre></td></tr></table></figure>
 <ul>
-<li><a href="#1-torchchunk方法">1.
-<strong>torch.chunk方法</strong></a></li>
-<li><a href="#2-torchcumsum方法">2.
-<strong>torch.cumsum方法</strong></a></li>
-<li><a href="#3-torchcat方法">3. <strong>torch.cat方法</strong></a></li>
-<li><a href="#4-torchstack方法"><strong>4.
-torch.stack方法</strong></a></li>
-<li><a href="#5-torchmax方法"><strong>5. torch.max方法</strong></a></li>
-<li><a href="#6-squeeze与unsqueezef方法">6.
-<strong>squeeze与unsqueezef方法</strong></a></li>
-<li><a href="#7-torchsplit方法">7. torch.split方法</a></li>
-<li><a href="#8-tensorexpand-方法">8. tensor.expand() 方法</a></li>
-<li><a href="#9-tensortranspose方法">9. tensor.transpose()方法</a></li>
+<li>参数<code>init</code>
+的默认值是True，表示装饰器会自动生成<code>__init__</code>方法，
+如果不想让装饰器生成对应的方法，可以在入参时候将其改为False</li>
+<li>参数<code>repr</code>
+的默认值是True，表示装饰器会自动生成<code>__repr__</code>方法，如果不想让装饰器生成对应的方法，可以在入参时候将其改为False
+（一个显示类信息的方法）</li>
+<li>其他参数类似</li>
+<li><font color="blue">从上面可以看到，如果不加参数，默认情况下，<code>@dataclass</code>
+装饰器会生成 <code>__repr__</code>、 <code>__init__</code> 、
+<code>__eq__</code>三个方法</font></li>
 </ul>
-<!-- tocstop -->
-            </div>
-            <!-- read more -->
+</blockquote>
+<h2><span id="使用举例">使用举例</span></h2>
+<h3><span id="使用装饰器定义一个类">使用装饰器定义一个类</span></h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#@dataclass 装饰器可以帮你生成 __repr__、 __init__ 等等方法，先举例自动生成的 __init__ 方法。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> dataclasses <span class="keyword">import</span> dataclass</span><br><span class="line"></span><br><span class="line"><span class="meta">@dataclass </span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span>:</span><br><span class="line">    name: <span class="built_in">str</span></span><br><span class="line">    age: <span class="built_in">int</span></span><br><span class="line">    <span class="built_in">id</span>:<span class="built_in">str</span> = <span class="string">&quot;default&quot;</span> <span class="comment"># 指定默认值 </span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">isAdult</span>(<span class="params">self</span>):   <span class="comment"># 支持自定义方法</span></span><br><span class="line">        <span class="keyword">if</span>(self.age&gt;=<span class="number">18</span>):</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">            </span><br><span class="line">p1 = Person(<span class="string">&quot;张三&quot;</span>,<span class="number">12</span>)</span><br><span class="line"><span class="built_in">print</span>(Person.__repr__)  <span class="comment"># 可以显示类信息</span></span><br><span class="line">p2 = Person(<span class="string">&quot;张三&quot;</span>,<span class="number">12</span>)</span><br><span class="line"><span class="built_in">print</span>(p1==p2) <span class="comment"># 还可以进行eq判断</span></span><br><span class="line"><span class="built_in">print</span>(p1)</span><br><span class="line">p1.isAdult()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;function __create_fn__.&lt;locals&gt;.__repr__ <span class="built_in">at</span> <span class="number">0</span>x7f16d6e68940&gt;</span><br><span class="line">True</span><br><span class="line">Person(name=&#x27;张三&#x27;, age=<span class="number">12</span>, id=&#x27;default&#x27;)</span><br><span class="line">False</span><br></pre></td></tr></table></figure>
+<h3><span id="关于套嵌">关于套嵌</span></h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 类的嵌套</span></span><br><span class="line"><span class="meta">@dataclass</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">    name:<span class="built_in">str</span></span><br><span class="line">    age:<span class="built_in">int</span></span><br><span class="line">    <span class="built_in">id</span>: <span class="built_in">str</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@dataclass</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Teacher</span>:</span><br><span class="line">    name:<span class="built_in">str</span></span><br><span class="line">    age:<span class="built_in">int</span></span><br><span class="line">    students:<span class="built_in">list</span> </span><br><span class="line"></span><br><span class="line">s1 = Student(<span class="string">&quot;张三&quot;</span>,<span class="number">15</span>,<span class="string">&quot;15115&quot;</span>)</span><br><span class="line">s2 = Student(<span class="string">&quot;李四&quot;</span>,<span class="number">16</span>,<span class="string">&quot;15116&quot;</span>)</span><br><span class="line"></span><br><span class="line">t = Teacher(<span class="string">&quot;王五&quot;</span>,<span class="number">30</span>,[s1,s2])</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(t)</span><br></pre></td></tr></table></figure>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Teacher(name=&#x27;王五&#x27;, age=<span class="number">30</span>, students=[Student(name=&#x27;张三&#x27;, age=<span class="number">15</span>, id=&#x27;<span class="number">15115</span>&#x27;), Student(name=&#x27;李四&#x27;, age=<span class="number">16</span>, id=&#x27;<span class="number">15116</span>&#x27;)])</span><br></pre></td></tr></table></figure>
+<h3><span id="对象初始化后禁止改变">对象初始化后禁止改变</span></h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> dataclasses <span class="keyword">import</span> dataclass</span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">Any</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@dataclass(<span class="params">frozen=<span class="literal">True</span></span>)  </span><span class="comment"># 这个参数在对象初始化后，会禁止更改值</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Data</span>:</span><br><span class="line">    name: <span class="type">Any</span></span><br><span class="line">    value: <span class="type">Any</span> = <span class="number">42</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">data = Data(<span class="string">&#x27;my_name&#x27;</span>, <span class="number">99</span>)</span><br><span class="line">data.name = <span class="string">&#x27;other&#x27;</span>  <span class="comment"># 报错：cannot assign to field &#x27;name&#x27;</span></span><br></pre></td></tr></table></figure>
+<h3><span id="待补充">待补充</span></h3>
+<p>参考：</p>
+<p><a href="https://zhuanlan.zhihu.com/p/53864366">Python笔记整理
+__repr__和<strong>str</strong> - 知乎 (zhihu.com)</a></p>
+
+    </article>
+    <!-- license -->
+    
+    <!-- paginator -->
+    <ul class="post-paginator">
+        <li class="next">
             
-            <div class="abstract-post-meta">
-                <!-- date -->
-                <div class="abstract-date" title="Last updated: 2023/04/06">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2022/10/28</span>
-                </div>
-                <!-- tags -->
-                
-            </div>
-        </article>
-        <div class="index-post-divider"></div>
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2023/04/06/pytorch-%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95%E8%BF%90%E7%AE%97/" title="pytorch-矩阵乘法运算">
+                    <div class="prevTitle">pytorch-矩阵乘法运算</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- comment -->
+    
+        <div class="post-comment">
+            <!-- 来必力 City 版安装代码 -->
+
+
+            
+
+            
+
+            
+
+            <!-- utteranc评论 -->
+
+
+            <!-- partial('_partial/comment/changyan') -->
+            <!--PC版-->
+
+
+            
+            
+
+            
+
+        </div>
+    
+    <!-- timeliness note -->
+    <!-- idea from: https://hexo.fluid-dev.com/posts/hexo-injector/#%E6%96%87%E7%AB%A0%E6%97%B6%E6%95%88%E6%80%A7%E6%8F%90%E7%A4%BA -->
+    
+    <!-- Mathjax -->
     
         
-        
-        
-        
-            
-            
-        
-        <article class="index-post">
-            <a class="abstract-title" href="/2022/10/27/Pytorch-nn-Dropout/">
-                
-                <span class="abstract-title-text">(Pytorch) nn.Dropout</span>
-            </a>
-            <div class="abstract-content">
-                关于pytroch 中nn.Dropout层的说明
-            </div>
-            <!-- read more -->
-            
-            <div class="abstract-post-meta">
-                <!-- date -->
-                <div class="abstract-date" title="Last updated: 2022/11/15">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2022/10/27</span>
-                </div>
-                <!-- tags -->
-                
-            </div>
-        </article>
-        <div class="index-post-divider"></div>
-    
-    <!-- paginator  -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script>
+
+
     
 </main>
 
@@ -731,6 +685,23 @@ torch.stack方法</strong></a></li>
 
         </div>
         <!-- toc -->
+        
+            <div class="toc-wrapper toc-wrapper-loding" style=
+
+
+
+
+
+
+
+    top:50vh;
+
+>
+                <div class="toc-catalog">
+                    <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+                </div>
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">dataclass简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.1.</span> <span class="toc-text">dataclass 提供的方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">使用举例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.1.</span> <span class="toc-text">使用装饰器定义一个类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.2.</span> <span class="toc-text">关于套嵌</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.3.</span> <span class="toc-text">对象初始化后禁止改变</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.4.</span> <span class="toc-text">待补充</span></a></li></ol></li></ol>
+            </div>
         
         <!-- sidebar -->
         <div class="sidebar sidebar-hide">
@@ -1465,7 +1436,16 @@ torch.stack方法</strong></a></li>
         
         <!-- async load share.js -->
         
+            <script src="/scripts/share.js?v=20211217" async></script>
+        
         <!-- mermaid -->
+        
+            <script src='https://cdn.jsdelivr.net/npm/mermaid@8.x/dist/mermaid.min.js'></script>
+            <script>
+                if (window.mermaid) {
+                    mermaid.initialize({theme: 'dark'});
+                }
+            </script>
         
     </body>
 </html>
