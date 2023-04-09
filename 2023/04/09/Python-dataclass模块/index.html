@@ -19,22 +19,22 @@
         <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
     
     <meta name="description" content="">
-    <meta name="description" content="1. 可变参数 （*参数，**参数）   *参数是收集所有未匹配的位置参数组成一个tuple对象，局部变量args指向 该tuple对象 **参数 收集所有未匹配的关键字参数组成一个dict参数，局部变量kwargs 指向该dict对象  12def test(*args,**kwargs):	pass  2. 传入参数 （*参数，**参数）   *参数用于解包tu">
+    <meta name="description" content="dataclass简介 简单来说，就是定义一个普通的类，@dataclass 可以帮助生成__repr__ __init__ 等方法。 dataclass 提供的方法  查看函数原型 12def dataclass(cls&#x3D;None, &#x2F;, *, init&#x3D;True, repr&#x3D;True, eq&#x3D;True, order&#x3D;False,              unsafe_hash">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Python-可变参数-传入参数">
-<meta property="og:url" content="https://github.com/vacuum-cup/vacuum-cup.github.io/2023/02/23/Python-%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0-%E4%BC%A0%E5%85%A5%E5%8F%82%E6%95%B0/index.html">
+<meta property="og:title" content="Python-dataclass模块">
+<meta property="og:url" content="https://github.com/vacuum-cup/vacuum-cup.github.io/2023/04/09/Python-dataclass%E6%A8%A1%E5%9D%97/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1. 可变参数 （*参数，**参数）   *参数是收集所有未匹配的位置参数组成一个tuple对象，局部变量args指向 该tuple对象 **参数 收集所有未匹配的关键字参数组成一个dict参数，局部变量kwargs 指向该dict对象  12def test(*args,**kwargs):	pass  2. 传入参数 （*参数，**参数）   *参数用于解包tu">
+<meta property="og:description" content="dataclass简介 简单来说，就是定义一个普通的类，@dataclass 可以帮助生成__repr__ __init__ 等方法。 dataclass 提供的方法  查看函数原型 12def dataclass(cls&#x3D;None, &#x2F;, *, init&#x3D;True, repr&#x3D;True, eq&#x3D;True, order&#x3D;False,              unsafe_hash">
 <meta property="og:locale">
-<meta property="article:published_time" content="2023-02-23T01:14:42.000Z">
-<meta property="article:modified_time" content="2023-02-23T01:26:10.721Z">
+<meta property="article:published_time" content="2023-04-09T12:23:18.000Z">
+<meta property="article:modified_time" content="2023-04-09T13:39:59.221Z">
 <meta property="article:author" content="xnf">
 <meta name="twitter:card" content="summary">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="icon" href="/assets/favicon.ico">
     
-    <title>Python-可变参数-传入参数 · dudu&#39;s blog</title>
+    <title>Python-dataclass模块 · dudu&#39;s blog</title>
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
 - testing support for link[rel=preload]
@@ -259,7 +259,7 @@
                 <a href="/">Dudu&#39;s Blog.</a>
             </div>
             <div class="post-title header-element">
-                <a href="#" class="post-name">Python-可变参数-传入参数</a>
+                <a href="#" class="post-name">Python-dataclass模块</a>
             </div>
         </div>
     
@@ -305,7 +305,7 @@
         <h1 class="intro-title">
             <!-- 主页  -->
             
-                Python-可变参数-传入参数
+                Python-dataclass模块
             <!-- 404 -->
             
         </h1>
@@ -330,13 +330,13 @@
                 
                 
                     <div class="post-intro-read">
-                        <span>字数统计: <span class="post-count word-count">248</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                        <span>字数统计: <span class="post-count word-count">768</span>阅读时长: <span class="post-count reading-time">3 min</span></span>
                     </div>
                 
                 <div class="post-intro-meta">
                     <!-- 撰写日期 -->
                     <span class="iconfont-archer post-intro-calander">&#xe676;</span>
-                    <span class="post-intro-time">2023/02/23</span>
+                    <span class="post-intro-time">2023/04/09</span>
                     <!-- busuanzi -->
                     
                         <span id="busuanzi_container_page_pv" class="busuanzi-pv">
@@ -492,28 +492,49 @@
                 <main class="main post-page">
     <article class="article-entry">
         <!--toc-->
-<h2><span id="1-可变参数-参数参数">1. 可变参数 （*参数，**参数）</span></h2>
+<h2><span id="dataclass简介">dataclass简介</span></h2>
+<p>简单来说，就是定义一个普通的类，<code>@dataclass</code>
+可以帮助生成<code>__repr__</code> <code>__init__</code> 等方法。</p>
+<h3><span id="dataclass-提供的方法">dataclass 提供的方法</span></h3>
+<blockquote>
+<p>查看函数原型</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">dataclass</span>(<span class="params">cls=<span class="literal">None</span>, /, *, init=<span class="literal">True</span>, <span class="built_in">repr</span>=<span class="literal">True</span>, eq=<span class="literal">True</span>, order=<span class="literal">False</span>,</span></span><br><span class="line"><span class="params">              unsafe_hash=<span class="literal">False</span>, frozen=<span class="literal">False</span></span>):</span><br></pre></td></tr></table></figure>
+<ul>
+<li>参数<code>init</code>
+的默认值是True，表示装饰器会自动生成<code>__init__</code>方法，
+如果不想让装饰器生成对应的方法，可以在入参时候将其改为False</li>
+<li>参数<code>repr</code>
+的默认值是True，表示装饰器会自动生成<code>__repr__</code>方法，如果不想让装饰器生成对应的方法，可以在入参时候将其改为False
+（一个显示类信息的方法）</li>
+<li>其他参数类似</li>
+<li><font color="blue">从上面可以看到，如果不加参数，默认情况下，<code>@dataclass</code>
+装饰器会生成 <code>__repr__</code>、 <code>__init__</code> 、
+<code>__eq__</code>三个方法</font></li>
+</ul>
+</blockquote>
+<h2><span id="使用举例">使用举例</span></h2>
+<h3><span id="使用装饰器定义一个类">使用装饰器定义一个类</span></h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#@dataclass 装饰器可以帮你生成 __repr__、 __init__ 等等方法，先举例自动生成的 __init__ 方法。</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> dataclasses <span class="keyword">import</span> dataclass</span><br><span class="line"></span><br><span class="line"><span class="meta">@dataclass </span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span>:</span><br><span class="line">    name: <span class="built_in">str</span></span><br><span class="line">    age: <span class="built_in">int</span></span><br><span class="line">    <span class="built_in">id</span>:<span class="built_in">str</span> = <span class="string">&quot;default&quot;</span> <span class="comment"># 指定默认值 </span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">isAdult</span>(<span class="params">self</span>):   <span class="comment"># 支持自定义方法</span></span><br><span class="line">        <span class="keyword">if</span>(self.age&gt;=<span class="number">18</span>):</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">            </span><br><span class="line">p1 = Person(<span class="string">&quot;张三&quot;</span>,<span class="number">12</span>)</span><br><span class="line"><span class="built_in">print</span>(Person.__repr__)  <span class="comment"># 可以显示类信息</span></span><br><span class="line">p2 = Person(<span class="string">&quot;张三&quot;</span>,<span class="number">12</span>)</span><br><span class="line"><span class="built_in">print</span>(p1==p2) <span class="comment"># 还可以进行eq判断</span></span><br><span class="line"><span class="built_in">print</span>(p1)</span><br><span class="line">p1.isAdult()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;function __create_fn__.&lt;locals&gt;.__repr__ <span class="built_in">at</span> <span class="number">0</span>x7f16d6e68940&gt;</span><br><span class="line">True</span><br><span class="line">Person(name=&#x27;张三&#x27;, age=<span class="number">12</span>, id=&#x27;default&#x27;)</span><br><span class="line">False</span><br></pre></td></tr></table></figure>
+<h3><span id="关于套嵌">关于套嵌</span></h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 类的嵌套</span></span><br><span class="line"><span class="meta">@dataclass</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Student</span>:</span><br><span class="line">    name:<span class="built_in">str</span></span><br><span class="line">    age:<span class="built_in">int</span></span><br><span class="line">    <span class="built_in">id</span>: <span class="built_in">str</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@dataclass</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Teacher</span>:</span><br><span class="line">    name:<span class="built_in">str</span></span><br><span class="line">    age:<span class="built_in">int</span></span><br><span class="line">    students:<span class="built_in">list</span> </span><br><span class="line"></span><br><span class="line">s1 = Student(<span class="string">&quot;张三&quot;</span>,<span class="number">15</span>,<span class="string">&quot;15115&quot;</span>)</span><br><span class="line">s2 = Student(<span class="string">&quot;李四&quot;</span>,<span class="number">16</span>,<span class="string">&quot;15116&quot;</span>)</span><br><span class="line"></span><br><span class="line">t = Teacher(<span class="string">&quot;王五&quot;</span>,<span class="number">30</span>,[s1,s2])</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(t)</span><br></pre></td></tr></table></figure>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Teacher(name=&#x27;王五&#x27;, age=<span class="number">30</span>, students=[Student(name=&#x27;张三&#x27;, age=<span class="number">15</span>, id=&#x27;<span class="number">15115</span>&#x27;), Student(name=&#x27;李四&#x27;, age=<span class="number">16</span>, id=&#x27;<span class="number">15116</span>&#x27;)])</span><br></pre></td></tr></table></figure>
+<h3><span id="对象初始化后禁止改变">对象初始化后禁止改变</span></h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> dataclasses <span class="keyword">import</span> dataclass</span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">Any</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@dataclass(<span class="params">frozen=<span class="literal">True</span></span>)  </span><span class="comment"># 这个参数在对象初始化后，会禁止更改值</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Data</span>:</span><br><span class="line">    name: <span class="type">Any</span></span><br><span class="line">    value: <span class="type">Any</span> = <span class="number">42</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">data = Data(<span class="string">&#x27;my_name&#x27;</span>, <span class="number">99</span>)</span><br><span class="line">data.name = <span class="string">&#x27;other&#x27;</span>  <span class="comment"># 报错：cannot assign to field &#x27;name&#x27;</span></span><br></pre></td></tr></table></figure>
+<h3><span id="关于field">关于field</span></h3>
 <blockquote>
 <ol type="1">
-<li><code>*参数</code>是收集所有未匹配的位置参数组成一个tuple对象，局部变量args指向
-该tuple对象</li>
-<li><code>**参数</code>
-收集所有未匹配的关键字参数组成一个dict参数，局部变量kwargs
-指向该dict对象</li>
+<li>在初始化<strong>可变默认值(mutable default)</strong>
+情况下，必须要通过field的默认工厂函数来进行声明。</li>
+<li>可以通过field来<strong>控制某一个成员变量是否被初始化</strong>。</li>
 </ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>(<span class="params">*args,**kwargs</span>):</span><br><span class="line">	<span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
 </blockquote>
-<h2><span id="2-传入参数-参数参数">2. 传入参数 （*参数，**参数）</span></h2>
-<blockquote>
-<ol type="1">
-<li><p><code>*参数</code>用于解包tuple对象的每个元素，作为一个一个的位置参数传入到函数中</p></li>
-<li><p><code>**参数</code>用于解包dict对象的每个元素，作为一个一个的关键字参数传入到函数中</p></li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">my_tuple = (<span class="string">&quot;wang&quot;</span>,<span class="string">&quot;yuan&quot;</span>,<span class="string">&quot;wai&quot;</span>)</span><br><span class="line"> </span><br><span class="line">temp(*my_tuple)</span><br><span class="line"><span class="comment">#---等同于---#</span></span><br><span class="line">temp(<span class="string">&quot;wangyuan&quot;</span>,<span class="string">&quot;yuan&quot;</span>,<span class="string">&quot;wai&quot;</span>)</span><br><span class="line"></span><br><span class="line">my_dict = &#123;<span class="string">&quot;name&quot;</span>:<span class="string">&quot;wangyuanwai&quot;</span>,<span class="string">&quot;age&quot;</span>:<span class="number">32</span>&#125;</span><br><span class="line"> </span><br><span class="line">temp(**my_dict)</span><br><span class="line"><span class="comment">#----等同于----#</span></span><br><span class="line">temp(name=<span class="string">&quot;wangyuanwai&quot;</span>,age=<span class="number">32</span>)</span><br></pre></td></tr></table></figure>
-</blockquote>
-<p>参考文章：</p>
-<p><a href="https://blog.csdn.net/cadi2011/article/details/84871401">(54条消息)
-Python之可变参数，*参数，**参数，以及传入*参数，**参数解包，*args，**kwargs的理解_叫我王员外就行的博客-CSDN博客</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> dataclasses <span class="keyword">import</span> dataclass,field</span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">List</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@dataclass</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">C</span>:</span><br><span class="line">    <span class="comment"># my_list: List[int] = []  # 前面的: List[int] 是类型注释  这里提示默认需要工厂类型</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 引入field后，使用默认工厂函数来初始化默认值</span></span><br><span class="line">    my_list: <span class="type">List</span>[<span class="built_in">int</span>] = field(default_factory=<span class="built_in">list</span>)</span><br><span class="line"></span><br><span class="line">c1 = C()</span><br><span class="line">c1.my_list += [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">c2 = C()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;c1:&#123;0&#125;; c2:&#123;1&#125;&quot;</span>.<span class="built_in">format</span>(c1, c2))</span><br><span class="line"><span class="comment">#&gt;&gt; c1:C(my_list=[1, 2, 3]); c2:C(my_list=[])</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> dataclasses <span class="keyword">import</span> dataclass, field</span><br><span class="line"></span><br><span class="line"><span class="meta">@dataclass</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">C</span>:</span><br><span class="line">    a: <span class="built_in">float</span>  <span class="comment"># 成员变量a在构造的时候必须初始化</span></span><br><span class="line">    b: <span class="built_in">float</span>  <span class="comment"># 成员变量b在构造的时候必须初始化</span></span><br><span class="line">    c: <span class="built_in">float</span> = field(init=<span class="literal">False</span>)  <span class="comment"># 告诉dataclass先不初始化成员变量c</span></span><br><span class="line"></span><br><span class="line">c1 = C(<span class="number">10</span>, <span class="number">20</span>)  <span class="comment"># 不给成员变量c赋值</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;c1--&gt;a:&#123;0&#125;; c1--&gt;b:&#123;1&#125;&quot;</span>.<span class="built_in">format</span>(c1.a, c1.b))</span><br><span class="line"><span class="comment">#&gt;&gt; c1--&gt;a:10; c1--&gt;b:20</span></span><br></pre></td></tr></table></figure>
+<h3><span id="待补充">待补充</span></h3>
+<p>参考：</p>
+<p><a href="https://zhuanlan.zhihu.com/p/419778289">Python3.7中dataclass模块简单说明
+- 知乎 (zhihu.com)</a></p>
 
     </article>
     <!-- license -->
@@ -522,17 +543,12 @@ Python之可变参数，*参数，**参数，以及传入*参数，**参数解�
     <ul class="post-paginator">
         <li class="next">
             
-                <div class="nextSlogan">Next Post</div>
-                <a href="/2023/03/03/numpy%E9%83%A8%E5%88%86%E6%96%B9%E6%B3%95/" title="numpy部分方法">
-                    <div class="nextTitle">numpy部分方法</div>
-                </a>
-            
         </li>
         <li class="previous">
             
                 <div class="prevSlogan">Previous Post</div>
-                <a href="/2023/01/02/%E5%B0%8F%E6%A0%B7%E6%9C%AC%E5%AD%A6%E4%B9%A0-%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/" title="小样本学习-关系抽取">
-                    <div class="prevTitle">小样本学习-关系抽取</div>
+                <a href="/2023/04/06/pytorch-%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95%E8%BF%90%E7%AE%97/" title="pytorch-矩阵乘法运算">
+                    <div class="prevTitle">pytorch-矩阵乘法运算</div>
                 </a>
             
         </li>
@@ -694,7 +710,7 @@ Python之可变参数，*参数，**参数，以及传入*参数，**参数解�
                 <div class="toc-catalog">
                     <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
                 </div>
-                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">1. 可变参数 （*参数，**参数）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">2. 传入参数 （*参数，**参数）</span></a></li></ol>
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">dataclass简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">1.1.</span> <span class="toc-text">dataclass 提供的方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">使用举例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.1.</span> <span class="toc-text">使用装饰器定义一个类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.2.</span> <span class="toc-text">关于套嵌</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.3.</span> <span class="toc-text">对象初始化后禁止改变</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.4.</span> <span class="toc-text">关于field</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.5.</span> <span class="toc-text">待补充</span></a></li></ol></li></ol>
             </div>
         
         <!-- sidebar -->
