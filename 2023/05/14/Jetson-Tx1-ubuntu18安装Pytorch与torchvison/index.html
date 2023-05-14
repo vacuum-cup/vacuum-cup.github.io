@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <!-- title -->
+
+
+    
+
+<!-- keywords -->
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="author" content="xnf">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="xnf">
+    
+        <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content="">
+    <meta name="description" content="一个私人的安装笔记  加密一下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jetson Tx1_ubuntu18安装Pytorch与torchvison">
+<meta property="og:url" content="https://github.com/vacuum-cup/vacuum-cup.github.io/2023/05/14/Jetson-Tx1-ubuntu18%E5%AE%89%E8%A3%85Pytorch%E4%B8%8Etorchvison/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="一个私人的安装笔记  加密一下">
+<meta property="og:locale">
+<meta property="article:published_time" content="2023-05-14T08:12:31.000Z">
+<meta property="article:modified_time" content="2023-05-14T08:26:17.584Z">
+<meta property="article:author" content="xnf">
+<meta property="article:tag" content="private">
+<meta name="twitter:card" content="summary">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="icon" href="/assets/favicon.ico">
+    
+    <title>Jetson Tx1_ubuntu18安装Pytorch与torchvison · dudu&#39;s blog</title>
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+    (function (w) {
+        'use strict'
+        // rel=preload support test
+        if (!w.loadCSS) {
+            w.loadCSS = function () {}
+        }
+        // define on the loadCSS obj
+        var rp = (loadCSS.relpreload = {})
+        // rel=preload feature support test
+        // runs once and returns a function for compat purposes
+        rp.support = (function () {
+            var ret
+            try {
+                ret = w.document.createElement('link').relList.supports('preload')
+            } catch (e) {
+                ret = false
+            }
+            return function () {
+                return ret
+            }
+        })()
+
+        // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+        // then change that media back to its intended value on load
+        rp.bindMediaToggle = function (link) {
+            // remember existing media attr for ultimate state, or default to 'all'
+            var finalMedia = link.media || 'all'
+
+            function enableStylesheet() {
+                link.media = finalMedia
+            }
+
+            // bind load handlers to enable media
+            if (link.addEventListener) {
+                link.addEventListener('load', enableStylesheet)
+            } else if (link.attachEvent) {
+                link.attachEvent('onload', enableStylesheet)
+            }
+
+            // Set rel and non-applicable media type to start an async request
+            // note: timeout allows this to happen async to let rendering continue in IE
+            setTimeout(function () {
+                link.rel = 'stylesheet'
+                link.media = 'only x'
+            })
+            // also enable media after 3 seconds,
+            // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+            setTimeout(enableStylesheet, 3000)
+        }
+
+        // loop through link elements in DOM
+        rp.poly = function () {
+            // double check this to prevent external calls from running
+            if (rp.support()) {
+                return
+            }
+            var links = w.document.getElementsByTagName('link')
+            for (var i = 0; i < links.length; i++) {
+                var link = links[i]
+                // qualify links to those with rel=preload and as=style attrs
+                if (
+                    link.rel === 'preload' &&
+                    link.getAttribute('as') === 'style' &&
+                    !link.getAttribute('data-loadcss')
+                ) {
+                    // prevent rerunning on link
+                    link.setAttribute('data-loadcss', true)
+                    // bind listeners to toggle media back
+                    rp.bindMediaToggle(link)
+                }
+            }
+        }
+
+        // if unsupported, run the polyfill
+        if (!rp.support()) {
+            // run once at least
+            rp.poly()
+
+            // rerun poly on an interval until onload
+            var run = w.setInterval(rp.poly, 500)
+            if (w.addEventListener) {
+                w.addEventListener('load', function () {
+                    rp.poly()
+                    w.clearInterval(run)
+                })
+            } else if (w.attachEvent) {
+                w.attachEvent('onload', function () {
+                    rp.poly()
+                    w.clearInterval(run)
+                })
+            }
+        }
+
+        // commonjs
+        if (typeof exports !== 'undefined') {
+            exports.loadCSS = loadCSS
+        } else {
+            w.loadCSS = loadCSS
+        }
+    })(typeof global !== 'undefined' ? global : this)
+</script>
+
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+</style>
+
+    <link rel="preload" href="/css/style.css?v=20211217" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/css/dark.css?v=20211217" as="style">
+    <link rel="stylesheet" href="/css/dark.css">
+    <link rel="stylesheet" href="/css/mobile.css?v=20211217" media="(max-width: 960px)">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" as="script">
+    <link rel="preload" href="/scripts/main.js?v=20211217" as="script">
+    <link rel="preload" href="/scripts/dark.js?v=20211217" as="script">
+    <link rel="preload" href="/font/Oswald-Regular.ttf" as="font" crossorigin>
+    <link rel="preload" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" as="font" crossorigin>
+    <!-- algolia -->
+    
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ == undefined) {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js" />')
+        }
+    </script>
+    
+        <body class="post-body">
+    
+        <!-- header -->
+        <header class="header header-mobile">
+    <!-- top read progress line -->
+    <div class="header-element">
+        <div class="read-progress"></div>
+    </div>
+    <!-- sidebar menu button -->
+    <div class="header-element">
+        
+            <div class="header-sidebar-menu">
+        
+            
+                <div style="padding-left: 1px;">&#xe775;</div>
+            
+        </div>
+    </div>
+    <!-- header actions -->
+    <div class="header-actions">
+        <!-- theme mode switch button -->
+        <span class="header-theme-btn header-element">
+            <i class="fas fa-adjust"></i>
+        </span>
+        <!-- back to home page text -->
+        <span class="home-link header-element">
+            <a href=/>Dudu's Blog.</a>
+        </span>
+    </div>
+    <!-- toggle banner for post layout -->
+    
+        
+            <div class="banner">
+        
+            <div class="blog-title header-element">
+                <a href="/">Dudu&#39;s Blog.</a>
+            </div>
+            <div class="post-title header-element">
+                <a href="#" class="post-name">Jetson Tx1_ubuntu18安装Pytorch与torchvison</a>
+            </div>
+        </div>
+    
+</header>
+
+        <!-- fixed footer -->
+        <footer class="footer-fixed">
+    <!-- back to top button -->
+    <div class="footer-fixed-element">
+        
+            <div class="back-top back-top-hidden">
+        
+        
+            <div>&#xe639;</div>
+        
+        </div>
+    </div>
+</footer>
+
+        <!-- wrapper -->
+        <div class="wrapper">
+            <div class="site-intro" style="
+
+
+
+
+
+
+
+    height:50vh;
+
+">
+    
+    <!-- 主页  -->
+    
+        
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+                Jetson Tx1_ubuntu18安装Pytorch与torchvison
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+                
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页 meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="private">private</a>
+    
+</div>
+
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">2</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <!-- 撰写日期 -->
+                    <span class="iconfont-archer post-intro-calander">&#xe676;</span>
+                    <span class="post-intro-time">2023/05/14</span>
+                    <!-- busuanzi -->
+                    
+                        <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                            <span class="iconfont-archer post-intro-busuanzi">&#xe602;</span>
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    
+                    <!-- 文章分享 -->
+                    <span class="share-wrapper">
+                        <span class="iconfont-archer share-icon">&#xe71d;</span>
+                        <span class="share-text">Share</span>
+                        <ul class="share-list">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+
+            <script>
+  // get user agent
+  function getBrowserVersions() {
+    var u = window.navigator.userAgent
+    return {
+      userAgent: u,
+      trident: u.indexOf('Trident') > -1, //IE内核
+      presto: u.indexOf('Presto') > -1, //opera内核
+      webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+      gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+      mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+      ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+      android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+      iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+      iPad: u.indexOf('iPad') > -1, //是否为iPad
+      webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+      weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+      uc: u.indexOf('UCBrowser') > -1, //是否为android下的UC浏览器
+    }
+  }
+  var browser = {
+    versions: getBrowserVersions(),
+  }
+  console.log('userAgent: ' + browser.versions.userAgent)
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded')
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document
+        .getElementsByClassName('intro-title')[0]
+        .classList.add('intro-fade-in')
+      document
+        .getElementsByClassName('intro-subtitle')[0]
+        .classList.add('intro-fade-in')
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in')
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb() {
+    if (browser.versions.uc) {
+      console.log('UCBrowser')
+      fontLoaded()
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular'],
+        },
+        loading: function () {
+          // 所有字体开始加载
+          // console.log('font loading');
+        },
+        active: function () {
+          // 所有字体已渲染
+          fontLoaded()
+        },
+        inactive: function () {
+          // 字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout')
+          fontLoaded()
+        },
+        timeout: 5000, // Set the timeout to two seconds
+      })
+    }
+  }
+
+  function asyncErr() {
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0]
+    o.src = u
+    if (cb) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          cb(null, e)
+        },
+        false
+      )
+    }
+    if (err) {
+      o.addEventListener(
+        'error',
+        function (e) {
+          err(null, e)
+        },
+        false
+      )
+    }
+    s.parentNode.insertBefore(o, s)
+  }
+
+  var asyncLoadWithFallBack = function (arr, success, reject) {
+    var currReject = function () {
+      reject()
+      arr.shift()
+      if (arr.length) async(arr[0], success, currReject)
+    }
+
+    async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack(
+    [
+      'https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js',
+      'https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js',
+      "/lib/webfontloader.min.js",
+    ],
+    asyncCb,
+    asyncErr
+  )
+</script>
+
+            <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+            <div class="container container-unloaded">
+                <main class="main post-page">
+    <article class="article-entry">
+        <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="password is error" data-whm="error">
+  <script id="hbeData" type="hbeData" data-hmacdigest="d226a444ba03e998af06d535f5407fe7bb6ab7ca86b08eab5146b1cad2406579">a4f6af75a3095eb4cbb2a913d3b94b45f145c559da905ebb5b3608c6703948b423043e7c9ae3bcac00d823978e8b34c3923693e43d369f9b86c9f1cdbb533336fb42b5bbe8f3f67d59ee426a4386e29f98959f1207fc5eb7f3d0f919befb70da203a7b94437543fd208118d2ca2894e7a9c9fbb258fa41d5352823c8d9ec3668f3592c55f9ff860707d0a3359bfe489c8c345d3737296c702d9aba90b72c7682c1c292dfcb865392cea549f094e2773626d7746e296ad2fd812073e575fe5a8a631ab6d6703564d60babc0774b067cc93c000bcf01bcdcb98f2e23997c0300e3c4f195b816c38a37b31405039240eb5fe25e2650a6de1143e3f521e6e225049583d2aaa5e9220fb3af1b0aa0a0238166a8725dca9e25a11365ee7dfd99c3fd1a34fe42727fb7393e7fe97aab5b7ae76057a22cd24ce99703f4bdd5d594b03bd394927428741f484ca2ec8e95f53492ded61159742a5a1ce1d1cda48d5dbe5020812e4de468a2cc947743e957ab585ece9b283759c867b66c04caf499da89b41ed26742012762702def3f9fc2ebc281715881280e9700262f5a1e52ce1c90d878a9e4a78ce2e214dd5280efec86200667d15b8b7ee99386b16f4e1dadcd2a1e0715f224ec51e4f43a4f123ae661ed97801a25aa369357f49681a5ef7984573e2aab0a8921d73ce8386f49489848bff2a34f6a237c53e3684650a3a311db40b2c4a3d2e3e034412e3519a40ab07e4a5dbc6b3f6203af1a785e6823d2eec0fe0724170f21af2f786579edb0fa1e1aeaf2e373fda4647a23463ea4a3f4824d62f1ba00a7291272a54f86961e4b75dd99655a8100a02cc7ecd8b85f7398655002f80f55c9b9a10317e5f1e952c9328d46c03e910a05f35070807514857d9a5d9074c3a37bbb3393e141b831943479bba2966530e353d08341197e19a87a0c6fda052fa9a76a1132fcd547d665b49969f46899c84ad699d7fbdc3eb5991209ff7c2d2e4e3d35bbaaaab1386eedb73e31879ff184b72fa582487a0f27f032af55b6cae0e8b54a3389ac20ee5247e31b1f6db6d11258b42991e1d812778de72f0ea9ef4c39407e228f27c5c76a17e5d90bd5884c0ae1b81190536387d122ee0e790968c80eb5f6e920dbc11a590997fc9ccb89e2dd0b7d8d15b7cd44905767bdb23874419b10605577015d2d07a819e1014cdaa22eb65ee5e270ec5b5b947119a1b33757633df1d8c91547f481d236b5c6fc79f9f5ff715b4c8cc3a130027b5a57ab14377eb90a17fd5cf6d3eeb9a35cce49a5be2d5b3f14821f0d9bc374177b8cdea127fa87c95a5baae6e8159614d881e24f3891d79aae22774ede24ab04037b25d86bbf148273f03ac56f4d8d8dce0783d6ecae36e6241f9f85679fbf0c7995824b4adb76aebb4b33747b09c310afb0d29a625dbd13e23152d179380079b09a310b2d9e0f40daea8a03314b2b6ab7c190108bfbf133242c2bb58e42a4c36cecfa9eacb555b24720dbf8e395643e2768d52d58ae0761738b19247224a641ec6b051992031efb00a9abd0e5c5dd340762205555af7796625e842574f4d5c6fcfe8301b7b0585b5e78f6cd4c1df1cbcb37142efce386590a06f80440998a3a915df8cf2a37b4f0757c3d2309d0bebffc9d83c7d3b4746d9b48aabd8e0d10406662a2f112c6993cf2ddc25fa52648ad9bf6dc147f30cc75288712bce524f7ba1ca2704f35cb9a6172036451f648068988379bda63982e33021ebfed5034b08f3602d75ab940395f63a7b44b6b3d8513406dd7c028ff10e6d8046ac70891f55fddcdd47ac217f810a8031db89a5e89f2d43db8210084e51475d46a7b5d6728b476d42dde2610ced2671bae896d4710718f481638c54ea8ed53fdde34e4309ab82ba375b67fbdacb3d86007e2c23e0d90ed41fea6ac7b270cecc1b9da1e5f3e0cb7c7856788626caab15954e7286623aec11bbc4cb5cd4668ced0cb04fb5b9c8af6086b9c65d2128af326dbda77a59520b6aa0154ae04d040ada2941557b13aae14ec202818f306f87f3b89983217107148cb94071bfbe2b5d7bb29a24a4a018492ddc56ceac37520eb75bda4c7bf3cd211275981bfc124b14b5ce86bed6ec47e1ac1876047e5443a3089dbe4cd5093fb4a070005dd4d09797fdfa7b0d4dd501a1535c481bd10d443386845097e561f3f8d6c3fdbd5cff862c5cc50bfabffd0b0e5289f41911b5037ed8e41118a793c0e4c97250ff14e7e43fd0112b5b8c51dc305fdce0d91694c2f1f07a9dcd6201660bced03056eccc6bfc9c7e93ec9d99a9627fef2aadd07cdd5c1bd36482e29803dee6653964ae675e3131b3751450dfb6c2f9a5cee0de8e9cd3d54bff3377a0f1eadd3bdb63ca5635bd016c41ff84b757f1616abd08578b48eb215a14085e19f2117780769a8f6c6e4ab002e8fd5ce87ab33c4a22bac6640c04a3d056cc700ebe6c2938193f50c2d6a9ddd7811ed920be00a5393b3744fddefb62ba66b812b0e9c4150fbc23f3547cfa56a3f31ce7f0b2d091d8a216b993eb97df2059c96d993814d81f6e6b5c99c2db75fc1428cfd13d20f7636ece4e4ff1cdf70f6e5e557604171b1a293aec25094c337a9e420bea0d9ca246a78bf295e837ebe0416e7f9fe3cbc4ecb9b0feafebc9e258209cf0b6277194d6c7d2ec9472100b7f9da2c5369b3e71753764af33df369eb4de66f22fe6094ea5a5494af3d13fb8109b34beb61b74321f77c907b0f14addb61205f32d9aee8a8aaf77f3d7dfc9161dd6b8cc9b63a653996ed39363866bb15393920b9c8247cbb0db66b526dfa17daf6bac259553f858fa9331280ab504e2fa121b77ce587b0e85692f3d650cb7b0a39a00b70b5b5c9fcb98593304ae86a21c80d8be687a98a819b30fac42a8521d1da1e5923d8e9ac75d81c5998a6d7b846c10209d728f54e6491e5872bf7e5cbed71f0cb82c0551953d65438b530a7af1282b012994f9dba7185ba8c00c6d24d9e4b03fe5568170098e45d067ae069477df388d1d4b87df2fab5f89af8706e9695aabbd7fd3bdb2a656ddc547c03a4d4dbef54eaf385f871fb7bc8a53c5c9eb91f4c029503413303b99818fb3aae01eb9e6f291cdd72212240cc5ec5231b031ccdb76f8afbe1caa33d28c39725c8317eeefebbe8c253bb8f5e7ed366bca9a68570702e135ba21d03a4352bfd22716d6d3582a88092e1bb1144c516b00adf84a6111170a6e34d5e1d02dfce0166c6b55795b05811a16dad502f3e4ded3903abfe79d8e26711c5c6d9044b61d281220886104b50a6e125c0792b25ef22999f5e54d0e7481a091349b68cd63bf3cf1fa2a43c5b7e83bb8b38fbabddb0d1579e42bb2154f666c0a3d83fc2df549594e22d01b56668ae9bf521e37d3ba9b077b632466170884ec92a36930c47dd5e7b925931ed27e874226cca9a78abd75e8ca072855ad692b04a86debfee04e5522f48d0eed85aa88b665b50b2c0a64e294fe305014e9d63042a7c1453357ea0d1dbc708df3e0b84bb9e43bc5c7f98444575257e7c6d764d42fa7374b77c6ce7ea8a81e308af082f4742a269a15fdd2378ef24fc65b1e2da9431bb9dc509a52fc9526922179b52666576d27c8d3ea25a0e9ffe20b5a7816782b84f303a4a958bd3a91bf70f650895035d5ad35640083ab4dd7838007a9672027558c6f4cdb25e48218e1a41146dc17e1ae3c7759658390ba8641fe8b6aa6da8a058e75bdd4cded0021fa4f684e8f695391e099cbe64958f337cca67c198047bb8d6dce845b56eb62f9914cdd9e15ff6379e7208ef19f0a67a04b3a66544fa1c58331809570f05a255ed20879121d206af6b7fbcb11cb7e86afedba1bc78c9117a274f0ba05fca657f44a1aa41203547385f495b308d16798e9e3938374d7b71a7936de3ebd04de5f7f327c35fa08e608cdc32f45fb8252be69f590e67b8bfef3116458fafd62de2efc104db85dd32a2b363a32df90af5283fec3cc1dbe6b64184ff762aaa8055d40064867e24363b4e9d656fd46db3bce199f64cd9a7f425ce13b9239f9046a0de9ec8480e2798236fc2e91635ab8f90125143699273bd6fb5e165c4d08a127dd9b25b377e0e3e8a49c2d6c0be2dacb504ad82224009718183bc4679d5e299ebfcdd62be2a8322534425dfded23a8b2024befac97f2c7a95ff0010957bea16f0f8ed85061b8baed88a05f6398f1ec6232da09b86a7a761a29df10ed376ec89f2d8affefff91045b5e16323cf44292562ad72869cf651dae2ff1ffed2081c1bc9759ae643cb3014ade0f680e8e4e85f09241927c0dc87feeb3690082a965c286d6303c69b6aa9e66c086a159cf591df474fbf38dea80235fa21c4559788a4c7afc205bba4abee1a76dba2730f4e0f673567b1bd9305568cf428d58f2e38915f7f90a3e70e1a53402e3bd1e211d09e0c21c7021d8d890a4ba0cc771468be4bb6c154534632b51d4830df38676afccbf3e678ecb3d5113179779623773091c732d6ea5fbfd98b5e8ba6282ae89bc109bb82be27a966495a8b85da7b92442f7a53d319b8e91dcfd9a053f63842b633afa384b33ce6a0468ababaada60c7c4d362a20176bb4b08f6bdd118e06a33a81b118fcb6ecaa1e5f0834b80d6c03b0d734f5b1571d44444db8f771295b177aa953eba2c0dc836e5f0577aacd93596681cb5b911765144eeacc1e0cbe69cf080364fa0838e870391da0591b7e88c21b530676210d4972d6800035bce1177b735ef0ecd8e7fd2440a4d09cce294f3d2cbd3cdefa3d18ca32bdb2cfa3c48a815621f34967a0c728b76387d776472144d34ccb3b8b75ea7fc7f44674451c241f81154212061a650b260be19064470f915fdbc1a21041f9f450d25b3c6cca4ff300c68633d64c6c852a621eb15a5be662689588ebc0dbf4eb2f861719ca0e22a0e70cd75bdcc9c4bbe8eca32239cff891115ac42f1bc2d4d61a14f546faf1f9c0283c8848a9a732c68790a4e94d874e104784f6e814714dcb65b38893386e87db8221de57754b642083a4189e324c84033a4c5290c8e588d180af6dabd52daf55c51c716ec1814e0a05485a79fa86b903d4fcce6008d5a612bef4041bb6a0a2aac159e610dc427def8e9e0b85f8d4bfd097d917d265d7bdcd9581cfdb792b9eaa9d8aef04fb20875e89025ef6f8506c17c5b3be3a7f2f65cde638a0066339e440b8319bed45460997a886731300b2a546e94248f514b7843232933a60e5c04b16f6c20985cf4f226b1a66277630f452161f537038f02024e22abcda8281a10e731ea119fc2ffb4cf4abf99147adb8ad523cda2dbcc647b6595419957b80de079f461ebee19f0281fe751310c38a95bd6221040cb69078b12c90ad2d09e5b24d0995a9dc5705b10e064496887d5a40f8f31b31db60a9e73359eb0c95ad06f7a278e2789d95d7e71d5a25b441b216b8cc4b4d84e3a7270e4d73d6b56f9b4fc3715503e95870b01b5c0eab5a21dc9891745d724811ac765a26c6a8abf0f31228a7d1a692dc9db6b035ca9b60be0d208b58e6365862c0a006107a1c2289bb9d574a891b1d933ce4e9c7f2729420287663edcb034cd2bf1c9fed1dba955175c44a0491bce696d08a61ff10a0dbd64c59a9c3541ffe72b0d37d0fc85b6153f0963972095dc5fe65a42a7da057ebe83f4c268a13d63a3a942066f428e2c3442ac2f2bc9e14f7f0704c6242da67246bf8aafad7384313d1aa37783235ca9131e492c4c8ce76c56eebca5b339800f13a05abd12709d2390be4f1db9b61e50a394aad501354c824ef399ef3eb780038be242325cd5f271bf4b8ca4509a1a231535dbc0b24a873ae14207b9cb5b485e2d053726e39656bf8abe43f818bafe474244987c72c9be046478de921666648eac6e1c52d83a4fab72c220664926a59babf0672d162c34f0c232ccebe243612c2cfcbd209256bf193d426e56704923b17798c055fda18c5a846ee480978f347df31eced7d15f2787b7903e734</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">password</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
+    </article>
+    <!-- license -->
+    
+    <!-- paginator -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href="/2023/05/14/Jetson-Tx1-ubuntu18%E4%BD%BF%E7%94%A8TensorRT%E5%8A%A0%E9%80%9Fyolov5s%E5%AE%9E%E7%8E%B0%E8%A7%86%E9%A2%91%E5%AE%9E%E6%97%B6%E6%8E%A8%E7%90%86/" title="Jetson Tx1_ubuntu18使用TensorRT加速yolov5s实现视频实时推理">
+                    <div class="nextTitle">Jetson Tx1_ubuntu18使用TensorRT加速yolov5s实现视频实时推理</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2023/05/14/Jetson-Tx1-ubuntu18%E5%AE%89%E8%A3%85ROS-Melodic/" title="Jetson_Tx1_ubuntu18安装ROS-Melodic">
+                    <div class="prevTitle">Jetson_Tx1_ubuntu18安装ROS-Melodic</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- comment -->
+    
+        <div class="post-comment">
+            <!-- 来必力 City 版安装代码 -->
+
+
+            
+
+            
+
+            
+
+            <!-- utteranc评论 -->
+
+
+            <!-- partial('_partial/comment/changyan') -->
+            <!--PC版-->
+
+
+            
+            
+
+            
+
+        </div>
+    
+    <!-- timeliness note -->
+    <!-- idea from: https://hexo.fluid-dev.com/posts/hexo-injector/#%E6%96%87%E7%AB%A0%E6%97%B6%E6%95%88%E6%80%A7%E6%8F%90%E7%A4%BA -->
+    
+    <!-- Mathjax -->
+    
+        
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script>
+
+
+    
+</main>
+
+                <!-- profile -->
+                
+            </div>
+            <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+        <div class="social">
+            
+    
+        
+            
+                <a href="mailto:1123836520@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/vacuum-cup" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                    
+                    <img class="profile-qr" src="/assets/wechat.png" />
+                </span>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer qq" title=qq>
+                    
+                    <img class="profile-qr" src="/assets/qq.jpg" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+
+        </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- website approve for Chinese user -->
+    
+    <!-- 不蒜子  -->
+    
+        <div class="busuanzi-container">
+            
+             
+                <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+            
+        </div>
+    	
+</footer>
+
+        </div>
+        <!-- toc -->
+        
+            <div class="toc-wrapper toc-wrapper-loding" style=
+
+
+
+
+
+
+
+    top:50vh;
+
+>
+                <div class="toc-catalog">
+                    <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+                </div>
+                
+            </div>
+        
+        <!-- sidebar -->
+        <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+        <div class="sidebar-panel-archives">
+    <!-- 在 ejs 中将 archive 按照时间排序 -->
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 36
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+        
+            
+            
+            <div class="archive-year"> 2023 </div>
+            <ul class="year-list">
+            
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/14</span>
+            <a class="archive-post-title" href="/2023/05/14/Jetson-Tx1-ubuntu18%E7%BC%96%E8%AF%91python3%E7%9A%84cv-bridge/">Jetson Tx1_ubuntu18编译python3的cv_bridge</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/14</span>
+            <a class="archive-post-title" href="/2023/05/14/Jetson-Tx1-ubuntu18%E5%AE%89%E8%A3%85Pytorch%E4%B8%8Etorchvison/">Jetson Tx1_ubuntu18安装Pytorch与torchvison</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/14</span>
+            <a class="archive-post-title" href="/2023/05/14/Jetson-Tx1-ubuntu18%E4%BD%BF%E7%94%A8TensorRT%E5%8A%A0%E9%80%9Fyolov5s%E5%AE%9E%E7%8E%B0%E8%A7%86%E9%A2%91%E5%AE%9E%E6%97%B6%E6%8E%A8%E7%90%86/">Jetson Tx1_ubuntu18使用TensorRT加速yolov5s实现视频实时推理</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/14</span>
+            <a class="archive-post-title" href="/2023/05/14/Jetson-Tx1-ubuntu18%E5%AE%89%E8%A3%85ROS-Melodic/">Jetson_Tx1_ubuntu18安装ROS-Melodic</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span>
+            <a class="archive-post-title" href="/2023/04/23/Transformer-%E7%9B%B8%E5%85%B3%E6%96%B9%E6%B3%95/">Transformer-相关方法</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span>
+            <a class="archive-post-title" href="/2023/04/09/Python-dataclass%E6%A8%A1%E5%9D%97/">Python-dataclass模块</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/06</span>
+            <a class="archive-post-title" href="/2023/04/06/pytorch-%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95%E8%BF%90%E7%AE%97/">pytorch-矩阵乘法运算</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/03</span>
+            <a class="archive-post-title" href="/2023/03/03/numpy%E9%83%A8%E5%88%86%E6%96%B9%E6%B3%95/">numpy部分方法</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/23</span>
+            <a class="archive-post-title" href="/2023/02/23/Python-%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0-%E4%BC%A0%E5%85%A5%E5%8F%82%E6%95%B0/">Python-可变参数-传入参数</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/02</span>
+            <a class="archive-post-title" href="/2023/01/02/%E5%B0%8F%E6%A0%B7%E6%9C%AC%E5%AD%A6%E4%B9%A0-%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/">小样本学习-关系抽取</a>
+        </li>
+    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2022 </div>
+            <ul class="year-list">
+            
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/19</span>
+            <a class="archive-post-title" href="/2022/12/19/2022-12-19%E7%BB%84%E4%BC%9A%E8%AE%A8%E8%AE%BA/">2022-12-19组会讨论</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/07</span>
+            <a class="archive-post-title" href="/2022/12/07/Tensorflow-SimpleRNN/">Tensorflow-SimpleRNN</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/05</span>
+            <a class="archive-post-title" href="/2022/12/05/Tensorflow-Tensorboard/">Tensorflow-Tensorboard</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/05</span>
+            <a class="archive-post-title" href="/2022/12/05/Tensorflow-%E5%BB%BA%E9%80%A0%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">Tensorflow-建造第一个神经网络</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/04</span>
+            <a class="archive-post-title" href="/2022/12/04/Tensorflow%E5%9F%BA%E7%A1%80/">Tensorflow基础</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/01</span>
+            <a class="archive-post-title" href="/2022/12/01/Pytorch-data-TensorDataset/">Pytorch-data-TensorDataset</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/28</span>
+            <a class="archive-post-title" href="/2022/11/28/2022-11-28%E7%BB%84%E4%BC%9A%E8%AE%B0%E5%BD%95/">2022-11-28组会记录</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/28</span>
+            <a class="archive-post-title" href="/2022/11/28/Diffusion-Model/">Diffusion Model</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span>
+            <a class="archive-post-title" href="/2022/11/26/%E6%8C%87%E6%95%B0%E7%A7%BB%E5%8A%A8%E5%B9%B3%E5%9D%87%EF%BC%88EMA%EF%BC%89/">指数移动平均（EMA）</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span>
+            <a class="archive-post-title" href="/2022/11/26/Python-call-%E6%96%B9%E6%B3%95/">Python 中的特殊成员(属性和方法)</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span>
+            <a class="archive-post-title" href="/2022/11/26/Pytorch-nn-BCEWithLogitsLoss/">(Pytorch)nn.BCEWithLogitsLoss</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/21</span>
+            <a class="archive-post-title" href="/2022/11/21/2022%E5%B9%B411%E6%9C%8821%E6%97%A5%E7%BB%84%E4%BC%9A/">2022年11月21日组会</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/21</span>
+            <a class="archive-post-title" href="/2022/11/21/%E7%A0%94%E7%A9%B6%E6%80%9D%E8%B7%AF%E9%9A%8F%E7%AC%94/">研究思路随笔</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/21</span>
+            <a class="archive-post-title" href="/2022/11/21/%E5%A4%9A%E9%80%9A%E9%81%93%E5%8D%B7%E7%A7%AF%E7%BD%91%E7%BB%9C/">多通道卷积网络</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/21</span>
+            <a class="archive-post-title" href="/2022/11/21/%E8%BF%81%E7%A7%BB%E5%AD%A6%E4%B9%A0/">迁移学习</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/21</span>
+            <a class="archive-post-title" href="/2022/11/21/TCN-%E6%97%B6%E9%97%B4%E5%8D%B7%E7%A7%AF%E7%BD%91%E7%BB%9C/">TCN-时间卷积网络</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/21</span>
+            <a class="archive-post-title" href="/2022/11/21/Transformer%E4%B8%8ELSTM%E4%BC%98%E5%8A%A3%E5%88%86%E6%9E%90/">Transformer与LSTM优劣分析</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/16</span>
+            <a class="archive-post-title" href="/2022/11/16/Bert%E4%B8%AD%E7%9A%84%E8%AF%8D%E5%90%91%E9%87%8F%E5%90%84%E9%A1%B9%E5%BC%82%E6%80%A7/">Bert中的词向量各项异性</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/15</span>
+            <a class="archive-post-title" href="/2022/11/15/11%E6%9C%8814%E7%BB%84%E4%BC%9A/">11月14日组会</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/13</span>
+            <a class="archive-post-title" href="/2022/11/13/Pandas-excel-%E6%95%B0%E6%8D%AE%E8%BF%BD%E5%8A%A0/">Pandas-excel-数据追加</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/13</span>
+            <a class="archive-post-title" href="/2022/11/13/Pytorch-data-DataLoader%E4%BD%BF%E7%94%A8/">Pytorch-data-DataLoader使用</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/09</span>
+            <a class="archive-post-title" href="/2022/11/09/%E5%AF%B9%E6%AF%94%E5%AD%A6%E4%B9%A0/">对比学习</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/04</span>
+            <a class="archive-post-title" href="/2022/11/04/Pytorch-nn-Embedding/">Pytorch-nn-Embedding</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/28</span>
+            <a class="archive-post-title" href="/2022/10/28/Pytorch-%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95/">(Pytorch)中的一些基本方法</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/27</span>
+            <a class="archive-post-title" href="/2022/10/27/Pytorch-nn-Dropout/">(Pytorch) nn.Dropout</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/24</span>
+            <a class="archive-post-title" href="/2022/10/24/my-first-blog/">my first blog</a>
+        </li>
+    
+    </div>
+</div>
+
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+        
+            <span class="sidebar-tag-name" data-tags="private">
+                <span class="iconfont-archer">&#xe606;</span>
+                private
+            </span>
+        
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+        缺失模块，请参考主题文档进行安装配置：https://github.com/fi3ework/hexo-theme-archer#%E5%AE%89%E8%A3%85%E4%B8%BB%E9%A2%98
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="notebook">
+            <span class="iconfont-archer">&#xe60a;</span>
+            notebook
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="深度学习基础">
+            <span class="iconfont-archer">&#xe60a;</span>
+            深度学习基础
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="nlp">
+            <span class="iconfont-archer">&#xe60a;</span>
+            nlp
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="Pandas">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Pandas
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="Python">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Python
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="Pytorch">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Pytorch
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="bert">
+            <span class="iconfont-archer">&#xe60a;</span>
+            bert
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="Tensorflow">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Tensorflow
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="transformer">
+            <span class="iconfont-archer">&#xe60a;</span>
+            transformer
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="numpy">
+            <span class="iconfont-archer">&#xe60a;</span>
+            numpy
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="contrastive">
+            <span class="iconfont-archer">&#xe60a;</span>
+            contrastive
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="小样本学习">
+            <span class="iconfont-archer">&#xe60a;</span>
+            小样本学习
+        </span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+
+    </div>
+</div>
+
+        <!-- site-meta -->
+        <script>
+    var siteMetaRoot = "/"
+    if (siteMetaRoot === "undefined") {
+        siteMetaRoot = '/'
+    }
+    var siteMeta = {
+        url: "https://github.com/vacuum-cup/vacuum-cup.github.io",
+        root: siteMetaRoot,
+        author: "xnf"
+    }
+</script>
+
+        <!-- import experimental options here -->
+        <!-- Custom Font -->
+
+
+        <!-- main func -->
+        <script src="/scripts/main.js?v=20211217"></script>
+        <!-- dark mode -->
+        <script src="/scripts/dark.js?v=20211217"></script>
+        <!-- fancybox -->
+        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" defer></script>
+        <!-- algolia -->
+        
+        <!-- busuanzi -->
+        
+            <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+        
+        <!-- CNZZ -->
+        
+        <!-- async load share.js -->
+        
+            <script src="/scripts/share.js?v=20211217" async></script>
+        
+        <!-- mermaid -->
+        
+            <script src='https://cdn.jsdelivr.net/npm/mermaid@8.x/dist/mermaid.min.js'></script>
+            <script>
+                if (window.mermaid) {
+                    mermaid.initialize({theme: 'dark'});
+                }
+            </script>
+        
+    </body>
+</html>

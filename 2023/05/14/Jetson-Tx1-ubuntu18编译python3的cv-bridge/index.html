@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="zh">
+    <!-- title -->
+
+
+    
+
+<!-- keywords -->
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="author" content="xnf">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="xnf">
+    
+        <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content="">
+    <meta name="description" content="个人学习笔记，暂不公开">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jetson Tx1_ubuntu18编译python3的cv_bridge">
+<meta property="og:url" content="https://github.com/vacuum-cup/vacuum-cup.github.io/2023/05/14/Jetson-Tx1-ubuntu18%E7%BC%96%E8%AF%91python3%E7%9A%84cv-bridge/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="个人学习笔记，暂不公开">
+<meta property="og:locale">
+<meta property="article:published_time" content="2023-05-14T09:30:01.000Z">
+<meta property="article:modified_time" content="2023-05-14T09:53:31.331Z">
+<meta property="article:author" content="xnf">
+<meta property="article:tag" content="private">
+<meta name="twitter:card" content="summary">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="icon" href="/assets/favicon.ico">
+    
+    <title>Jetson Tx1_ubuntu18编译python3的cv_bridge · dudu&#39;s blog</title>
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+    (function (w) {
+        'use strict'
+        // rel=preload support test
+        if (!w.loadCSS) {
+            w.loadCSS = function () {}
+        }
+        // define on the loadCSS obj
+        var rp = (loadCSS.relpreload = {})
+        // rel=preload feature support test
+        // runs once and returns a function for compat purposes
+        rp.support = (function () {
+            var ret
+            try {
+                ret = w.document.createElement('link').relList.supports('preload')
+            } catch (e) {
+                ret = false
+            }
+            return function () {
+                return ret
+            }
+        })()
+
+        // if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+        // then change that media back to its intended value on load
+        rp.bindMediaToggle = function (link) {
+            // remember existing media attr for ultimate state, or default to 'all'
+            var finalMedia = link.media || 'all'
+
+            function enableStylesheet() {
+                link.media = finalMedia
+            }
+
+            // bind load handlers to enable media
+            if (link.addEventListener) {
+                link.addEventListener('load', enableStylesheet)
+            } else if (link.attachEvent) {
+                link.attachEvent('onload', enableStylesheet)
+            }
+
+            // Set rel and non-applicable media type to start an async request
+            // note: timeout allows this to happen async to let rendering continue in IE
+            setTimeout(function () {
+                link.rel = 'stylesheet'
+                link.media = 'only x'
+            })
+            // also enable media after 3 seconds,
+            // which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+            setTimeout(enableStylesheet, 3000)
+        }
+
+        // loop through link elements in DOM
+        rp.poly = function () {
+            // double check this to prevent external calls from running
+            if (rp.support()) {
+                return
+            }
+            var links = w.document.getElementsByTagName('link')
+            for (var i = 0; i < links.length; i++) {
+                var link = links[i]
+                // qualify links to those with rel=preload and as=style attrs
+                if (
+                    link.rel === 'preload' &&
+                    link.getAttribute('as') === 'style' &&
+                    !link.getAttribute('data-loadcss')
+                ) {
+                    // prevent rerunning on link
+                    link.setAttribute('data-loadcss', true)
+                    // bind listeners to toggle media back
+                    rp.bindMediaToggle(link)
+                }
+            }
+        }
+
+        // if unsupported, run the polyfill
+        if (!rp.support()) {
+            // run once at least
+            rp.poly()
+
+            // rerun poly on an interval until onload
+            var run = w.setInterval(rp.poly, 500)
+            if (w.addEventListener) {
+                w.addEventListener('load', function () {
+                    rp.poly()
+                    w.clearInterval(run)
+                })
+            } else if (w.attachEvent) {
+                w.attachEvent('onload', function () {
+                    rp.poly()
+                    w.clearInterval(run)
+                })
+            }
+        }
+
+        // commonjs
+        if (typeof exports !== 'undefined') {
+            exports.loadCSS = loadCSS
+        } else {
+            w.loadCSS = loadCSS
+        }
+    })(typeof global !== 'undefined' ? global : this)
+</script>
+
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+</style>
+
+    <link rel="preload" href="/css/style.css?v=20211217" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/css/dark.css?v=20211217" as="style">
+    <link rel="stylesheet" href="/css/dark.css">
+    <link rel="stylesheet" href="/css/mobile.css?v=20211217" media="(max-width: 960px)">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" as="script">
+    <link rel="preload" href="/scripts/main.js?v=20211217" as="script">
+    <link rel="preload" href="/scripts/dark.js?v=20211217" as="script">
+    <link rel="preload" href="/font/Oswald-Regular.ttf" as="font" crossorigin>
+    <link rel="preload" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" as="font" crossorigin>
+    <!-- algolia -->
+    
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ == undefined) {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js" />')
+        }
+    </script>
+    
+        <body class="post-body">
+    
+        <!-- header -->
+        <header class="header header-mobile">
+    <!-- top read progress line -->
+    <div class="header-element">
+        <div class="read-progress"></div>
+    </div>
+    <!-- sidebar menu button -->
+    <div class="header-element">
+        
+            <div class="header-sidebar-menu">
+        
+            
+                <div style="padding-left: 1px;">&#xe775;</div>
+            
+        </div>
+    </div>
+    <!-- header actions -->
+    <div class="header-actions">
+        <!-- theme mode switch button -->
+        <span class="header-theme-btn header-element">
+            <i class="fas fa-adjust"></i>
+        </span>
+        <!-- back to home page text -->
+        <span class="home-link header-element">
+            <a href=/>Dudu's Blog.</a>
+        </span>
+    </div>
+    <!-- toggle banner for post layout -->
+    
+        
+            <div class="banner">
+        
+            <div class="blog-title header-element">
+                <a href="/">Dudu&#39;s Blog.</a>
+            </div>
+            <div class="post-title header-element">
+                <a href="#" class="post-name">Jetson Tx1_ubuntu18编译python3的cv_bridge</a>
+            </div>
+        </div>
+    
+</header>
+
+        <!-- fixed footer -->
+        <footer class="footer-fixed">
+    <!-- back to top button -->
+    <div class="footer-fixed-element">
+        
+            <div class="back-top back-top-hidden">
+        
+        
+            <div>&#xe639;</div>
+        
+        </div>
+    </div>
+</footer>
+
+        <!-- wrapper -->
+        <div class="wrapper">
+            <div class="site-intro" style="
+
+
+
+
+
+
+
+    height:50vh;
+
+">
+    
+    <!-- 主页  -->
+    
+        
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+                Jetson Tx1_ubuntu18编译python3的cv_bridge
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+                
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页 meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags="private">private</a>
+    
+</div>
+
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">2</span>阅读时长: <span class="post-count reading-time">1 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <!-- 撰写日期 -->
+                    <span class="iconfont-archer post-intro-calander">&#xe676;</span>
+                    <span class="post-intro-time">2023/05/14</span>
+                    <!-- busuanzi -->
+                    
+                        <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                            <span class="iconfont-archer post-intro-busuanzi">&#xe602;</span>
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    
+                    <!-- 文章分享 -->
+                    <span class="share-wrapper">
+                        <span class="iconfont-archer share-icon">&#xe71d;</span>
+                        <span class="share-text">Share</span>
+                        <ul class="share-list">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+
+            <script>
+  // get user agent
+  function getBrowserVersions() {
+    var u = window.navigator.userAgent
+    return {
+      userAgent: u,
+      trident: u.indexOf('Trident') > -1, //IE内核
+      presto: u.indexOf('Presto') > -1, //opera内核
+      webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+      gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+      mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+      ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+      android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+      iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+      iPad: u.indexOf('iPad') > -1, //是否为iPad
+      webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+      weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+      uc: u.indexOf('UCBrowser') > -1, //是否为android下的UC浏览器
+    }
+  }
+  var browser = {
+    versions: getBrowserVersions(),
+  }
+  console.log('userAgent: ' + browser.versions.userAgent)
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded')
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document
+        .getElementsByClassName('intro-title')[0]
+        .classList.add('intro-fade-in')
+      document
+        .getElementsByClassName('intro-subtitle')[0]
+        .classList.add('intro-fade-in')
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in')
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb() {
+    if (browser.versions.uc) {
+      console.log('UCBrowser')
+      fontLoaded()
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular'],
+        },
+        loading: function () {
+          // 所有字体开始加载
+          // console.log('font loading');
+        },
+        active: function () {
+          // 所有字体已渲染
+          fontLoaded()
+        },
+        inactive: function () {
+          // 字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout')
+          fontLoaded()
+        },
+        timeout: 5000, // Set the timeout to two seconds
+      })
+    }
+  }
+
+  function asyncErr() {
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0]
+    o.src = u
+    if (cb) {
+      o.addEventListener(
+        'load',
+        function (e) {
+          cb(null, e)
+        },
+        false
+      )
+    }
+    if (err) {
+      o.addEventListener(
+        'error',
+        function (e) {
+          err(null, e)
+        },
+        false
+      )
+    }
+    s.parentNode.insertBefore(o, s)
+  }
+
+  var asyncLoadWithFallBack = function (arr, success, reject) {
+    var currReject = function () {
+      reject()
+      arr.shift()
+      if (arr.length) async(arr[0], success, currReject)
+    }
+
+    async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack(
+    [
+      'https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js',
+      'https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js',
+      "/lib/webfontloader.min.js",
+    ],
+    asyncCb,
+    asyncErr
+  )
+</script>
+
+            <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+            <div class="container container-unloaded">
+                <main class="main post-page">
+    <article class="article-entry">
+        <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="password is error" data-whm="error">
+  <script id="hbeData" type="hbeData" data-hmacdigest="ef2d71696f3c0fd2a8a3225448e4b9f143364725e26ed7971837347b27a54f53">a4f6af75a3095eb4cbb2a913d3b94b45ec3223407587ce9d7943c4cd2a386e3ae0a1ac5656ba7689f4439210e50580445d533ad5cd87525230857de8a1b0d327e9f44644b327e98c49e0c6b9adc4686305f1547a96ad130e3d8ac9c8942821cb15a3c2e4be39536aeb36ef9b2835ed5143ea3470efc9a5af18bce1d78e5eb6c27b10d7c98bda8c7ea6c9309384f6d6d186ebb9d87ceeed8a59d152b55f7104728712b9cd4bb66fa71d9a2f3ce211e9ffb9450f49a1cdd547be05bbb144c7921b941344e4f5ca41cb5ec76cceec626540f98c5ddfdacff3e8c929e33761b978c611e546bdae4cb4552398d4e2852f26d02ced0899cd2026ad5d26fa06311aa0f5caec1ddbe3e78ed51662d94d4c3cd4ad7d9ce6138994db20d8ebe7daaadc7557893d7f408b5c8311f2cc3f53c16554c9ae9ae44f81236bcd07ee588bb2d9ff3f6de9dba7f0d8e4df691d2b9b14e7d6950ad7992c436bad2a84193c3ae8cb6b869d704ba2138c0d696debdc71d9f111e19d999804b91f35e0e58b44a29913ebffab5f06166d6bb8cfe78345a369c715c42f90f0e5ed0f0edd849a56ac6567c6a6a1ca99cbe9941e72b6ed3b2666ac7a5a43e7bef7e1fbc8a10f4e37257265bea945ef6b50d2bf7b377f2a4277fa4b246b36e79a1bffb90efbbc8c3505f8537f413fbc43de98772347a4bee3b70f3b7029114c1a895bf8b220ee015ca03f5e9743641740bb0e7777b7dacde2047cc80e7bd6b022dfe4ec6faa8f9032c66ee329de2972a63771239062d17f767ec8a59f640d4933af0ea17fbaa6ccc8115c890a17622a92aa529ea8f49fec45114b3ef4865e5dfe25b5a95fab2f4365ceb145801ce0a9f978fa4eb05319f55a085ba364010c4ee77654e473268845086673179efd844e153ea9001691ad15d15007027acfbd6c2b55cbe6d54de27e6508c8105cc8345e2d63069e94eb60617da9eafede7fdd9e1fb94cd09e04d7ffc626a530c4fa063923cb2e8b1901d2a256c5e5c928f4325528afca2f6b712fb893205b7d72510aebf8b02052598418ffbdc118b434cd1b2534dd21518ebec825aa4aad5c4c7d235c08410d10ea2bf0df6cf295ce1dbf9f444f07a88d27d523300d83989a5cea574c22b02ea173cc9a639f7e8bf6ad7a9785d3bbb2fa73bae7e4f8fba3d43e2df584b5ea5057b7b3150e90ce518cbc6067ba48f6e230142dd2101013941ee0be4918d5bbcb937615c9e75989213fe420db9f2bfc495442f86ff2c88d58ea4f14d06a84350e215f1919f19e74a0d28fb5abb03523d4d6443d5f76737c0fce05e628af473cac404df05770bc14d66b1484170d9f7ba11bfaed1678b0abb8e9bc74c19a621264bf0454b8e499383251e1fed7f9eb5958a00b86fe466e83f9dfb06374e87ac6fc5f9d7d2ed28414d9afdc810f18584dc749ea319f358ccea3edd72229a562c8217888c17e9a2849f58f66c4fdf7d13a95c983dff32bdaef42e5172b619dcaf63361a270638bc5ea3a94c6acecce22abb8ce90a4643fb2ff7d0d7487ac3f295fb988c7bd87806713414b2f72551aac03204d917102e8957a340f00d756935d22fe750365c1175ea9ca67ce9c9f4f5453443379c15b68d9e5146470682829eed706d18f24cad4091614ba178c59cc4e44729a54c0996c4ee2be920f8c7c222872b49b04e7abe151bc29e0d388fd3f0b4f30fc513106e9fcd25678af4934e1600929e3a011b55241473a58fcce7482c20aa8988de4256d3487eac9392c130f30bad27d7383d95f8da478358837029023d5ab227ec90dd78f8b815a02a13532ded829a8e836977be7e9a167b5ed0ba8aa6f78ef4971ecba48a0a41525c113fb69ca0043c0f6a67b383b0c96fc4164541e1cb4b4c19d81d286687b199d64be18bed5de365c122634cc2ccd771344d95cd50ced4cb52baf48f1bf5d35cf97e8cb6dc2246e37ece3b2638a929f96f1d78a7f142213beb2c8282fc36999d9dccd303446208f967b3bcb7f25178441b3af4276143603e9527e7255bb96b6af5c7cae0c0d6e9147318dd1bc6a8a717ad32c3c1f98e412751b77721a7d6d9a186d3529190f5cb371678121021b511c593f3fd87d54b9955a18b2070c8822ac16ca1bed2607b1d5747052ad0985b2b7945acba757521805c4278bac3cbdf0c73669c01f8d1294f7ad5d6eb55ff0071a70c3536057e1b21fa2f450ab0865ddb56d036b0438981bb6151976849c8bb91d88c546d3ff6f68a16df6efaa2b6b1e580bf3b2cbf1808603dfcc0b4b2ad876ab2551eead770d35c50492aad6aaf29085f6f7d6a764583f100b4fc598a6f8a806b82e5613709de86bbbaefcf62c75ce3745e30e470289b84c6ab8d95dbf3f39619c5453b1769b9eb2f3bb0d28b3a8ad8897a36ad86de00f4f685da5ddf65e2af9fd67d5ab1288c6c9850b4272615632fb591bdf40196d2f431d730b0fdac7dca34542b04046c362f4726c2966d5761a12ac587415c66febcc76011ecc33320b9b1c73f06c9d37c995e87d18cfef97acc8b5173131d01010c2eee31c08aabfb8618fc7bbf09bfb4291a14e497cffd307e5bda782c1e3ff546665ad8742d060617da90c50a9225bb32912d466a7c7f80ccd0ebe1d0bdc380fd40734c8bd9d7cb9583039ce83c5cdb237f9d24eb1720e3f1ff9684e9074bbf8355cdb0f21c2b079b724d4d3e360a016b00525eab4c7c36d951c9ae3eb79982a2de439afe9dbde3b0a9597127bfc2311771e1823a85949420b83c7fb995577624dfa2345cdf43bf0f8176f88c2657755939bf0ba8f62fc4ada9476f0a77afa931314e343ccfab7dbcbd673bb680d2e06fb294b0e63e4ca0e6d11e4877cfdd74ed0427f0769e752846b9ecdaaf007778ec2e52da28d2902720ab593252c22bfb5244d6ba399c58a5a102742d524734e8493da64caf9e3e71e72d23150f376833a89fc4a10d32dd5337cec30d16eb036e8cb2d9d90f12a2715b9794ba72b01ed87406c5c3ef29ac2bb60c59c971a34df88f7a842a34f0d697a8d13a8f7673d955e2dfa799ab1c8dda8704cd146b204f3dca1252db19f0972978a9d614e0ce32deadf8015b8b46bfad587ca5ef34509a7a392aa3440c42627b0ebae8b3efeb317a8ec8cf58ab2c9ebad700ded87037e9028d35c80d514ef9766264245717ff6d36175d15dd74596be55fedf64212d45661f8991ef069cab23b20a87f23107bd6a34ea77ed37958a9d852e1e6f8e8187629fd1d01e4a3b7206bf2caa8cb282c94ac4971a5fc9f898d286884b333d8acd8a0c40730fcf375d2fd76266915906f8f1a22d0a50d2462867ec61df8392bc98589914a4ac5cb52558ac9a997e21d5721ca3ae54908d786e74ee0da26557c5789645e74b9df22479ea8724d3f32f927909a2c515a3d293b53953f4a009ec76baf3594e83fe1ddcfeae206bcb9b829e72159b8271ab59bb4705d17ccd24c32978a8db36cb73d7b06d58e6b5b929c4682f47399618a07d54dd60c497ce691133851407f505e6d6b551b454f491ae4c147b4c6fb7aa65bfae5543b585da06fd61eb179cb67a3ac322912947d71fcf829e36718fbead58c34a6a2d3020a41a9343efbb9c74781489d55ffe555cc688e50d814e643b795f58e9b0367a7c0f1f59f722566a31816556d639892552827531d5cbccbd2bba820f62e298855941380ef9bb126d455f426434f9ebe348ea990dcac8457668b39eb9e28739dc0d35aa370a00e0e83de4731de89d875fff60f420e26034425062bf31c4b892b17fc6f771b9790c32d40d4c0a59bee3aa12a2f88c124717bbfa5b51d30da7aedc424a9ae20a16e43c44e0fb42e67bc3f6cf2642bdabf08414b3e0305e90e92ea6cf575037017b2645b62c8a0299074288f2437e1b61be20628f9c8497902c77f19c4ff7a193e15376ca6c091b398c7ac626e35a3408d6367b087cd9bf29290ef2227299ce5a15f50089245f40867baeabe2823abfc0ab46d42349e8884bf48e0d9b30956a6fc38024ea700607029da5e84cc2ae9199917bdf05588ee9e8899743cb30685ddad002ac018af9207cfa15d9e0fe97e25b7eb61d3a15243c15e449d1524b67560a1f8b014d5556d1ec5e8ec504e64cc9340e69df205bc0433d56f250b6dc41c945090f6ee1b474fa7fce4df296c95ef2cd0ec8cd50310eed74bba7953d5507bf1b7124fd4e10263ff7d5876f4cfaf07b5496f2dd1ec20f7d85f8b2d76708569c27929af2f174e8cdd822375dea590c0fd460a0414f1a057be60853afb4a9b78c240d934546ea3292ea3baa3b8f6f24bcfcb6b6c749431edfd3fe0969eb15b591474d7e180cf3ecf45e8973c4c5997c17610ebff65baabc55c1d34957d7d95e0f8c9bfa6b7246fb58d693a4f88232abb7548dd00bc1e6ad2ad1d33d97556b31165351af028db089981c982546eb4cc3ef60a9ab3c100b72eeabc050745fbc5196547c7a70a0f695b4c5d52271048b9f3389fac3fe96d48430a31a3b9e0f743d10771c3caa8aa926f1e86319cb020eee360afca16eda13e1bc5482440ec0f412e7f5a77653c479cf82930323a78aa371a32d759ac28b4c9797b4f526dc422130cc9357e62ac18567ac14c6d550b397744edac20f8e72e4260295025453de8fde0207fa2d17dea03e143763443830149e6519e6d5948d96908d0a64a6210b4b3c548545ced7661d54c56a1b5dfbe9c666772a8b2ec38c9205b1924ceb58c5e19ddc4eea43d799a41078ede1442cc27d2b475b3575a66b217243a114fd757a0a652b9a673e3e0be56728a22199cc3cdcd7fbf23c54efcf327f0a16fb3ba633ef19bbff3e3e120b6986f7538df50121ac4f23c311aadaac90caf71b624abfd0b66cfa071d6bd431a4613c24e6338d8f225de84567f3d90999949ea1703e6b124aab728c8ab6835670016d1005d710f22fccaf2dfd3ad988c1ced4eb4c946e7757c730e2257810570c67f39603870b6776515a5fc0eaab17dda4a7e50fb6d5b30f6d5f0bbc30471b821bc079a6f6e37fc8aee3a1f84fedc20484054ab1f228fc9e664b1de1633395f2fd75ecbeecc8c0533a1c72215b7ffde621ed56f70b7a32ab4630aa84b3def0534966ee1dab39b9375b23501e9299602cca12400826f5a1d28926a5689242fa4f4c6aa203ff73e55923fe71f8f3856e9508be7bcc93382da01f0bbf3d2fd9ec20074be12e7e97d649ab3a9414d2a97e9820c7684a36fa044a6aeeaa2899ff442ab355d07d8db28dd2daac449134d435d53fbb15620e83eee8f7aa0fa6f4962fb49e348f5239fde0f2df3c216ad66f7c73b8a85c0658d6548392ff291e95554381e1e41e0240aad7826087b58c7ac7ddebe00046354606eb3d7586ffbe4b660b9ff5294b752e62d3621615237d70f997a635d4579fde8d02970a918c61b94cd83bb904c72e7ea700a99b4800c3cce7c7e845b9c7126699bd00d127e38172bb243584052e0ca1fdc7f2a7023a02707bbe97729a0f03704cbcbd5408187cacfe1e40a13db98e1321ffc487224ac29b288f398dce89d13887a6dfdcc8b1fffd8d961d86afafd789a49f38efebc2be84e45fdee5f113b0058f61144e35105a4a75447b9ef745ef5b36bdf2e50e6e3ab180f141f2f198c15555fe02f2e854250fd075af181b07555e60d5a75e9d6e5e969dadd40380a867b3294ac97b7252b01127e3d8b0f324e751e87af869368a56ffbe501e027a60f8e72ae48cea372acd49582d3605f62c8067d415c32e8078d486647c9a8d24d30099a39f01d60d0cf63344dc3d915e3b8947b104cd7244b5c3c1d65e043871582a4b84d77c8199b1a319ea2d53ecda473934facbf891738cba337f8ce14b67022598b714f5fcc7626fc80727afee0095af189fece4d6fcd33edde2aeeea6a8d2b9a5c37aa8a3aa0e46f2a9f736f0357d2f24d4d62d3a020f349ce1ba8c00bf2409095b60b91cffca3420f647ff2756c0064a00e4728af41851571332ec96ece54d38fbbd788166ffdbd56618690bafca1e25389073e61c4e42159eda66f6ce3f1b6b49b3f40503669a13dfadf404614bb628655d631ec76f8b080333bd4b39a3a82667861686a2ec7a02353c872577dbcf3424209ae614a354d60fe18f28c1af7292d11267278be074cbcc9293b5a4d193e667755cd9666995835e45aade063d2b3a601007654b7c6e0c975316a3174fecddeba8523951ea8a2c3b2ddc0dcfa803d0f31c8fa000d53791236a7753c17735964888d83963d15134fbeb50d6f6ce770ee45346f062797270c2918417bd4c12c32544c460c94d5cd768e858bc02dbe0af9ccc5b00815be0d5e5d62a4ed9283fdc62279a2afc35d514ba8e8dccc27784d33a9dd5bef17ecab384010832e50a73ad05832afe3902e80b3ae4e32d6226aa8c253924b3ecb793cfdca5b6723d217657585f71816018c952e1446d4adbc84f506639dd7fb147d2ee934def97532603c98747ea739d9cd328f83b9a05a93f3c3d41d1c7d03385ff52d5b58ca9a4fdd3d51ce93dff01a6551387e687d84ea41916b0b95f9e59321d21ee7c69700fdb9d73f326732317544b95c75827bec11381edca417a232eefbb7beb4f8aa36c20c0eef93208327e1b870f6c5106a9ee3d7dc555cdbfeddcc6531d75e5ec0e1822fedec532cc5c879bd6c6a008fc322702e5a2c6a6e5b6fde718c6b0ab4094bd9ca77ac680cb8591ba7f20ceb6822610cdca96c1a2673f57bd7234ef810f4466d4ff49e4d4a6d69e59c60edd264bc1fe4dca2490e3bd998056ac06b9ba753e6004708bd293711bc20ff78f2e8f6baac57e2004b66eaa03d9f7a4b9989dd47045fbf2f5088b1771794f4e443523a17fea3d9be49e0ba40b87c83857b60f2eac2bb5a540c6a7593958209187dc3f247225ee68ef6552fc3863c67445aa78a5b5c6ed60940917928454793de1ebda52e178c8ecb98adcd5e0410631ec564882d86962c110bd04ee2e509aa2ba21765403ba562f81f9fca0bb65b8fbb69e11bfc863390f474179640c3c6c72c28d5c80baf3b9296c93e97d7ba33d3f9b0706e64603cb0fb8d1ebca2443ab47e356fddc9cc20750c72a803e8909fa9f48702ce3f5125d6052750f139af7e9ae691c48f721c362bac98a78492adf0a8c781a9983d6cf975d3584e6e361abc8c3d872476c0d6fdbb2f4e1752b32ba06ff96cd46746918f124c7f3fc31f1d3d5cc6a745eddde811d400434be012aa9d7c4d2df608510f957e62e5ae842075d1db9d13983d895ade6c7849ad88c42d3bb09a1d85f21ad7a7b9ca105c5d149ef4b2b644c77b7b3d36320d823a95a139cc967bcd6ae2b19d91a2ca07f3395c444bc85ba635355ee75e78278b7802e5c97e461c90e294b2b13730ac6561801d69cebc3e2041a51477a3c5e961ccc4cb46dff0c453d67fb064d7e15bdb3febd4340c1df29b466f3888e7757fc2874e62e1b209ae8d032df316a035f33e119ba95f5a2de309259109c06386a29c10f731961e6011e3ac3d4666291d99899edf3b2269fc17301e6ec1903bd5e240498e99ce56500e7cf76147c56e8365dcd9fc2b1f1b77e820ef03616373365c909a937cb84fac9d1eb613e18dd2097e95c75403896486a6c28f20358beb76c414eabfca4a3fc19622b898298a8c63bf9a2844a8d4e6ebc760d6e4b11d8d51c73c2158397aa9295345c919ba65c8a0456a5b811eddfddad8f1702db903cdddb3ea7952b7428ef83b7ddeabfe774e7b2db1c7d4030d63200fbd52522fc5c0777131216c24f905613991267eb55673a569f8927a9c09bcbd6a625a46ca46bc961fefaa492290e91994d84eccd74183a7fba204e9b850baa9210862e269bbadb5e950198223555a8b3b4d2dc5548d594baac0dc14ece8f689a2d0b8ccf62a208e3057340c68e238f7969e2f4c29055eff57686db2ba94245614873ed0864e9ed9d809a2d0a64d56a11c69e4f908b9caad773e208b1c1fadab98c221f2bcbe8be11d4073318c87582d4e6f2a346eae61b087e3cf856057240e02ec4687a7d5fc14c2a04004d0e89b2425ab553fe77e43bb1f422a1235f45c8ffc5fca3a48aea67d329b269f6745311f95171bd5043f65edce06c74de732866b92c0c84f41ad2c4578d34ab2cb630dd01d48a68249c0beb9296d5851d00bd0061b354ed3a19c081a9cf6b00315a982ba3d6a9858984924fad9ad1f40d18354317f49a998bac84c7053da9a6784c9f941a56ccfc78fe82ebf2bdb49fc5279c90f18b65b7eb6032d3d136f79e447acaa3de4f06751066aef1788a5cf75591ec0c86b9e7408f9111a176a200c36f8150ac1394f68c4ef82988e119ec8cd0ca371c24da7117380fccfc2c5359c52ca20c4aea3a33b0b97edaa405e3edea2d2c4560df44d327c2f341fa80643b8aeffa4e8547d93a43d565c63abe4005560379b281a29d1bd0a4673d2e5ff488303602884b6893edb158799655f1820ce266de5757c6266f24221f78a4e3c2a6e178879ef7694fe77de40b23e6be0d1a33204061d941efbcee0a6ad6b5ab34a59b31228df502bc1cf7ad046528170d7ad67a3769eaf424d5e50b8560443e6fa71d9f06dc10010193c8f3949659247558940a50c666c96d35d9458067412c1695c7d36ade2fb5a3d34e49218e0eb053c6126557a26926f460f33863b772074a46ef7c2acacefdbddb8335a1604ca949b0700290c96bc7dc61269288309fb6064b64ec5e304f6778c051605cdcd5e0a37fe06ac8a083094517a263aa7def5dab1e9c506fa7a94b1f70b17fab1cbf769f29a86ec9432f05b4f621614be9304367984c9cf66670056693bc0d0d87fc609081b4fcb0cb5d0a51fba98cab70a82ce42368c47200e21fdd6f125b887b1ca1ad04b7d5f6aeb32b8f139085395f35c3bf4b462fe597ecac441ceee8a66ba612579f2a971f468ae8716ac691f69a159ea271588a74fb99782615a2114485df3204c7879d92945c8ee46b7deabc1212da5135056ae26cd2a5ec27d985c9e186e4dee7b8b0a545e9f63dde9ea605af6cb51ecf72ddde2cfb2894658c5ca1b718407770cf877afefb766276c76aa7380dc66bbdbd736659c758a79ebb088827dbc8ec500641e63f2b81c18bc6079042c08565f85d1ba27cb80169fc547560e0eacf8fae618fd24c8ab97fc9c62e94a4db9d106b32b7fc7c35900b43608ba25346b736209155f8a0a28f5b54209b4dc76edc05045a8dfafd34cb969a9a8f39dc7c55b6b2d8333cb8fbb1f56e234d8853c162f9cb31f14fbc8daa4269833fb3cdfd576ab27cf55df524f9a220f6e86b9e1f78193eb9fe4e4fc76a8f4796cfef295195de8546c57c435c5565f4dcba3c850a974d7b1752fddf69ad07788fbf266255d88a4428eada4ccc81f83395428ec0907c6e6b261c9cc2d743ab3a2c3a433f53f0276b4d8ba42d3deaa38d2505ea01b2cf284d86a64517f4050032fb9906f4f28c4ae46f9d7ca2dbe6ff9cdd842ebc2ed704c7ca9532db8c97edb19f17d8b9c04b5f032e20b60c2e5d3194ab212340244085dbd06279d5b1b0f1630d5f635891fdbbcf9bda8824b230db482a67a5aa26dd72750b29fb114a6db71895495375b21b56c2689d52543f7f6840d16bc3d83ef874e7460503f6ac6c8eae51d0cacbea85edd72dabf6869492c53ec8bbdf572929f35a211676793f4ce85d2165ed4bc742eeb95bf0a1ca3c5a2e8886357b0a135bc10ad9c3dfbb880db955b6d615206bfd23f8b9200e19fa846e8b979b8c444b9ba11bc26443</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">password</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
+    </article>
+    <!-- license -->
+    
+    <!-- paginator -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2023/05/14/Jetson-Tx1-ubuntu18%E4%BD%BF%E7%94%A8TensorRT%E5%8A%A0%E9%80%9Fyolov5s%E5%AE%9E%E7%8E%B0%E8%A7%86%E9%A2%91%E5%AE%9E%E6%97%B6%E6%8E%A8%E7%90%86/" title="Jetson Tx1_ubuntu18使用TensorRT加速yolov5s实现视频实时推理">
+                    <div class="prevTitle">Jetson Tx1_ubuntu18使用TensorRT加速yolov5s实现视频实时推理</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- comment -->
+    
+        <div class="post-comment">
+            <!-- 来必力 City 版安装代码 -->
+
+
+            
+
+            
+
+            
+
+            <!-- utteranc评论 -->
+
+
+            <!-- partial('_partial/comment/changyan') -->
+            <!--PC版-->
+
+
+            
+            
+
+            
+
+        </div>
+    
+    <!-- timeliness note -->
+    <!-- idea from: https://hexo.fluid-dev.com/posts/hexo-injector/#%E6%96%87%E7%AB%A0%E6%97%B6%E6%95%88%E6%80%A7%E6%8F%90%E7%A4%BA -->
+    
+    <!-- Mathjax -->
+    
+        
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script>
+
+
+    
+</main>
+
+                <!-- profile -->
+                
+            </div>
+            <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+        <div class="social">
+            
+    
+        
+            
+                <a href="mailto:1123836520@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/vacuum-cup" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                    
+                    <img class="profile-qr" src="/assets/wechat.png" />
+                </span>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer qq" title=qq>
+                    
+                    <img class="profile-qr" src="/assets/qq.jpg" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+
+        </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- website approve for Chinese user -->
+    
+    <!-- 不蒜子  -->
+    
+        <div class="busuanzi-container">
+            
+             
+                <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+            
+        </div>
+    	
+</footer>
+
+        </div>
+        <!-- toc -->
+        
+            <div class="toc-wrapper toc-wrapper-loding" style=
+
+
+
+
+
+
+
+    top:50vh;
+
+>
+                <div class="toc-catalog">
+                    <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+                </div>
+                
+            </div>
+        
+        <!-- sidebar -->
+        <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+        <div class="sidebar-panel-archives">
+    <!-- 在 ejs 中将 archive 按照时间排序 -->
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 36
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+        
+            
+            
+            <div class="archive-year"> 2023 </div>
+            <ul class="year-list">
+            
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/14</span>
+            <a class="archive-post-title" href="/2023/05/14/Jetson-Tx1-ubuntu18%E7%BC%96%E8%AF%91python3%E7%9A%84cv-bridge/">Jetson Tx1_ubuntu18编译python3的cv_bridge</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/14</span>
+            <a class="archive-post-title" href="/2023/05/14/Jetson-Tx1-ubuntu18%E5%AE%89%E8%A3%85Pytorch%E4%B8%8Etorchvison/">Jetson Tx1_ubuntu18安装Pytorch与torchvison</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/14</span>
+            <a class="archive-post-title" href="/2023/05/14/Jetson-Tx1-ubuntu18%E4%BD%BF%E7%94%A8TensorRT%E5%8A%A0%E9%80%9Fyolov5s%E5%AE%9E%E7%8E%B0%E8%A7%86%E9%A2%91%E5%AE%9E%E6%97%B6%E6%8E%A8%E7%90%86/">Jetson Tx1_ubuntu18使用TensorRT加速yolov5s实现视频实时推理</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/14</span>
+            <a class="archive-post-title" href="/2023/05/14/Jetson-Tx1-ubuntu18%E5%AE%89%E8%A3%85ROS-Melodic/">Jetson_Tx1_ubuntu18安装ROS-Melodic</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/23</span>
+            <a class="archive-post-title" href="/2023/04/23/Transformer-%E7%9B%B8%E5%85%B3%E6%96%B9%E6%B3%95/">Transformer-相关方法</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span>
+            <a class="archive-post-title" href="/2023/04/09/Python-dataclass%E6%A8%A1%E5%9D%97/">Python-dataclass模块</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/06</span>
+            <a class="archive-post-title" href="/2023/04/06/pytorch-%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95%E8%BF%90%E7%AE%97/">pytorch-矩阵乘法运算</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/03</span>
+            <a class="archive-post-title" href="/2023/03/03/numpy%E9%83%A8%E5%88%86%E6%96%B9%E6%B3%95/">numpy部分方法</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/23</span>
+            <a class="archive-post-title" href="/2023/02/23/Python-%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0-%E4%BC%A0%E5%85%A5%E5%8F%82%E6%95%B0/">Python-可变参数-传入参数</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/02</span>
+            <a class="archive-post-title" href="/2023/01/02/%E5%B0%8F%E6%A0%B7%E6%9C%AC%E5%AD%A6%E4%B9%A0-%E5%85%B3%E7%B3%BB%E6%8A%BD%E5%8F%96/">小样本学习-关系抽取</a>
+        </li>
+    
+        
+            
+            
+                
+                </ul>
+            
+            <div class="archive-year"> 2022 </div>
+            <ul class="year-list">
+            
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/19</span>
+            <a class="archive-post-title" href="/2022/12/19/2022-12-19%E7%BB%84%E4%BC%9A%E8%AE%A8%E8%AE%BA/">2022-12-19组会讨论</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/07</span>
+            <a class="archive-post-title" href="/2022/12/07/Tensorflow-SimpleRNN/">Tensorflow-SimpleRNN</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/05</span>
+            <a class="archive-post-title" href="/2022/12/05/Tensorflow-Tensorboard/">Tensorflow-Tensorboard</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/05</span>
+            <a class="archive-post-title" href="/2022/12/05/Tensorflow-%E5%BB%BA%E9%80%A0%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">Tensorflow-建造第一个神经网络</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/04</span>
+            <a class="archive-post-title" href="/2022/12/04/Tensorflow%E5%9F%BA%E7%A1%80/">Tensorflow基础</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/01</span>
+            <a class="archive-post-title" href="/2022/12/01/Pytorch-data-TensorDataset/">Pytorch-data-TensorDataset</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/28</span>
+            <a class="archive-post-title" href="/2022/11/28/2022-11-28%E7%BB%84%E4%BC%9A%E8%AE%B0%E5%BD%95/">2022-11-28组会记录</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/28</span>
+            <a class="archive-post-title" href="/2022/11/28/Diffusion-Model/">Diffusion Model</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span>
+            <a class="archive-post-title" href="/2022/11/26/%E6%8C%87%E6%95%B0%E7%A7%BB%E5%8A%A8%E5%B9%B3%E5%9D%87%EF%BC%88EMA%EF%BC%89/">指数移动平均（EMA）</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span>
+            <a class="archive-post-title" href="/2022/11/26/Python-call-%E6%96%B9%E6%B3%95/">Python 中的特殊成员(属性和方法)</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/26</span>
+            <a class="archive-post-title" href="/2022/11/26/Pytorch-nn-BCEWithLogitsLoss/">(Pytorch)nn.BCEWithLogitsLoss</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/21</span>
+            <a class="archive-post-title" href="/2022/11/21/2022%E5%B9%B411%E6%9C%8821%E6%97%A5%E7%BB%84%E4%BC%9A/">2022年11月21日组会</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/21</span>
+            <a class="archive-post-title" href="/2022/11/21/%E7%A0%94%E7%A9%B6%E6%80%9D%E8%B7%AF%E9%9A%8F%E7%AC%94/">研究思路随笔</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/21</span>
+            <a class="archive-post-title" href="/2022/11/21/%E5%A4%9A%E9%80%9A%E9%81%93%E5%8D%B7%E7%A7%AF%E7%BD%91%E7%BB%9C/">多通道卷积网络</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/21</span>
+            <a class="archive-post-title" href="/2022/11/21/%E8%BF%81%E7%A7%BB%E5%AD%A6%E4%B9%A0/">迁移学习</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/21</span>
+            <a class="archive-post-title" href="/2022/11/21/TCN-%E6%97%B6%E9%97%B4%E5%8D%B7%E7%A7%AF%E7%BD%91%E7%BB%9C/">TCN-时间卷积网络</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/21</span>
+            <a class="archive-post-title" href="/2022/11/21/Transformer%E4%B8%8ELSTM%E4%BC%98%E5%8A%A3%E5%88%86%E6%9E%90/">Transformer与LSTM优劣分析</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/16</span>
+            <a class="archive-post-title" href="/2022/11/16/Bert%E4%B8%AD%E7%9A%84%E8%AF%8D%E5%90%91%E9%87%8F%E5%90%84%E9%A1%B9%E5%BC%82%E6%80%A7/">Bert中的词向量各项异性</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/15</span>
+            <a class="archive-post-title" href="/2022/11/15/11%E6%9C%8814%E7%BB%84%E4%BC%9A/">11月14日组会</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/13</span>
+            <a class="archive-post-title" href="/2022/11/13/Pandas-excel-%E6%95%B0%E6%8D%AE%E8%BF%BD%E5%8A%A0/">Pandas-excel-数据追加</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/13</span>
+            <a class="archive-post-title" href="/2022/11/13/Pytorch-data-DataLoader%E4%BD%BF%E7%94%A8/">Pytorch-data-DataLoader使用</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/09</span>
+            <a class="archive-post-title" href="/2022/11/09/%E5%AF%B9%E6%AF%94%E5%AD%A6%E4%B9%A0/">对比学习</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/04</span>
+            <a class="archive-post-title" href="/2022/11/04/Pytorch-nn-Embedding/">Pytorch-nn-Embedding</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/28</span>
+            <a class="archive-post-title" href="/2022/10/28/Pytorch-%E4%B8%AD%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95/">(Pytorch)中的一些基本方法</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/27</span>
+            <a class="archive-post-title" href="/2022/10/27/Pytorch-nn-Dropout/">(Pytorch) nn.Dropout</a>
+        </li>
+    
+        
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/24</span>
+            <a class="archive-post-title" href="/2022/10/24/my-first-blog/">my first blog</a>
+        </li>
+    
+    </div>
+</div>
+
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+        
+            <span class="sidebar-tag-name" data-tags="private">
+                <span class="iconfont-archer">&#xe606;</span>
+                private
+            </span>
+        
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+        缺失模块，请参考主题文档进行安装配置：https://github.com/fi3ework/hexo-theme-archer#%E5%AE%89%E8%A3%85%E4%B8%BB%E9%A2%98
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="notebook">
+            <span class="iconfont-archer">&#xe60a;</span>
+            notebook
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="深度学习基础">
+            <span class="iconfont-archer">&#xe60a;</span>
+            深度学习基础
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="nlp">
+            <span class="iconfont-archer">&#xe60a;</span>
+            nlp
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="Pandas">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Pandas
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="Python">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Python
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="Pytorch">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Pytorch
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="bert">
+            <span class="iconfont-archer">&#xe60a;</span>
+            bert
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="Tensorflow">
+            <span class="iconfont-archer">&#xe60a;</span>
+            Tensorflow
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="transformer">
+            <span class="iconfont-archer">&#xe60a;</span>
+            transformer
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="numpy">
+            <span class="iconfont-archer">&#xe60a;</span>
+            numpy
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="contrastive">
+            <span class="iconfont-archer">&#xe60a;</span>
+            contrastive
+        </span>
+    
+        <span class="sidebar-category-name" data-categories="小样本学习">
+            <span class="iconfont-archer">&#xe60a;</span>
+            小样本学习
+        </span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+
+    </div>
+</div>
+
+        <!-- site-meta -->
+        <script>
+    var siteMetaRoot = "/"
+    if (siteMetaRoot === "undefined") {
+        siteMetaRoot = '/'
+    }
+    var siteMeta = {
+        url: "https://github.com/vacuum-cup/vacuum-cup.github.io",
+        root: siteMetaRoot,
+        author: "xnf"
+    }
+</script>
+
+        <!-- import experimental options here -->
+        <!-- Custom Font -->
+
+
+        <!-- main func -->
+        <script src="/scripts/main.js?v=20211217"></script>
+        <!-- dark mode -->
+        <script src="/scripts/dark.js?v=20211217"></script>
+        <!-- fancybox -->
+        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" defer></script>
+        <!-- algolia -->
+        
+        <!-- busuanzi -->
+        
+            <script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" async></script>
+        
+        <!-- CNZZ -->
+        
+        <!-- async load share.js -->
+        
+            <script src="/scripts/share.js?v=20211217" async></script>
+        
+        <!-- mermaid -->
+        
+            <script src='https://cdn.jsdelivr.net/npm/mermaid@8.x/dist/mermaid.min.js'></script>
+            <script>
+                if (window.mermaid) {
+                    mermaid.initialize({theme: 'dark'});
+                }
+            </script>
+        
+    </body>
+</html>
