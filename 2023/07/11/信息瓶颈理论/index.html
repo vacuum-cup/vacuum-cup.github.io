@@ -19,18 +19,28 @@
         <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
     
     <meta name="description" content="">
-    <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="https://github.com/vacuum-cup/vacuum-cup.github.io/archives/2023/02/index.html">
+    <meta name="description" content="1. 基础知识补充：信息论的部分基础概念   信息量：   对某个事件发证或者变量出现的概率的度量。一般一个事件发生的概率越低，事件包含的信息量越大。 香农提出的衡量信息的公式： \[ f(p)&#x3D;log\frac{1}{p}&#x3D;-log{p} \]   熵（entropy）：  实际就对时间不确定程度的一个度量，可以用来衡量一个系统的稳定程度。 公式定义： 对于">
+<meta property="og:type" content="article">
+<meta property="og:title" content="信息瓶颈理论">
+<meta property="og:url" content="https://github.com/vacuum-cup/vacuum-cup.github.io/2023/07/11/%E4%BF%A1%E6%81%AF%E7%93%B6%E9%A2%88%E7%90%86%E8%AE%BA/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1. 基础知识补充：信息论的部分基础概念   信息量：   对某个事件发证或者变量出现的概率的度量。一般一个事件发生的概率越低，事件包含的信息量越大。 香农提出的衡量信息的公式： \[ f(p)&#x3D;log\frac{1}{p}&#x3D;-log{p} \]   熵（entropy）：  实际就对时间不确定程度的一个度量，可以用来衡量一个系统的稳定程度。 公式定义： 对于">
 <meta property="og:locale">
+<meta property="og:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20230711224608328.png">
+<meta property="og:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/v2-8cf04c938180b3fd267b600f23425e91_720w.webp">
+<meta property="og:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20230711231649670.png">
+<meta property="og:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20230712111950186.png">
+<meta property="og:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20230712112121251.png">
+<meta property="article:published_time" content="2023-07-11T09:27:59.000Z">
+<meta property="article:modified_time" content="2023-07-12T03:42:08.978Z">
 <meta property="article:author" content="xnf">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20230711224608328.png">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link rel="icon" href="/assets/favicon.ico">
     
-    <title>dudu&#39;s blog</title>
+    <title>信息瓶颈理论 · dudu&#39;s blog</title>
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
 - testing support for link[rel=preload]
@@ -217,6 +227,8 @@
         }
     </script>
     
+        <body class="post-body">
+    
         <!-- header -->
         <header class="header header-mobile">
     <!-- top read progress line -->
@@ -246,6 +258,17 @@
     </div>
     <!-- toggle banner for post layout -->
     
+        
+            <div class="banner">
+        
+            <div class="blog-title header-element">
+                <a href="/">Dudu&#39;s Blog.</a>
+            </div>
+            <div class="post-title header-element">
+                <a href="#" class="post-name">信息瓶颈理论</a>
+            </div>
+        </div>
+    
 </header>
 
         <!-- fixed footer -->
@@ -272,24 +295,77 @@
 
 
 
+    height:50vh;
+
 ">
     
     <!-- 主页  -->
+    
+        
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
+            
+                信息瓶颈理论
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
             
+                
+            <!-- 404 -->
+            
         </p>
         <!-- 文章页 meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+    
+</div>
+
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">1.8k</span>阅读时长: <span class="post-count reading-time">7 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <!-- 撰写日期 -->
+                    <span class="iconfont-archer post-intro-calander">&#xe676;</span>
+                    <span class="post-intro-time">2023/07/11</span>
+                    <!-- busuanzi -->
+                    
+                        <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                            <span class="iconfont-archer post-intro-busuanzi">&#xe602;</span>
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    
+                    <!-- 文章分享 -->
+                    <span class="share-wrapper">
+                        <span class="iconfont-archer share-icon">&#xe71d;</span>
+                        <span class="share-text">Share</span>
+                        <ul class="share-list">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -419,37 +495,234 @@
 
             <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
             <div class="container container-unloaded">
-                <main class="main index-page">
+                <main class="main post-page">
+    <article class="article-entry">
+        <!--toc-->
+<h2><span id="1基础知识补充信息论的部分基础概念">1.
+基础知识补充：信息论的部分基础概念</span></h2>
+<blockquote>
+<ol type="1">
+<li>信息量：</li>
+</ol>
+<blockquote>
+<p>对某个事件发证或者变量出现的概率的度量。<font color="red"><strong>一般一个事件发生的概率越低，事件包含的信息量越大</strong>。</font></p>
+<p>香农提出的衡量信息的公式： <span class="math display">\[
+f(p)=log\frac{1}{p}=-log{p}
+\]</span></p>
+</blockquote>
+<ol start="2" type="1">
+<li><p>熵（entropy）：</p>
+<blockquote>
+<p>实际就对时间<strong>不确定程度</strong>的一个度量，可以用来衡量一个系统的稳定程度。</p>
+<p>公式定义：</p>
+<p>对于一个离散型随机变量<span class="math inline">\(X\sim
+p(x)\)</span>，其离散熵可以定义为： <span class="math display">\[
+H(X)=-\sum_{x\in X}p(x)logp(x),log以2为㡳，单位为比特
+\]</span>
+<font color="red"><strong>事件发生的不确定性越高，它的熵就越高,那么也就是说，该随机变量包含的信息量越大</strong></font></p>
+<p>举例： 扔硬币<span class="math inline">\(X\)</span>与扔骰子<span class="math inline">\(Y\)</span>两个事件熵为：<span class="math inline">\(H(X)=1,H(Y)=log6\)</span>.</p>
+<p>其实就是意味着，在计算机中，要表示抛硬币的结果，需要用1
+bit，要表示掷骰子的结果需要用log6 bit（实际表示时为向上取整3
+bit），也就是说<strong>熵是平均意义上对随机变量的编码长度。</strong></p>
+<p>对连续变量，公式定义就是积分形式： <span class="math display">\[
+H(X)=\int P(x)·logp(x)dx
+\]</span></p>
+</blockquote></li>
+<li><p>联合熵：</p>
+<blockquote>
+<p>多个联合变量的熵，也就是将熵的定义推广到多变量的范围 <span class="math display">\[
+H(X,Y)=\sum _{x\in X}\sum_{y\in Y}P(x,y)log\frac{1}{P(x,y)}=-ElogP(xy)
+\]</span></p>
+</blockquote></li>
+<li><p>条件熵</p>
+<blockquote>
+<p>一个随机变量在给定的情况下，系统的熵 <span class="math display">\[
+H(Y|X)=\sum_{x\in X}P(x)H(Y|X=x) \\\\
+=\sum_{x\in X}P(x)[\sum_{y\in Y}P(y|x)log\frac{1}{P(y|x)}] \\\\
+=\sum_{x\in X}\sum_{y\in Y}P(x)P(y|x)log\frac{1}{P(y|x)} \\\\
+=\sum_{x\in X}\sum_{y\in Y}P(x,y)log\frac{1}{P(y|x)}
+\]</span></p>
+</blockquote></li>
+<li><p><font color="red"><strong>互信息</strong></font></p>
+<blockquote>
+<p>熵表明了单个随机变量的不确定程度，那么熵的值是确定不变的吗？我们有办法缩减这个不确定性吗？如果能缩减那缩减多少可以量化吗？</p>
+<figure>
+<img src="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20230711224608328.png" alt="image-20230711224608328">
+<figcaption aria-hidden="true">image-20230711224608328</figcaption>
+</figure>
+<p><strong>互信息的定义:</strong></p>
+<p>对于两个随机变量<span class="math inline">\(X,Y\)</span>
+,如果其联合分布为<span class="math inline">\(p(x,y)\)</span>边缘分布为<span class="math inline">\(p(x),p(y)\)</span> ,则互信息定义为： <span class="math display">\[
+I(X;Y)=\sum_{x\in X}\sum_{y\in Y}p(x,y)log\frac{p(x,y)}{p(x)p(y)}
+\]</span> 推导上式，令其符合上述例子中的信息缩减形势 <span class="math display">\[
+I(X;Y)=\sum_{x\in X}\sum_{y\in Y}p(x,y)log\frac{p(x,y)}{p(x)p(y)}\\\\
+=\sum_{x\in X}\sum_{y\in Y}p(x,y)log\frac{p(y)p(x|y)}{p(x)p(y)}\\\\
+=\sum_{x\in X}\sum_{y\in Y}p(x,y)log\frac{p(x|y)}{p(x)}\\\\
+=\sum_{x\in X}\sum_{y\in Y}p(x,y)log{p(x|y)}-\sum_{x\in X}\sum_{y\in
+Y}p(x,y)log{p(x)}\\
+=-\sum_{x\in X}p(x)log{p(x)}-[-\sum_{x\in X}\sum_{y\in
+Y}p(x,y)log{p(x|y)}]\\\\
+=H(x)-H(X|Y)
+\]</span> <font color="green">可以直观地看到<span class="math inline">\(H(X)\)</span> 表示为原随机变量<span class="math inline">\(X\)</span> 的信息量， <span class="math inline">\(H(X|Y)\)</span> 为知道事实 <span class="math inline">\(Y\)</span> 后 <span class="math inline">\(X\)</span> 的信息量，<strong>互信息<span class="math inline">\(I(X;Y)\)</span>则表示为知道事实 Y
+后，原来信息量减少了多少。</strong></font></p>
+<figure>
+<img src="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/v2-8cf04c938180b3fd267b600f23425e91_720w.webp" alt="img">
+<figcaption aria-hidden="true">img</figcaption>
+</figure>
+</blockquote></li>
+<li><p>相对熵</p>
+<blockquote>
+<p>对于两个随机变量之间相差多少？也就是说，这两个随机变量的分布函数相似吗？如果不相似，那么它们之间差可以量化吗？</p>
+<p><strong>相对熵给出了两个分布之间的差异程度的量化，也就说相对熵代表的是这个两个分布的“距离”。</strong></p>
+<p><font color="red">相对熵的定义：</font></p>
+<blockquote>
+<p>两个概率密度函数<span class="math inline">\(p(x)\)</span><span class="math inline">\(q(x)\)</span> 之间的相对熵定义为： <span class="math display">\[
+D(p||q)=\sum_{x\in X}p(x)log\frac{p(x)}{q(x)}
+\]</span> 相对熵的一个应用场景就是，假设某一个样本服从分布<span class="math inline">\(p(x)\)</span>，我们通过样本拟合出来的分布是 <span class="math inline">\(q(x)\)</span> ,那么他们之间的差异程度就是 <span class="math inline">\(D(p||q)\)</span> ，再一步而言， 根据分布<span class="math inline">\(p(x)\)</span>得出表示随机变量的码长为其熵<span class="math inline">\(H(p)\)</span>，而估计的分布为<span class="math inline">\(q(x)\)</span>,那么他们的关系可以表达为： <span class="math display">\[
+H(q)=H(p)+D(p||q)
+\]</span> 这样就量化了两个分布之间的“距离”了。</p>
+</blockquote>
+<p>最后，互信息定义可以如下表示：</p>
+<figure>
+<img src="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20230711231649670.png" alt="image-20230711231649670">
+<figcaption aria-hidden="true">image-20230711231649670</figcaption>
+</figure>
+<p>由这样的推导，我们知道互信息本质上其实是描述了联合分布<span class="math inline">\(p(x,y)\)</span> ，与两个边缘分布之积 <span class="math inline">\(p(x)p(y)\)</span>的差异程度，如果差异程度为0，表示两个随机变量独立，符合我们的直觉.</p>
+</blockquote></li>
+</ol>
+</blockquote>
+<h2><span id="2-信息瓶颈理论information-bottleneck-ib">2. 信息瓶颈理论
+Information Bottleneck (IB)</span></h2>
+<blockquote>
+<p><strong>使用神经网络来学习映射</strong><span class="math inline">\(X\rightarrow Y\)</span> 。在隐藏层将数据<span class="math inline">\(X\)</span>编码为<span class="math inline">\(Z\)</span>,参数化表示为<span class="math inline">\(p(z|x;\theta)\)</span>。</p>
+<p><font color="red"><strong>IB对Z的要求是最大化该编码和训练目标Y之间的互信息</strong></font><span class="math inline">\(I(Z,Y;\theta)\)</span>: <span class="math display">\[
+I(Z,Y;\theta)=\int
+dxdyp(z,y|\theta)log\frac{p(z,y|\theta)}{p(z|\theta)p(y|\theta)}
+\]</span> 另一方面，IB 希望能够限制编码 <span class="math inline">\(Z\)</span> 的复杂度。一般而言，输入 <span class="math inline">\(X\)</span>是高维的，如图像。编码<span class="math inline">\(Z\)</span>应该是低维表示，提取 <span class="math inline">\(X\)</span>的特征来预测 <span class="math inline">\(Y\)</span> 。<font color="red">因此，IB
+的另一个标准是限制输入X和编码 Z之间的互信息，希望 <span class="math inline">\(I(X,Z)\le I_c\)</span>，其中<span class="math inline">\(I_c\)</span>是一个约束.</font></p>
+<p><strong>IB要最大化的目标函数为：</strong></p>
+<blockquote>
+<p>优化目标可以解释成：最大化 <span class="math inline">\(Z\)</span> 和
+<span class="math inline">\(Y\)</span> 的互信息的同时，最大化 <span class="math inline">\(Z\)</span> 关于 <span class="math inline">\(X\)</span> 的压缩程度（maximal compression）。参数
+<span class="math inline">\(\beta\)</span>用于控制二者的权衡。</p>
+</blockquote>
+<p><span class="math display">\[
+R_{IB}(\theta)=I(Z,Y;|\theta)-\beta I(Z,X;\theta)
+\]</span></p>
+<p>通俗的解释来讲，IB 中的第一项希望 <span class="math inline">\(Z\)</span> 包含更多能够用于预测 <span class="math inline">\(Y\)</span> 的信息，第二项则希望 <span class="math inline">\(Z\)</span> 能够"forget"关于 <span class="math inline">\(X\)</span> 的信息。能够满足这两点的编码 <span class="math inline">\(Z\)</span> 被认为是好的编码。因为 <span class="math inline">\(Z\)</span> 能够忽略 <span class="math inline">\(X\)</span> 中和目标 <span class="math inline">\(Y\)</span>无关的细节，因此 <span class="math inline">\(Z\)</span>对噪声不敏感.</p>
+</blockquote>
+<h3><span id="21-深度学习中ib的求解">2.1 深度学习中IB的求解</span></h3>
+<blockquote>
+<p>变量<span class="math inline">\(X,Y,Z\)</span>之间的马尔科夫链可以表示为<span class="math inline">\(Y\leftrightarrow X \leftrightarrow
+Z\)</span>。这里限制了<span class="math inline">\(Z\)</span>不能以目标<span class="math inline">\(Y\)</span>为条件，只以<span class="math inline">\(X\)</span>为条件。在此基础下，联合分布： <span class="math display">\[
+p(X,Y,Z)=p(Z|X,Y)p(Y|X)p(X)=p(Z|X)p(Y|X)p(X)
+\]</span> <strong>关于IB目标函数的求解，主要分为两项</strong></p>
+<ol type="1">
+<li><p>求解<span class="math inline">\(I(Z,Y)\)</span></p>
+<blockquote>
+<p>根据互信息定义： <span class="math display">\[
+I(Z,Y)=\int dydzp(x,z)log\frac{p(z,y)}{p(z)p(y)}=\int
+dydzp(x,z)log\frac{p(y|z)}{p(y)}
+\]</span> 对两个分布： 目标分布<span class="math inline">\(p\)</span>与预测分布<span class="math inline">\(q\)</span>,相对熵一定<span class="math inline">\(\ge0\)</span> <span class="math display">\[
+KL[p(Y|Z),q(Y|Z)]=\int dydz p(y|z)log\frac{p(y|z)}{q(y|z)} \ge0\\
+\Rightarrow \int dydz p(y|z)log{p(y|z)} \ge \int dydz p(y|z)log{q(y|z)}
+\]</span> 所以有： <span class="math display">\[
+I(Z,Y)=\int dydz p(y,z)log \frac{p(y|z)}{p(y)} \\
+\ge \int dydzp(y,z)log \frac{q(y|z)}{p(y)} \\
+=\int dydzp(y,z)logq(y|z)- \int dyp(y)logp(y) \\
+=\int dydzp(y,z)logq(y|z)+H(Y)
+\]</span> 再通过恒等关系引入<span class="math inline">\(X\)</span>,
+同时结合上述马尔科夫链可得 <span class="math display">\[
+I(Z,Y) \ge \int dxdydzp(x)p(y|x)p(z|x)log(q(y|z))
+\]</span></p>
+<p><font color="green">如上，就得到了<span class="math inline">\(I(Z,Y)\)</span>的下界</font>。</p>
+</blockquote></li>
+<li><p>求解<span class="math inline">\(I(Z,X)\)</span></p>
+<blockquote>
+<figure>
+<img src="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20230712111950186.png" alt="image-20230712111950186">
+<figcaption aria-hidden="true">image-20230712111950186</figcaption>
+</figure>
+</blockquote></li>
+<li><p>整体求解：</p>
+<blockquote>
+<figure>
+<img src="https://wgx--img.oss-cn-qingdao.aliyuncs.com/img/image-20230712112121251.png" alt="image-20230712112121251">
+<figcaption aria-hidden="true">image-20230712112121251</figcaption>
+</figure>
+</blockquote></li>
+</ol>
+</blockquote>
+<p>参考链接：</p>
+<p><a href="https://zhuanlan.zhihu.com/p/36192699">信息论（1）——熵、互信息、相对熵
+- 知乎 (zhihu.com)</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/36192699">[Information
+Bottleneck - 知乎
+(zhihu.com)](https://zhuanlan.zhihu.com/p/102925788)</a></p>
+
+    </article>
+    <!-- license -->
+    
+    <!-- paginator -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href="/2023/05/14/Jetson-Tx1-ubuntu18%E7%BC%96%E8%AF%91python3%E7%9A%84cv-bridge/" title="Jetson Tx1_ubuntu18编译python3的cv_bridge">
+                    <div class="prevTitle">Jetson Tx1_ubuntu18编译python3的cv_bridge</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- comment -->
+    
+        <div class="post-comment">
+            <!-- 来必力 City 版安装代码 -->
+
+
+            
+
+            
+
+            
+
+            <!-- utteranc评论 -->
+
+
+            <!-- partial('_partial/comment/changyan') -->
+            <!--PC版-->
+
+
+            
+            
+
+            
+
+        </div>
+    
+    <!-- timeliness note -->
+    <!-- idea from: https://hexo.fluid-dev.com/posts/hexo-injector/#%E6%96%87%E7%AB%A0%E6%97%B6%E6%95%88%E6%80%A7%E6%8F%90%E7%A4%BA -->
+    
+    <!-- Mathjax -->
     
         
-        
-        
-        
-            
-            
-        
-        <article class="index-post">
-            <a class="abstract-title" href="/2023/02/23/Python-%E5%8F%AF%E5%8F%98%E5%8F%82%E6%95%B0-%E4%BC%A0%E5%85%A5%E5%8F%82%E6%95%B0/">
-                
-                <span class="abstract-title-text">Python-可变参数-传入参数</span>
-            </a>
-            <div class="abstract-content">
-                简单介绍了 函数的可变参数，与输入参数，带*问题
-            </div>
-            <!-- read more -->
-            
-            <div class="abstract-post-meta">
-                <!-- date -->
-                <div class="abstract-date" title="Last updated: 2023/02/23">
-                    <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2023/02/23</span>
-                </div>
-                <!-- tags -->
-                
-            </div>
-        </article>
-        <div class="index-post-divider"></div>
-    
-    <!-- paginator  -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                processEscapes: true,
+                skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"></script>
+
+
     
 </main>
 
@@ -547,6 +820,25 @@
 
         </div>
         <!-- toc -->
+        
+            <div class="toc-wrapper toc-wrapper-loding" style=
+
+
+
+
+
+
+
+    top:50vh;
+
+>
+                <div class="toc-catalog">
+                    <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+                </div>
+                <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">1.
+基础知识补充：信息论的部分基础概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">2. 信息瓶颈理论
+Information Bottleneck (IB)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 深度学习中IB的求解</span></a></li></ol></li></ol>
+            </div>
         
         <!-- sidebar -->
         <div class="sidebar sidebar-hide">
@@ -1412,7 +1704,16 @@
         
         <!-- async load share.js -->
         
+            <script src="/scripts/share.js?v=20211217" async></script>
+        
         <!-- mermaid -->
+        
+            <script src='https://cdn.jsdelivr.net/npm/mermaid@8.x/dist/mermaid.min.js'></script>
+            <script>
+                if (window.mermaid) {
+                    mermaid.initialize({theme: 'dark'});
+                }
+            </script>
         
     </body>
 </html>
